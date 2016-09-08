@@ -7,20 +7,24 @@ var connect = require("react-redux").connect;
 
 var HelloWorld = React.createClass({
 	componentWillMount: function(){
-		console.log("before dispatch", this.props.message);
 		this.props.dispatch(actions.fetchData());
 	},
 	render: function(){
-		console.log("after dispatch ", this.props.message);
+		console.log("after dispatch ", this.props.tasks);
+		var taskData = this.props.tasks.map(function(todo) {
+			return (<li key={todo.id} className="tasks">{todo.id} : {todo.title}</li>)
+		});
+		// console.log(taskData);
 		return (
-			<div>{this.props.message}</div>)
+				<ul>{taskData}</ul>
+		)
 	}
 });
 
 var mapStateToProps = function(state, props) {
 
     return {
-        message: state.message
+        tasks: state.taskList
     };
 };
 

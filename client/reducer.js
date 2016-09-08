@@ -1,13 +1,15 @@
 
 var actions = require("./action");
 
-var initialState = {};
+var initialState = {
+	taskList:[]
+}
 
 var reducerCreator = function (state, action) {
 	state = state || initialState;
 	if (action.type === actions.FETCH_DATA_SUCCESS) {
 		return {
-			message: action.data.message
+			taskList: action.data
 		}
 	}
 	if (action.type === actions.FETCH_DATA_ERROR) {
