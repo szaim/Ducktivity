@@ -8,6 +8,13 @@ var fetchDataSuccess = function(data) {
 	};
 };
 
+var FETCH_CHARACTER = 'FETCH_CHARACTER';
+var fetchCharacter = function(character) {
+	return {
+		type: FETCH_CHARACTER,
+		character: character
+	};
+};
 
 var FETCH_DATA_ERROR = 'FETCH_DATA_ERROR';
 var fetchDataError = function(error) {
@@ -43,6 +50,14 @@ var fetchData = function() {
    });
   };
 };
+
+
+
+
+
+
+exports.FETCH_CHARACTER = FETCH_CHARACTER;
+exports.fetchCharacter = fetchCharacter;
 
 exports.FETCH_DATA_SUCCESS = FETCH_DATA_SUCCESS;
 exports.fetchDataSuccess = fetchDataSuccess;
