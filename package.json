@@ -1,5 +1,5 @@
 {
-  "name": "starter-template",
+  "name": "mega-man-robot",
   "version": "1.0.0",
   "description": "",
   "main": "client/index.js",
@@ -42,7 +42,9 @@
     "babel-preset-react": "^6.11.1",
     "babel-register": "^6.9.0",
     "chokidar-cli": "^1.2.0",
-    "webpack": "^1.13.1",
-    "nodemon": "^1.10.2"
+    "css-loader": "^0.25.0",
+    "nodemon": "^1.10.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1"
   }
 }

@@ -1,6 +1,6 @@
 var React = require("react");
 import { render } from 'react-dom';
-// require("../styles.css");
+require("../style.css");
 var routes = require ('./components/routes');
 // import Main from './components/app';
 

@@ -1,0 +1,29 @@
+* {
+	size: 100%;
+	// background: yellow;
+}
+
+.container {
+	margin-top: 10rem;
+    display: webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+    // background: red;
+    // margin-top: 10rem;
+}
+
+.leftComponent {
+	float: left;
+	// margin-right: 8em;
+    margin-left: 10em;
+}
+
+.rightComponent {
+	float: right;
+	margin-right: 10em;
+
+}
+
+.listCharacters {
+	width: 20em
+}
