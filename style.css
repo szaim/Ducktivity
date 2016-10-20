@@ -8,6 +8,9 @@
     display: webkit-box;
     -webkit-box-pack:center;
     -webkit-box-align:center;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding-top: 3em;
     // background: red;
     // margin-top: 10rem;
 }
@@ -27,3 +30,30 @@
 .listCharacters {
 	width: 20em
 }
+
+.formButton {
+	margin-top: 3rem;
+}
+
+.restartButton {
+	margin-top: 0.5rem;
+}
+
+.image {
+	width: 250px;
+
+}
+
+.buttonImg {
+	width: 30px;
+}
+
+.button {
+	margin-left: 27px;
+}
+
+.characterImg {
+	width: 250px;
+	height: 250px;
+}
+

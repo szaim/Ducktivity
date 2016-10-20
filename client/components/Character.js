@@ -9,7 +9,7 @@ var Character = React.createClass({
 				    {this.props.name}
 				  </li>
 				  <li  className="list-group-item list-group-item-action">
-				  	<img src={this.props.img} className="img-rounded m-x-auto d-block" />
+				  	<img src={this.props.img} className="img-rounded m-x-auto d-block characterImg" />
 				  </li>
 				  <li  className="list-group-item list-group-item-action">
 				  	<h5>Weapon:</h5>
