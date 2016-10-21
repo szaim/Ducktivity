@@ -14,11 +14,11 @@ var Home = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className="jumbotron col-sm-12 text-center">
+			<div className="jumbotron col-sm-6 col-sm-offset-3 text-xs-center home">
 				<h1>Mega Man Robot</h1>
-				<p className="lead">some fancy motto</p>
+				<p className="lead">Let's start the Game</p>
 				<Link to='/playerOne'>
-					<button onClick={this.onSubmitButton} type='button' className='btn btn-lg btn-success'>
+					<button onClick={this.onSubmitButton} type='button' className='btn btn-lg btn-primary'>
 						Get Started
 					</button>
 				</Link>

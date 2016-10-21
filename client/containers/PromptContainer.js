@@ -31,19 +31,19 @@ var PromptContainer = React.createClass({
 	},
 	render: function() {
 		return(
-			<div className="jumbotron col-sm-6 col-sm-offset-3 text-center">
+			<div className="jumbotron col-sm-6 col-sm-offset-3 text-xs-center players">
 				<h1>{this.props.route.header}</h1>
-				<div className="col-sm-12">
-					<form onSubmit={this.onFormSubmit}>
+				<div className="col-sm-12 text-xs-center">
+					<form onSubmit={this.onFormSubmit} className="text-xs-center">
 						<div className="form-group">
 							<input
 								className="form-control"
-								placeholder="Megaman name"
+								placeholder="Type Megaman Name"
 								type="text" ref="theInput"/>
 						</div>
-						<div className="form-group col-sm-4 col-sm-offset-4">
+						<div className="form-group col-sm-4 col-sm-offset-4 centered">
 							<button
-								className="btn btn-block btn-success"
+								className="btn btn-block btn-primary"
 								type="submit">
 								Continue
 							</button>

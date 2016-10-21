@@ -1,32 +1,11 @@
 var React = require("react");
 var Modal = require('react-modal');
-var connect = require("react-redux").connect;
-var store = require("../redux/store");
-var actions = require("../redux/action");
 
-var winnerCharater = {};
+
+
 var Modale = React.createClass({
 
 	render: function() {
-		function test(data) {
-			for(var i = 0; i < data.length; i++) {
-				for(var j = 0; j < data.length; j++) {
-					if (data[i].weapon === data[j].weakness) {
-						// console.log("strong", this.props.data[i]);
-						winnerCharater = data[i];
-					}
-				// else if (this.props.data[j].weapon === this.props.data[i].weakness) {
-				// 	console.log("strong", this.props.data[j]);
-				// }
-				}
-	
-			};
-			console.log(winnerCharater);
-			return winnerCharater;
-		};
-
-		var result = test(this.props.data);
-		console.log(result);
 		return (
 		<div>
 			<div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -42,8 +21,8 @@ var Modale = React.createClass({
 					</div>
 					<div className="text-xs-center imageDiv">
 						<h3 style={{color: "red"}}>The Winner is: </h3>
-							<p>{result.name}</p>
-							<img src={result.avatar} className="Thumbnail mx-auto" />
+							<p>{this.props.nameWinner}</p>
+							<img src={this.props.avatarWinner} className="rounded mx-auto" />
 					</div>
 			      </div>
 			      <div className="modal-footer">
@@ -60,13 +39,7 @@ var Modale = React.createClass({
 	}
 });
 
-var mapStateToProps = function(state, props) {
-	return {
-		data: state.characters
-	}
-};
 
-var Container = connect(mapStateToProps)(Modale)
 
-module.exports = Container;
+module.exports = Modale;
 
