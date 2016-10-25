@@ -17,14 +17,14 @@ var reducer = function(state, action) {
 
 	if(action.type === actions.FETCH_DATA_SUCCESS) {
 		console.log("rdata recieved in reducer", action.data)
-		return {
-			task: action.data.message
+		var newState = Object.assign({}, state, {
+						task: action.data.message
+		});
+				return newState;
 		}
-	}
 	else if (action.type === actions.FETCH_DATA_ERROR) {
-		return {
-			error: action.error
-		}
+		return action.error
+
 	}
 
 	return state;

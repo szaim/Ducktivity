@@ -4,7 +4,7 @@ var connect = require("react-redux").connect;
 var store = require("../redux/store");
 
 
-var ContainerSample = React.createClass({
+var App = React.createClass({
 	componentDidMount: function() {
 		this.props.dispatch(actions.fetchData());
 	},
@@ -14,7 +14,6 @@ var ContainerSample = React.createClass({
 			hello
 			{this.props.data}
 			</div>
-
 		)
 	}
 });
@@ -26,6 +25,6 @@ var mapStateToProps = function(state, props) {
 	}
 };
 
-var Container = connect(mapStateToProps)(ContainerSample);
+var Container = connect(mapStateToProps)(App);
 
 module.exports = Container;

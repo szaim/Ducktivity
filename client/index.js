@@ -3,11 +3,11 @@ var React = require("react");
 var render = require("react-dom").render;
 var Provider = require("react-redux").Provider;
 var store = require("./redux/store");
-var ContainerSample = require("./containers/ContainerSample");
-
+var App = require("./containers/App");
+var TaskBoard = require('./containers/TaskBoard');
 
 render(	<Provider store={store}>
-			<ContainerSample />
+			<TaskBoard />
 		</Provider>
 		, document.getElementById('app')
 );
