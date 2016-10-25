@@ -33,7 +33,7 @@ var fetchData = function() {
        );
    })
     .catch(function(error) {
-       console.log("fetch error promise: ", error);
+    console.log("fetch error promise: ", error);
      return dispatch(
        fetchDataError(error)
        );

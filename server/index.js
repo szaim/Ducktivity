@@ -4,9 +4,13 @@ var app = express();
 var Task = require('./models/task');
 var mongoose = require('mongoose');
 var config = require('./config');
+var googleConfig = require('./googleConfig');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var BearerStrategy = require('passport-http-bearer').Strategy;
+var passport = require("passport");
 
 app.use(bodyParser.json());
-
+app.use(passport.initialize());
 app.use('/', express.static('build'));
 
 /*Connection to MongoDB/mongoose */
