@@ -75,3 +75,26 @@ app.put('/api/:id', function(req, res) {
 	});
 });
 
+
+/*Delete the status*/
+app.delete('/api/:id', function(req, res) {
+	Task.remove({
+		_id: req.params.id
+	}).exec(function(err, task){
+		if (err) {
+            console.log('Idea not found: ', err);
+            return res.status(500).json({
+                message: err
+            });
+        } else {
+			res.send({
+				message: "Task deleted!"
+			});
+        }
+	});
+});
+
+
+
+
+
