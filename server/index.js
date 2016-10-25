@@ -31,7 +31,7 @@ if (require.main === module) {
         }
     });
 }
-
+/*Get All the tasks*/
 app.get('/api', function(req, res) {
 	Task.find({})
 		.exec(function(err, tasks){
@@ -43,7 +43,7 @@ app.get('/api', function(req, res) {
 		});
 });
 
-
+/*post a new task*/
 app.post('/api', function(req, res) {
 	var newTask = new Task(req.body);
 	newTask.save(function(err, task) {
@@ -52,6 +52,26 @@ app.post('/api', function(req, res) {
 		} else {
 			res.json(task);
 		}
+	});
+});
+
+/*Update the status*/
+app.put('/api/:id', function(req, res) {
+	Task.findOne({
+		_id: req.params.id
+	}).exec(function(err, task){
+		if (err) {
+            console.log('Idea not found: ', err);
+            return res.status(500).json({
+                message: err
+            });
+        }
+		var newTitle = req.body.title;
+		task.title = newTitle;
+		var newStatus = req.body.status;
+		task.status = newStatus;
+		task.save();
+		res.json(task);
 	});
 });
 
