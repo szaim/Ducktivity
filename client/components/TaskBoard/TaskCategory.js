@@ -1,5 +1,5 @@
 var React = require('react');
-var actions = require('../../redux/actions/action');
+var actions = require('../../redux/actions/TaskCategory');
 var connect = require('react-redux').connect;
 var TaskItem = require('./TaskItem');
 
@@ -7,7 +7,7 @@ var TaskItem = require('./TaskItem');
 var TaskCategory = React.createClass({
   componentDidMount: function() {
         console.log(this.props);
-    this.props.dispatch(actions.fetchData());
+    this.props.dispatch(actions.fetchTasks());
 
   },
   handleCommentChange: function() {
