@@ -30,7 +30,7 @@ if (require.main === module) {
             console.error(err);
         }
     });
-};
+}
 
 app.get('/api', function(req, res) {
 	Task.find({})
@@ -43,4 +43,15 @@ app.get('/api', function(req, res) {
 		});
 });
 
+
+app.post('/api', function(req, res) {
+	var newTask = new Task(req.body);
+	newTask.save(function(err, task) {
+		if(err) {
+			console.log("error", error);
+		} else {
+			res.json(task);
+		}
+	});
+});
 
