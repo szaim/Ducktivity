@@ -38,7 +38,7 @@ if (require.main === module) {
 }
 
 app.get('/app', function(req, res) {
-    User.find({})
+    User.find({}).populate('tasks')
         .exec(function(err, users) {
             if (err) {
                 res.send("Error has occured")
@@ -58,11 +58,18 @@ passport.use(new GoogleStrategy({
     function(accessToken, refreshToken, profile, done) {
         console.log('PROFILE', profile);
 
-        // var user = {
-        //     googleID: profile.id,
-        //     accessToken: accessToken
-        // }
-         // return done(null, user);
+        // var arrTasks;
+        // Task.find({}).exec(function(err, tasks){
+        //     if (err) {
+        //     console.log('error', err);
+        //     } else {
+        //         console.log("All tasks: ", tasks);
+        //         arrTasks = tasks;
+        //         console.log("Array : ", arrTasks);
+
+        //     }
+        // })
+
         User.find({
             'googleID': profile.id
         }, function(err, users) {
@@ -73,6 +80,7 @@ passport.use(new GoogleStrategy({
                     googleID: profile.id,
                     accessToken: accessToken,
                     fullName: profile.displayName,
+                    tasks: arrTasks,
                     avatar: profile.image
 
                 }, function(err, users) {
@@ -143,6 +151,33 @@ app.get('/user', passport.authenticate('bearer', {session: false}),
 
 });
 
+/*Assign a new task to the User */
+
+app.post('/api/:userId', function(req, res){
+    User.find({
+        googleID: req.params.userId
+    })
+    .exec(function(err, user){
+        console.log("user found", user);
+        var newTask = new Task({
+            owner: user[0].fullName,
+            title: req.body.title,
+            status: req.body.status
+        });
+        newTask.save();
+        console.log("after user found", user);
+        console.log("task created", newTask);
+        user[0].tasks.push(newTask);
+        user[0].save();
+        console.log("new user found", user);
+    })
+    .populate('Task').exec(function(err, populatedUser){
+            console.log(populatedUser, 'final user');
+        })
+});
+
+// app.get('/api/:userId', function(req, res){})
+
 /*Get All the tasks*/
 app.get('/api', function(req, res) {
 	Task.find({})
@@ -186,6 +221,7 @@ app.put('/api/:id', function(req, res) {
 		res.json(task);
 	});
 });
+
 
 
 /*Delete the status*/
