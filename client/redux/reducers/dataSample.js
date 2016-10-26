@@ -1,5 +1,6 @@
 var data = [
   {
+  id: 1,
   owner: 'Billy',
 	title: 'get back end working',
 	category: 'todo',
@@ -9,6 +10,7 @@ var data = [
 
 },
 {
+  id: 2,
 owner: 'Joel',
 title: 'add user roles',
 category: 'blocked',
@@ -18,6 +20,7 @@ status: ''
 
 },
 {
+  id: 3,
 owner: 'Shantel',
 title: 'wire up front-end components',
 category: 'in-progress',
@@ -27,6 +30,7 @@ status: ''
 
 },
 {
+  id: 4,
 owner: 'Ikbob',
 title: 'initalize project',
 category: 'completed',

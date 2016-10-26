@@ -18,24 +18,43 @@ var TaskCategory = React.createClass({
   },
   handleTaskDelete: function(){
   },
-  handleAddTask: function() {
+  updateTaskInput: function(){
 
   },
+  handleAddTask: function(data, event) {
+    event.preventDefault();
+    console.log(this.refs);
+    var taskId = data.id;
+    var TaskConstruct = {
+      owner: '',
+      title: this.refs[taskId].value,
+      category: data.category,
+      subtask: [],
+      assignedTo: [],
+      status: ''
+    }
+    console.log(TaskConstruct);
+  },
  render: function(){
-  var handleAddTask = this.handleAddTask;
-   console.log(this.props)
+  var that = this;
+  var handleAddTask = function(event){
+    that.handleAddTask(this, event)
+  };
+  var handleTaskDelete = this.handleTaskDelete;
    var displayTasks = this.props.cards.map(function(data, index) {
      return (
          <div className="card-box" key={index}>
          <div className='card-top'>
-         <h1>{data.category}</h1>
-         <button type='submit' onSubmit={handleAddTask}>Add Task</button>
+         <h1> {data.category}</h1>
+         <input key={index} ref={data.id}  type='text' />
+         <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
+
          </div>
-             <TaskItem title={data.title} cardData={data} />
+             <TaskItem title={data.title} handleTaskDelete={handleTaskDelete} cardData={data} />
          </div>
        )
-
    });
+
    return (
      <div className='task-categories'>
      {displayTasks}
