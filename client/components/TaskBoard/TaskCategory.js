@@ -7,7 +7,7 @@ var TaskItem = require('./TaskItem');
 var TaskCategory = React.createClass({
   componentDidMount: function() {
         console.log(this.props);
-    this.props.dispatch(actions.fetchTasks());
+    // this.props.dispatch(actions.fetchTasks());
 
   },
   handleCommentChange: function() {
@@ -22,24 +22,18 @@ var TaskCategory = React.createClass({
 
   },
  render: function(){
+   console.log(this.props)
+   var displayTasks = this.props.cards.map(function(data, index) {
+     return (
+         <div className="card-box" key={index}>
+             <TaskItem title={data.title} cardData={data} />
+         </div>
+       )
+
+   });
    return (
      <div className='task-categories'>
-     <h1>ToDo <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='todo' ?
-      <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-      : null}
-     <h1>In Progress <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-        {this.props.taskStatus=='in-progress' ?
-        <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-          : null}
-     <h1>Blocked <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='blocked' ?
-     <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-       : null}
-     <h1>Completed <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='completed' ?
-     <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-       : null}
+     {displayTasks}
      </div>
    )
  }
@@ -50,9 +44,7 @@ var TaskCategory = React.createClass({
 var mapStateToProps = function(state, props) {
 	console.log(state);
 	return {
-		commentValue: state.commentValue,
-    taskTitle: state.taskCategory.taskTitle,
-    taskStatus: 'todo'
+    cards: state.taskCategory
 	}
 };
 

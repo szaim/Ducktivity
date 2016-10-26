@@ -1,26 +1,26 @@
 var actions = require("../actions/TaskCategory");
+var data = require('./dataSample');
 
 var initialState = {
-	task: "",
-  taskTitle: ''
+
 };
 
 var taskCategory = function(state, action) {
-	state = state || initialState;
+	// state = state || initialState;
+	//
+	// if(action.type === actions.FETCH_TASKS_SUCCESS) {
+	// 	console.log("rdata recieved in reducer", action.data)
+	// 	var newState = Object.assign({}, state, {
+	// 					taskCategory: action.data.title
+	// 	});
+	// 			return newState;
+	// 	}
+	// else if (action.type === actions.FETCH_TASKS_ERROR) {
+	// 	return action.error
+	//
+	// }
 
-	if(action.type === actions.FETCH_TASKS_SUCCESS) {
-		console.log("rdata recieved in reducer", action.data)
-		var newState = Object.assign({}, state, {
-						taskTitle: action.data.title
-		});
-				return newState;
-		}
-	else if (action.type === actions.FETCH_TASKS_ERROR) {
-		return action.error
-
-	}
-
-	return state;
+	return data;
 };
 
 module.exports = taskCategory;

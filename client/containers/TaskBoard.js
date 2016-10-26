@@ -10,7 +10,7 @@ var TaskBoard = React.createClass({
  render: function(){
    return (
      <div className='task-board'>
-     <Test />
+     <TaskCategory />
      </div>
    )
  }
