@@ -163,68 +163,48 @@ app.post('/api/:userId', passport.authenticate('bearer', {
                 console.log("new user found", user);
                 res.json(user);
             });
-});
-
-/*Get All the tasks*/
-app.get('/api', function(req, res) {
-    Task.find({})
-        .exec(function(err, tasks) {
-            if (err) {
-                console.log('error', err);
-            } else {
-                res.json(tasks);
-            }
-        });
-});
-
-/*post a new task*/
-app.post('/api', function(req, res) {
-    var newTask = new Task(req.body);
-    newTask.save(function(err, task) {
-        if (err) {
-            console.log("error", error);
-        } else {
-            res.json(task);
-        }
     });
-});
 
-/*Update the status*/
-// app.put('/api/:id', function(req, res) {
-//  Task.findOne({
-//      _id: req.params.id
-//  }).exec(function(err, task){
-//      if (err) {
-//             console.log('Idea not found: ', err);
-//             return res.status(500).json({
-//                 message: err
-//             });
-//         }
-//      var newTitle = req.body.title;
-//      task.title = newTitle;
-//      var newStatus = req.body.status;
-//      task.status = newStatus;
-//      task.save();
-//      res.json(task);
-//  });
-// });
-
-
-
-/*Delete the status*/
-app.delete('/api/:id', function(req, res) {
-    Task.remove({
-        _id: req.params.id
-    }).exec(function(err, task) {
+/*Update Card */
+//TODO: Refactor using User instead Directly the Card
+app.put('/api/:cardId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Card.findOneAndUpdate({
+        _id: req.params.cardId
+    },{$set :{title: req.body.title, status: req.body.status}}, function(err, cards) {
         if (err) {
-            console.log('Idea not found: ', err);
+            console.log('cards not found: ', err);
             return res.status(500).json({
                 message: err
             });
-        } else {
-            res.send({
-                message: "Task deleted!"
-            });
         }
-    });
+        console.log(cards);
+       // cards.title = req.body.title;
+
+       //  cards.save();
+       res.json(cards);   
+        });
+
+
 });
+
+
+        // User.update({
+        //         "googleID": req.params.userId,
+        //         "cards.id": req.body.user.id
+        //     }, {
+        //         "$set": {
+        //             "cards.$.title": req.body.user.title
+        //         }
+        //     },
+        //     function(err, user) {
+        //         if (err) {
+        //             return res.send(err);
+        //         }
+        //         return res.send(user);
+        //     });
+        // console.log("body", req.body);
+
+
