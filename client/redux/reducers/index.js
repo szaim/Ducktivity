@@ -3,7 +3,7 @@ var taskCategory = require('./TaskCategory');
 
 
 var rootReducer = combineReducers({
-		taskCategory
+		taskCategory: taskCategory
  });
 
 

@@ -51,7 +51,7 @@ var mapStateToProps = function(state, props) {
 	console.log(state);
 	return {
 		commentValue: state.commentValue,
-    taskTitle: 'best task ever',
+    taskTitle: state.taskCategory.taskTitle,
     taskStatus: 'todo'
 	}
 };

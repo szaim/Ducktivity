@@ -1,7 +1,7 @@
 var React = require('react')
 
 var TaskItem = function(props) {
-
+ console.log(props)
   return(
     <div className="task-item">
       {props.title}

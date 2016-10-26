@@ -1,15 +1,8 @@
 var actions = require("../actions/TaskCategory");
 
-// var combineReducers = require('redux').combineReducers;
-// var reducer = combineReducers({
-//     board: boardReducer,
-//     list: listReducer,
-//     card: cardReducer
-// });
-
-
 var initialState = {
-	task: ""
+	task: "",
+  taskTitle: ''
 };
 
 var taskCategory = function(state, action) {
@@ -18,7 +11,7 @@ var taskCategory = function(state, action) {
 	if(action.type === actions.FETCH_TASKS_SUCCESS) {
 		console.log("rdata recieved in reducer", action.data)
 		var newState = Object.assign({}, state, {
-						task: action.data
+						taskTitle: action.data.title
 		});
 				return newState;
 		}
