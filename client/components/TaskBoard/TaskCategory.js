@@ -22,10 +22,15 @@ var TaskCategory = React.createClass({
 
   },
  render: function(){
+  var handleAddTask = this.handleAddTask;
    console.log(this.props)
    var displayTasks = this.props.cards.map(function(data, index) {
      return (
          <div className="card-box" key={index}>
+         <div className='card-top'>
+         <h1>{data.category}</h1>
+         <button type='submit' onSubmit={handleAddTask}>Add Task</button>
+         </div>
              <TaskItem title={data.title} cardData={data} />
          </div>
        )
