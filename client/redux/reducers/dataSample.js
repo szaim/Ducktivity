@@ -1,36 +1,52 @@
 var data = [{
    "id": 0,
    "category": "To Do",
-   "taskTitle": "",
-   "tasks": [],
-   "comentValue": "",
-   "status": "Kryptonian"
+   "tasks": [{
+      owner: "",
+      title: "",
+      comentValue: "",
+      status: ""
+   }],
+   
+   "delete": false
 
 },
 {
    "id": 1,
    "category": "In Progress",
    "taskTitle": "",
-   "tasks": [],
+   "tasks": [{
+      owner: "",
+      title: "",
+      status: ""
+   }],
    "comentValue": "",
-   "status": "Human"
+   "delete": false
 },
 {
    "id": 2,
    "category": "Blocked",
    "taskTitle": "",
-   "tasks": [],
+   "tasks": [{
+      owner: "",
+      title: "",
+      status: ""
+   }],
    "comentValue": "",
-   "status": "Human"
+   "delete": false
 
 },
 {
    "id": 3,
    "category": "Completed",
    "taskTitle": "",
-   "tasks": [],
+   "tasks": [{
+      owner: "",
+      title: "",
+      status: ""
+   }],
    "comentValue": "",
-   "status": "Human"
+   "delete": false
 
 }]
 
