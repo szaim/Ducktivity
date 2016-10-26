@@ -11,7 +11,7 @@ var UserBoard = new mongoose.Schema({
   fullName: {
     type: String
   },
-  tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}],
+  cards: [{type: Schema.Types.ObjectId, ref: 'Card'}],
   userType: {
   	type: String,
   	Default: "Project Manager"
@@ -22,8 +22,7 @@ var UserBoard = new mongoose.Schema({
   avatar: {
   	type: String
   }
-
-});
+ });
 
 var User = mongoose.model('User', UserBoard);
 

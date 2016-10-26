@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
-var Task = require('./models/task');
+var Card = require('./models/card');
 var User = require('./models/user');
 var mongoose = require('mongoose');
 var config = require('./config');
@@ -20,7 +20,7 @@ var runServer = function(callback) {
         if (err && callback) {
             return callback(err);
         }
-        
+
         app.listen(config.PORT, function() {
             console.log('Listening on localhost:' + config.PORT);
             if (callback) {
@@ -37,17 +37,6 @@ if (require.main === module) {
     });
 }
 
-app.get('/app', function(req, res) {
-    User.find({}).populate('tasks')
-        .exec(function(err, users) {
-            if (err) {
-                res.send("Error has occured")
-            } else {
-                res.json(users);
-            }
-        });
-});
-
 passport.use(new GoogleStrategy({
 
         clientID: googleConfig.googleAuth.clientID,
@@ -58,33 +47,22 @@ passport.use(new GoogleStrategy({
     function(accessToken, refreshToken, profile, done) {
         console.log('PROFILE', profile);
 
-        // var arrTasks;
-        // Task.find({}).exec(function(err, tasks){
-        //     if (err) {
-        //     console.log('error', err);
-        //     } else {
-        //         console.log("All tasks: ", tasks);
-        //         arrTasks = tasks;
-        //         console.log("Array : ", arrTasks);
-
-        //     }
-        // })
-
         User.find({
             'googleID': profile.id
         }, function(err, users) {
-            console.log('users', users.length)
+            console.log('users', users.length);
+            console.log('Avatar', profile.photos[0].value);
+
             if (!users.length) {
 
                 User.create({
                     googleID: profile.id,
                     accessToken: accessToken,
                     fullName: profile.displayName,
-                    tasks: arrTasks,
-                    avatar: profile.image
+                    avatar: profile.photos[0].value
 
                 }, function(err, users) {
-                    console.log('=======>>', err, users)
+                    console.log('=======>>', err, users);
                     return done(err, users);
                 });
 
@@ -92,29 +70,28 @@ passport.use(new GoogleStrategy({
                 // update user with new tokens
                 return done(err, users);
             }
-
-
-
         });
-
-
- }));
+    }));
 
 
 passport.use(new BearerStrategy(
-  function(token, done) {
-  User.find({ accessToken: token },
-    function(err, users) {
-      if(err) {
-          return done(err)
-      }
-      if(!users) {
-          return done(null, false)
-      }
-      return done(null, users, { scope: ['read'] })
+    function(token, done) {
+        User.find({
+                accessToken: token
+            },
+            function(err, users) {
+                if (err) {
+                    return done(err)
+                }
+                if (!users) {
+                    return done(null, false)
+                }
+                return done(null, users, {
+                    scope: ['read']
+                });
+            }
+        );
     }
-  );
-}
 ));
 
 // route for logging out
@@ -137,113 +114,117 @@ app.get('/auth/google/callback',
         console.log('req', req);
         console.log('req.user', req.user);
         console.log('req.user.accessToken', req.user[0].accessToken);
-        // res.cookie("accessToken", req.user.accessToken, {expires: 0});
+        res.cookie("accessToken", req.user[0].accessToken, {
+            expires: 0
+        });
+        //res.redirect(/success?accessToken= + req.user.accessToken);
         // httpOnly: true
-            // Successful authentication, redirect home.
+        // TODO: make the access token secure 
+        // Successful authentication, redirect home.
         res.redirect('/success');
     }
 );
-
-app.get('/user', passport.authenticate('bearer', {session: false}), 
+/*Returns all the users */
+app.get('/api', passport.authenticate('bearer', {
+        session: false
+    }),
     function(req, res) {
-        // validate(req.user[0].questions, req.user[0].score);
-        return res.send(req.user);
-
-});
+        User.find({}).populate('cards')
+            .exec(function(err, users) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    res.json(users);
+                }
+            });
+    });
 
 /*Assign a new task to the User */
-
-app.post('/api/:userId', function(req, res){
-    User.find({
-        googleID: req.params.userId
-    })
-    .exec(function(err, user){
-        console.log("user found", user);
-        var newTask = new Task({
-            owner: user[0].fullName,
-            title: req.body.title,
-            status: req.body.status
-        });
-        newTask.save();
-        console.log("after user found", user);
-        console.log("task created", newTask);
-        user[0].tasks.push(newTask);
-        user[0].save();
-        console.log("new user found", user);
-        res.json(user)
-    })
-    // .populate('tasks').exec(function(err, populatedUser){
-    //         console.log(populatedUser, 'final user');
-    //     })
+app.post('/api/:userId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        User.find({
+                googleID: req.params.userId
+            })
+            .exec(function(err, user) {
+                console.log("user found", user);
+                var newCard = new Card({
+                    owner: user[0].fullName,
+                    title: req.body.title,
+                    category: req.body.category,
+                    status: req.body.status
+                });
+                newCard.save();
+                console.log("after user found", user);
+                console.log("task created", newCard);
+                user[0].cards.push(newCard);
+                user[0].save();
+                console.log("new user found", user);
+                res.json(user);
+            });
 });
-
-// app.get('/api/:userId', function(req, res){})
 
 /*Get All the tasks*/
 app.get('/api', function(req, res) {
-	Task.find({})
-		.exec(function(err, tasks){
-			if (err) {
-            console.log('error', err);
-        	} else {
-        		res.json(tasks);
-        	}
-		});
+    Task.find({})
+        .exec(function(err, tasks) {
+            if (err) {
+                console.log('error', err);
+            } else {
+                res.json(tasks);
+            }
+        });
 });
 
 /*post a new task*/
 app.post('/api', function(req, res) {
-	var newTask = new Task(req.body);
-	newTask.save(function(err, task) {
-		if(err) {
-			console.log("error", error);
-		} else {
-			res.json(task);
-		}
-	});
+    var newTask = new Task(req.body);
+    newTask.save(function(err, task) {
+        if (err) {
+            console.log("error", error);
+        } else {
+            res.json(task);
+        }
+    });
 });
 
 /*Update the status*/
 // app.put('/api/:id', function(req, res) {
-// 	Task.findOne({
-// 		_id: req.params.id
-// 	}).exec(function(err, task){
-// 		if (err) {
+//  Task.findOne({
+//      _id: req.params.id
+//  }).exec(function(err, task){
+//      if (err) {
 //             console.log('Idea not found: ', err);
 //             return res.status(500).json({
 //                 message: err
 //             });
 //         }
-// 		var newTitle = req.body.title;
-// 		task.title = newTitle;
-// 		var newStatus = req.body.status;
-// 		task.status = newStatus;
-// 		task.save();
-// 		res.json(task);
-// 	});
+//      var newTitle = req.body.title;
+//      task.title = newTitle;
+//      var newStatus = req.body.status;
+//      task.status = newStatus;
+//      task.save();
+//      res.json(task);
+//  });
 // });
 
 
 
 /*Delete the status*/
 app.delete('/api/:id', function(req, res) {
-	Task.remove({
-		_id: req.params.id
-	}).exec(function(err, task){
-		if (err) {
+    Task.remove({
+        _id: req.params.id
+    }).exec(function(err, task) {
+        if (err) {
             console.log('Idea not found: ', err);
             return res.status(500).json({
                 message: err
             });
         } else {
-			res.send({
-				message: "Task deleted!"
-			});
+            res.send({
+                message: "Task deleted!"
+            });
         }
-	});
+    });
 });
-
-
-
-
-
