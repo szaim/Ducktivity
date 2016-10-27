@@ -9,6 +9,7 @@ var googleConfig = require('./googleConfig');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
 var passport = require("passport");
+var ObjectId = mongoose.Types.ObjectId;
 
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -119,27 +120,30 @@ app.get('/auth/google/callback',
         });
         //res.redirect(/success?accessToken= + req.user.accessToken);
         // httpOnly: true
-        // TODO: make the access token secure 
+        // TODO: make the access token secure. Cookies are secured enough
         // Successful authentication, redirect home.
         res.redirect('/success');
     }
 );
-/*Returns all the users */
-app.get('/api', passport.authenticate('bearer', {
+/*Returns The cards for that Particular user */
+app.get('/api/:userId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        User.find({}).populate('cards')
-            .exec(function(err, users) {
+        User.findOne({
+            googleID: req.params.userId
+        }).populate('cards')
+            .exec(function(err, user) {
                 if (err) {
                     res.send("Error has occured");
                 } else {
-                    res.json(users);
+                    res.json(user.cards);
                 }
             });
     });
 
 /*Assign a new task to the User */
+//Refactor just sending the Array of cards
 app.post('/api/:userId', passport.authenticate('bearer', {
         session: false
     }),
@@ -160,51 +164,37 @@ app.post('/api/:userId', passport.authenticate('bearer', {
                 console.log("task created", newCard);
                 user[0].cards.push(newCard);
                 user[0].save();
-                console.log("new user found", user);
-                res.json(user);
+                console.log("User cards", user[0].cards);
+                // res.json(user[0].cards);
+                console.log("request Params for User:", req.params.userId);
+                res.redirect('/api/'+req.params.userId);
             });
+
     });
 
-/*Update Card */
-//TODO: Refactor using User instead Directly the Card
+/*Update Card Delete STATUS */
+//TODO: Refactor using User instead Directly the Card --> Quicker 
 app.put('/api/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Card.findOneAndUpdate({
-        _id: req.params.cardId
-    },{$set :{title: req.body.title, status: req.body.status}}, function(err, cards) {
-        if (err) {
-            console.log('cards not found: ', err);
-            return res.status(500).json({
-                message: err
+        Card.update({
+            _id: req.params.cardId
+        }, {
+            $set: {
+                title: req.body.title,
+                status: req.body.status
+            }
+        }, {returnNewDocument : true}, function(err, cards) {
+            if (err) {
+                console.log('cards not found: ', err);
+                return res.status(500).json({
+                    message: err
+                });
+            }
+            // console.log(cards);
+            res.json({
+                message: "deleted Successfully"
             });
-        }
-        console.log(cards);
-       // cards.title = req.body.title;
-
-       //  cards.save();
-       res.json(cards);   
         });
-
-
-});
-
-
-        // User.update({
-        //         "googleID": req.params.userId,
-        //         "cards.id": req.body.user.id
-        //     }, {
-        //         "$set": {
-        //             "cards.$.title": req.body.user.title
-        //         }
-        //     },
-        //     function(err, user) {
-        //         if (err) {
-        //             return res.send(err);
-        //         }
-        //         return res.send(user);
-        //     });
-        // console.log("body", req.body);
-
-
+    });
