@@ -137,10 +137,11 @@ app.get('/api/:userId', passport.authenticate('bearer', {
                 if (err) {
                     res.send("Error has occured");
                 } else {
+                    console.log("user.cards", user.cards);
                     res.json(user.cards);
                 }
             });
-    });
+});
 
 /*Assign a new task to the User */
 //Refactor just sending the Array of cards
@@ -167,14 +168,15 @@ app.post('/api/:userId', passport.authenticate('bearer', {
                 console.log("User cards", user[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for User:", req.params.userId);
-                res.redirect('/api/'+req.params.userId);
+                 res.json({
+                     message: "New Card Added Successfully"
+                 });
             });
-
-    });
+});
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker 
-app.put('/api/:cardId', passport.authenticate('bearer', {
+app.put('/api/:userId/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -192,7 +194,7 @@ app.put('/api/:cardId', passport.authenticate('bearer', {
                     message: err
                 });
             }
-            // console.log(cards);
+            console.log("user Id", req.params.userId);
             res.json({
                 message: "deleted Successfully"
             });
