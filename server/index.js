@@ -122,7 +122,7 @@ app.get('/auth/google/callback',
         // httpOnly: true
         // TODO: make the access token secure. Cookies are secured enough
         // Successful authentication, redirect home.
-        res.redirect('/success');
+        res.redirect('/#ducktivity');
     }
 );
 /*Returns The cards for that Particular user */
@@ -138,6 +138,14 @@ app.get('/api/:userId', passport.authenticate('bearer', {
                     res.send("Error has occured");
                 } else {
                     console.log("user.cards", user.cards);
+                    var trash = [];
+                    for(var i = user.cards.length; i--;) {
+                        if(user.cards[i].status == "deleted") {
+                            user.cards.splice(i, 1);
+                            console.log("usercards", user.cards)
+                            // return user.cards
+                        }
+                    }
                     res.json(user.cards);
                 }
             });
@@ -176,7 +184,7 @@ app.post('/api/:userId', passport.authenticate('bearer', {
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker 
-app.put('/api/:userId/:cardId', passport.authenticate('bearer', {
+app.put('/api/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -194,7 +202,6 @@ app.put('/api/:userId/:cardId', passport.authenticate('bearer', {
                     message: err
                 });
             }
-            console.log("user Id", req.params.userId);
             res.json({
                 message: "deleted Successfully"
             });
