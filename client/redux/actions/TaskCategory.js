@@ -1,4 +1,5 @@
 require('isomorphic-fetch');
+var Cookies = require("js-cookie");
 
 var FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 var fetchTasksSuccess = function(data) {
@@ -15,34 +16,135 @@ var fetchTasksError = function(error) {
     };
 };
 
-
-
-var fetchTasks = function() {
- return function(dispatch) {
-    var url = 'http://localhost:8080/api';
-    return fetch(url).then(function(response) {
-     if (response.status < 200 || response.status >= 300) {
-       var error = new Error(response.statusText);
-       error.response = response;
-       throw error;
-     }
-     return response.json();
-   })
-    .then(function(data) {
-     console.log("fetch TASKS promise: ", data);
-     return dispatch(
-       fetchTasksSuccess(data)
-       );
-   })
-    .catch(function(error) {
-       console.log("fetch tasks promise: ", error);
-     return dispatch(
-       fetchTasksError(error)
-       );
-   });
-  };
+var FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+var fetchUserSuccess = function(data) {
+    return {
+        type: FETCH_USER_SUCCESS,
+        data: data
+    };
+};
+var FETCH_USER_ERROR= 'FETCH_USER_ERROR';
+var fetchUserError = function(error) {
+    return {
+        type: FETCH_USER_ERROR,
+        error: error
+    };
 };
 
+
+// var fetchTasks = function() {
+//  return function(dispatch) {
+//     var url = 'http://localhost:8080/api';
+//     return fetch(url).then(function(response) {
+//      if (response.status < 200 || response.status >= 300) {
+//        var error = new Error(response.statusText);
+//        error.response = response;
+//        throw error;
+//      }
+//      return response.json();
+//    })
+//     .then(function(data) {
+//      console.log("fetch TASKS promise: ", data);
+//      return dispatch(
+//        fetchTasksSuccess(data)
+//        );
+//    })
+//     .catch(function(error) {
+//        console.log("fetch tasks promise: ", error);
+//      return dispatch(
+//        fetchTasksError(error)
+//        );
+//    });
+//   };
+// };
+
+
+var fetchUser = function() {
+   return function(dispatch) {
+    var token = Cookies.get('accessToken');
+    // var token = getToken();
+    console.log('token=', token);
+    // const headers = new Headers();
+    // headers.append('Authorization', `Bearer ` + token);
+    var headers = new Headers({
+        Authorization: 'bearer ' + token
+      });
+    console.log('header', headers);
+       var url = 'http://localhost:8080/api';
+       return fetch(url, {headers: headers}).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json();
+       })
+       .then(function(data) {
+               console.log("USER DATA", data);
+           return dispatch(
+               fetchUserSuccess(data)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               fetchUserError(error)
+           );
+       });
+   }
+};
+
+var POST_DATA_SUCCESS = 'POST_DATA_SUCCESS';
+var postDataSuccess = function(data) {
+    return {
+        type: POST_DATA_SUCCESS,
+        data: data
+    };
+};
+var POST_DATA_ERROR = 'POST_DATA_ERROR';
+var postDataError = function(error) {
+    return {
+        type: POST_DATA_ERROR ,
+        error: error
+    };
+};
+
+var postCard = function(title, category, status, owner) {
+   return function(dispatch) {
+    // var token = getToken();
+    // const headers = new Headers();
+    // headers.append('Authorization', `Bearer ` + token);
+    var token = Cookies.get('accessToken');
+       var url = 'http://localhost:8080/api/'+ owner;
+       return fetch(url, {
+        method: 'post',
+        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+        body: JSON.stringify({
+          title: title,
+          category: category,
+          status: status
+        })
+
+      }).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json();
+       })
+       .then(function(data) {
+               console.log("POST DATA", data);
+           return dispatch(
+               postDataSuccess(data)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               postDataError(error)
+           );
+       });
+   }
+};
 
 
 var UPDATE_TASKS_SUCCESS = 'UPDATE_TASKS_SUCCESS';
@@ -201,14 +303,25 @@ var deleteTask = function(deleteTaskStatus, userId) {
    }
 };
 
+// for the user
+exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
+exports.fetchUserSuccess = fetchUserSuccess;
+exports.FETCH_USER_ERROR = FETCH_USER_ERROR;
+exports.fetchUserError = fetchUserError;
+exports.fetchUser = fetchUser;
 
+// for POST DATA
+exports.POST_DATA_SUCCESS = POST_DATA_SUCCESS;
+exports.postDataSuccess = postDataSuccess;
+exports.POST_DATA_ERROR = POST_DATA_ERROR;
+exports.postDataError = postDataError;
+exports.postCard = postCard;
 
-
-exports.FETCH_TASKS_SUCCESS = FETCH_TASKS_SUCCESS;
-exports.fetchTasksSuccess = fetchTasksSuccess;
-exports.FETCH_TASKS_ERROR = FETCH_TASKS_ERROR;
-exports.fetchTasksError = fetchTasksError;
-exports.fetchTasks = fetchTasks;
+// exports.FETCH_TASKS_SUCCESS = FETCH_TASKS_SUCCESS;
+// exports.fetchTasksSuccess = fetchTasksSuccess;
+// exports.FETCH_TASKS_ERROR = FETCH_TASKS_ERROR;
+// exports.fetchTasksError = fetchTasksError;
+// exports.fetchTasks = fetchTasks;
 
 // exports.UPDATE_TASKS_SUCCESS = UPDATE_TASKS_SUCCESS;
 // exports.updateTasksSuccess = updateTasksSuccess;

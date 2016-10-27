@@ -2,7 +2,7 @@ var actions = require("../actions/TaskCategory");
 var data = require('./dataSample');
 
 var initialState = {
-
+	task: []
 };
 
 var taskCategory = function(state, action) {
@@ -29,10 +29,36 @@ var taskCategory = function(state, action) {
 	else if (action.type === actions.UPDATE_TASKS_ERROR) {
 		return action.error
 	}
+	else if (action.type === actions.FETCH_USER_SUCCESS) {
+		console.log("add USER success in reducer", action.data)
+		state = Object.assign({}, state, {
+			task: action.data
+		});
+
+		console.log('fetch user success', state);
+		return state;
+	}
+
+	else if (action.type === actions.FETCH_USER_ERROR) {
+		return action.error
+	}
+
+	else if (action.type === actions.POST_DATA_SUCCESS) {
+		console.log("POST SUCCESS", action.data)
+		state = Object.assign({}, state, {
+			task: action.data
+		});
+		return state;
+	}
+
+	else if (action.type === actions.POST_DATA_ERROR) {
+		return action.error
+	}
 
 
-	console.log('TaskCategory data', data);
-	return data;
+
+	console.log('TaskCategory state', state);
+	return state;
 
 };
 

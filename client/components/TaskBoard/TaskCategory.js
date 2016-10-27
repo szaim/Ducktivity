@@ -7,7 +7,7 @@ var TaskItem = require('./TaskItem');
 var TaskCategory = React.createClass({
   componentDidMount: function() {
         console.log(this.props);
-    // this.props.dispatch(actions.fetchTasks());
+    this.props.dispatch(actions.fetchUser());
 
   },
   handleCommentChange: function() {
@@ -38,21 +38,22 @@ this.props.dispatch(actions.deleteTask(TaskConstruct, userId));
   handleAddTask: function(data, event) {
     event.preventDefault();
     console.log('addTask this.refs', this.refs);
-    var taskId = data.id;
+    var taskId = data._id;
     var TaskConstruct = {
       owner: data.owner,
-      title: this.refs['card-add' + taskId].value,
+      title: this.refs['card-add-' + taskId].value,
       category: data.category,
       subtask: data.subtask,
       assignedTo: data.assignedTo,
       status: 'active'
     }
     console.log('addTask', TaskConstruct);
-this.props.dispatch(actions.updateTasks(TaskConstruct, userId));
-
+this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, TaskConstruct.owner));
+this.props.dispatch(actions.fetchUser());
 
   },
  render: function(){
+  console.log("component data", this.props.cards);
   var that = this;
   var handleAddTask = function(event){
     that.handleAddTask(this, event)
@@ -66,7 +67,7 @@ this.props.dispatch(actions.updateTasks(TaskConstruct, userId));
          <div className="card-box" key={index}>
          <div className='card-top'>
          <h1> {data.category}</h1>
-         <input key={index} ref={'card-add'+ data.id}  type='text' />
+         <input key={index} ref={'card-add-'+ data._id}  type='text' />
          <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
 
          </div>
@@ -88,9 +89,9 @@ this.props.dispatch(actions.updateTasks(TaskConstruct, userId));
 
 
 var mapStateToProps = function(state, props) {
-	console.log(state);
+	console.log(state.taskCategory.task);
 	return {
-    cards: state.taskCategory
+    cards: state.taskCategory.task
 	}
 };
 

@@ -122,46 +122,46 @@ app.get('/auth/google/callback',
         // httpOnly: true
         // TODO: make the access token secure. Cookies are secured enough
         // Successful authentication, redirect home.
-        res.redirect('/#ducktivity');
+        res.redirect('/#/ducktivity');
     }
 );
 /*Returns The cards for that Particular user */
-app.get('/api/:userId', passport.authenticate('bearer', {
+app.get('/api', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        User.findOne({
-            googleID: req.params.userId
-        }).populate('cards')
+        User.find().populate('cards')
             .exec(function(err, user) {
                 if (err) {
                     res.send("Error has occured");
                 } else {
                     console.log("user.cards", user.cards);
                     var trash = [];
-                    for(var i = user.cards.length; i--;) {
-                        if(user.cards[i].status == "deleted") {
-                            user.cards.splice(i, 1);
-                            console.log("usercards", user.cards)
+                    for(var i = user[0].cards.length; i--;) {
+                        if(user[0].cards[i].status == "deleted") {
+                            user[0].cards.splice(i, 1);
+                            console.log("usercards", user[0].cards)
                             // return user.cards
                         }
                     }
-                    res.json(user.cards);
+                    res.json(user[0].cards);
                 }
             });
 });
 
 /*Assign a new task to the User */
 //Refactor just sending the Array of cards
-app.post('/api/:userId', passport.authenticate('bearer', {
+app.post('/api/:owner', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         User.find({
-                googleID: req.params.userId
+                fullName: req.params.owner
             })
             .exec(function(err, user) {
                 console.log("user found", user);
+                 console.log("body", req.body);
+                
                 var newCard = new Card({
                     owner: user[0].fullName,
                     title: req.body.title,
@@ -176,9 +176,7 @@ app.post('/api/:userId', passport.authenticate('bearer', {
                 console.log("User cards", user[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for User:", req.params.userId);
-                 res.json({
-                     message: "New Card Added Successfully"
-                 });
+                 res.json(user[0].cards);
             });
 });
 
