@@ -7,7 +7,7 @@ var TaskItem = require('./TaskItem');
 var TaskCategory = React.createClass({
   componentDidMount: function() {
         console.log(this.props);
-    this.props.dispatch(actions.fetchTasks());
+    // this.props.dispatch(actions.fetchTasks());
 
   },
   handleCommentChange: function() {
@@ -16,30 +16,70 @@ var TaskCategory = React.createClass({
   handleCommentSubmit: function() {
 
   },
-  handleTaskDelete: function(){
+  handleTaskDelete: function(data, event){
+    console.log('delete');
+    event.preventDefault();
+    console.log('delete/update this.refs', this.refs);
+    console.log('delete data', data);
+    var taskId = data.title;
+    var TaskConstruct = {
+      owner: data.owner,
+      title: data.title,
+      category: data.category,
+      subtask: data.subtask,
+      assignedTo: data.assignedTo,
+      status: 'deleted'
+    }
+    console.log('delete TaskConstruct', TaskConstruct);
+
+this.props.dispatch(actions.deleteTask(TaskConstruct, userId));
+
   },
-  handleAddTask: function() {
+  handleAddTask: function(data, event) {
+    event.preventDefault();
+    console.log('addTask this.refs', this.refs);
+    var taskId = data.id;
+    var TaskConstruct = {
+      owner: data.owner,
+      title: this.refs['card-add' + taskId].value,
+      category: data.category,
+      subtask: data.subtask,
+      assignedTo: data.assignedTo,
+      status: 'active'
+    }
+    console.log('addTask', TaskConstruct);
+this.props.dispatch(actions.updateTasks(TaskConstruct, userId));
+
 
   },
  render: function(){
+  var that = this;
+  var handleAddTask = function(event){
+    that.handleAddTask(this, event)
+  };
+  var handleTaskDelete = function(event){
+    that.handleTaskDelete(this, event)
+  };
+
+  var displayTasks = this.props.cards.map(function(data, index) {
+     return (
+         <div className="card-box" key={index}>
+         <div className='card-top'>
+         <h1> {data.category}</h1>
+         <input key={index} ref={'card-add'+ data.id}  type='text' />
+         <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
+
+         </div>
+              <div className="task-item-container">
+             <TaskItem title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
+              </div>
+         </div>
+       )
+   });
+
    return (
      <div className='task-categories'>
-     <h1>ToDo <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='todo' ?
-      <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-      : null}
-     <h1>In Progress <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-        {this.props.taskStatus=='in-progress' ?
-        <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-          : null}
-     <h1>Blocked <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='blocked' ?
-     <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-       : null}
-     <h1>Completed <input type="button" value="Add" onClick={this.props.handleAddTask}></input></h1>
-     {this.props.taskStatus=='completed' ?
-     <TaskItem title={this.props.taskTitle} commentValue={this.props.commentValue}/>
-       : null}
+     {displayTasks}
      </div>
    )
  }
@@ -50,9 +90,7 @@ var TaskCategory = React.createClass({
 var mapStateToProps = function(state, props) {
 	console.log(state);
 	return {
-		commentValue: state.commentValue,
-    taskTitle: state.taskCategory.taskTitle,
-    taskStatus: 'todo'
+    cards: state.taskCategory
 	}
 };
 

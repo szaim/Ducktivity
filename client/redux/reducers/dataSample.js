@@ -1,52 +1,42 @@
-var data = [{
-   "id": 0,
-   "category": "To Do",
-   "tasks": [{
-      owner: "",
-      title: "",
-      comentValue: "",
-      status: ""
-   }],
-   
-   "delete": false
+var data = [
+  {
+  id: 1,
+  owner: 'Billy',
+	title: 'get back end working',
+	category: 'todo',
+	subtask: [],
+	assignedTo: [],
+	status: ''
 
 },
 {
-   "id": 1,
-   "category": "In Progress",
-   "taskTitle": "",
-   "tasks": [{
-      owner: "",
-      title: "",
-      status: ""
-   }],
-   "comentValue": "",
-   "delete": false
-},
-{
-   "id": 2,
-   "category": "Blocked",
-   "taskTitle": "",
-   "tasks": [{
-      owner: "",
-      title: "",
-      status: ""
-   }],
-   "comentValue": "",
-   "delete": false
+  id: 2,
+owner: 'Joel',
+title: 'add user roles',
+category: 'blocked',
+subtask: [],
+assignedTo: [],
+status: ''
 
 },
 {
-   "id": 3,
-   "category": "Completed",
-   "taskTitle": "",
-   "tasks": [{
-      owner: "",
-      title: "",
-      status: ""
-   }],
-   "comentValue": "",
-   "delete": false
+  id: 3,
+owner: 'Shantel',
+title: 'wire up front-end components',
+category: 'in-progress',
+subtask: [],
+assignedTo: [],
+status: ''
+
+},
+{
+  id: 4,
+owner: 'Ikbob',
+title: 'initalize project',
+category: 'completed',
+subtask: [],
+assignedTo: [],
+status: ''
 
 }]
 
