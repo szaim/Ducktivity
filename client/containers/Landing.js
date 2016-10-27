@@ -1,14 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var TaskBoard = require('./TaskBoard');
+// var Input = require('./UserInput');
 
 
-
-var App = function(props){
+var Landing = function(){
 
 	return (
-		<div id="App">
-			{props.children}
+		<div id="landing">
+			<TaskBoard />
 		</div>
 
 		)
@@ -19,4 +19,4 @@ var App = function(props){
 };
 
 
-module.exports = App;
+module.exports = Landing;

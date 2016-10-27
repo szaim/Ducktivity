@@ -3,11 +3,17 @@ var React = require("react");
 var render = require("react-dom").render;
 var Provider = require("react-redux").Provider;
 var store = require("./redux/store");
-var App = require("./containers/App");
-var TaskBoard = require('./containers/TaskBoard');
+var routes = require("./Routes");
+// var App = require("./containers/App");
+// var TaskBoard = require('./containers/TaskBoard');
 
-render(	<Provider store={store}>
-			<TaskBoard />
-		</Provider>
-		, document.getElementById('app')
-);
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    render(
+    	routes, 
+    	document.getElementById('app'));
+});
