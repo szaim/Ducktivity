@@ -2,7 +2,8 @@ var actions = require("../actions/TaskCategory");
 var data = require('./dataSample');
 
 var initialState = {
-	task: []
+	task: [],
+	userId: ""
 };
 
 var taskCategory = function(state, action) {
@@ -32,7 +33,8 @@ var taskCategory = function(state, action) {
 	else if (action.type === actions.FETCH_USER_SUCCESS) {
 		console.log("add USER success in reducer", action.data)
 		state = Object.assign({}, state, {
-			task: action.data
+			task: action.data.cards,
+			userId: action.data.googleID
 		});
 
 		console.log('fetch user success', state);

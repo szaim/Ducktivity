@@ -135,7 +135,7 @@ app.get('/api', passport.authenticate('bearer', {
                 if (err) {
                     res.send("Error has occured");
                 } else {
-                    console.log("user.cards", user.cards);
+                    console.log("user.cards", user[0].cards);
                     var trash = [];
                     for(var i = user[0].cards.length; i--;) {
                         if(user[0].cards[i].status == "deleted") {
@@ -144,26 +144,26 @@ app.get('/api', passport.authenticate('bearer', {
                             // return user.cards
                         }
                     }
-                    res.json(user[0].cards);
+                    res.json(user[0]);
                 }
             });
 });
 
 /*Assign a new task to the User */
 //Refactor just sending the Array of cards
-app.post('/api/:owner', passport.authenticate('bearer', {
+app.post('/api/:userId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         User.find({
-                fullName: req.params.owner
+                googleID: req.params.userId
             })
             .exec(function(err, user) {
                 console.log("user found", user);
                  console.log("body", req.body);
                 
                 var newCard = new Card({
-                    owner: user[0].fullName,
+                    owner: user.fullName,
                     title: req.body.title,
                     category: req.body.category,
                     status: req.body.status
@@ -176,7 +176,7 @@ app.post('/api/:owner', passport.authenticate('bearer', {
                 console.log("User cards", user[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for User:", req.params.userId);
-                 res.json(user[0].cards);
+                 res.json(user[0]);
             });
 });
 

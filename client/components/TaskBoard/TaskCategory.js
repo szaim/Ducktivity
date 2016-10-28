@@ -5,7 +5,7 @@ var TaskItem = require('./TaskItem');
 
 
 var TaskCategory = React.createClass({
-  componentDidMount: function() {
+  componentWillMount: function() {
         console.log(this.props);
     this.props.dispatch(actions.fetchUser());
 
@@ -48,7 +48,7 @@ this.props.dispatch(actions.deleteTask(TaskConstruct, userId));
       status: 'active'
     }
     console.log('addTask', TaskConstruct);
-this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, TaskConstruct.owner));
+this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, this.props.userId));
 this.props.dispatch(actions.fetchUser());
 
   },
@@ -91,7 +91,8 @@ this.props.dispatch(actions.fetchUser());
 var mapStateToProps = function(state, props) {
 	console.log(state.taskCategory.task);
 	return {
-    cards: state.taskCategory.task
+    cards: state.taskCategory.task,
+    userId: state.taskCategory.userId
 	}
 };
 
