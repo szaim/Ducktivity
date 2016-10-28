@@ -11,7 +11,7 @@ var UserBoard = new mongoose.Schema({
   fullName: {
     type: String
   },
-  cards: [{type: Schema.Types.ObjectId, ref: 'Card'}],
+  categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
   userType: {
   	type: String,
   	Default: "Project Manager"

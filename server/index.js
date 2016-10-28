@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
 var Card = require('./models/card');
+var Category = require('./models/category');
 var User = require('./models/user');
 var mongoose = require('mongoose');
 var config = require('./config');
@@ -130,26 +131,33 @@ app.get('/api', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        User.find().populate('cards')
-            .exec(function(err, user) {
-                if (err) {
-                    res.send("Error has occured");
-                } else {
-                    console.log("user.cards", user[0].cards);
-                    var trash = [];
-                    for(var i = user[0].cards.length; i--;) {
-                        if(user[0].cards[i].status == "deleted") {
-                            user[0].cards.splice(i, 1);
-                            console.log("usercards", user[0].cards)
-                            // return user.cards
+        User.find().populate({ 
+                 path: 'categories',
+                 populate: {
+                   path: 'cards',
+                   model: 'Card'
+                 } 
+              })
+                .exec(function(err, user) {
+                    if (err) {
+                        res.send("Error has occured");
+                    } else {
+                        console.log("user.cards", user[0].categories);
+                        for(var i = user[0].categories.length; i--;) {
+                            for(var j = user[0].categories[i].cards.length; j--;) {
+                                if(user[0].categories[i].cards[j].status == "deleted") {
+                                    user[0].categories[i].cards.splice(j, 1);
+                                    console.log("usercards", user[0].categories)
+                                    // return user.cards
+                                }
+                            }
                         }
+                        res.json(user[0]);
                     }
-                    res.json(user[0]);
-                }
-            });
+                });
 });
 
-/*Assign a new task to the User */
+/*Assign a new Category to the User */
 //Refactor just sending the Array of cards
 app.post('/api/:userId', passport.authenticate('bearer', {
         session: false
@@ -162,21 +170,50 @@ app.post('/api/:userId', passport.authenticate('bearer', {
                 console.log("user found", user);
                  console.log("body", req.body);
                 
-                var newCard = new Card({
+                var newCategory = new Category({
                     owner: user.fullName,
+                    title: req.body.title,
+                    status: req.body.status
+                });
+                newCategory.save();
+                console.log("after user found", user);
+                console.log("task created", newCategory);
+                user[0].categories.push(newCategory);
+                user[0].save();
+                console.log("User cards", user[0].categories);
+                // res.json(user[0].cards);
+                console.log("request Params for User:", req.params.userId);
+                 res.json(user[0]);
+            });
+});
+
+// POST FOR THE CARDS
+app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Category.find({
+                _id: req.params.categoryId
+            })
+            .exec(function(err, category) {
+                console.log("category found", category);
+                 console.log("body", req.body);
+                
+                var newCard = new Card({
+                    owner: req.body.owner,
                     title: req.body.title,
                     category: req.body.category,
                     status: req.body.status
                 });
                 newCard.save();
-                console.log("after user found", user);
+                console.log("after user found", category);
                 console.log("task created", newCard);
-                user[0].cards.push(newCard);
-                user[0].save();
-                console.log("User cards", user[0].cards);
+                category[0].cards.push(newCard);
+                category[0].save();
+                console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
-                console.log("request Params for User:", req.params.userId);
-                 res.json(user[0]);
+                console.log("request Params for Category:", req.params.categoryId);
+                 res.json(category[0]);
             });
 });
 

@@ -67,6 +67,7 @@ this.props.dispatch(actions.fetchUser());
          <div className="card-box" key={index}>
          <div className='card-top'>
          <h1> {data.category}</h1>
+         
          <input key={index} ref={'card-add-'+ data._id}  type='text' />
          <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
 
