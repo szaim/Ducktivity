@@ -31,9 +31,9 @@ var taskCategory = function(state, action) {
 		return action.error
 	}
 	else if (action.type === actions.FETCH_USER_SUCCESS) {
-		console.log("add USER success in reducer", action.data)
+		console.log("add USER success in reducer", action.data.categories)
 		state = Object.assign({}, state, {
-			task: action.data.cards,
+			task: action.data.categories,
 			userId: action.data.googleID
 		});
 

@@ -1,10 +1,10 @@
 var React = require('react');
 var actions = require('../../redux/actions/TaskCategory');
 var connect = require('react-redux').connect;
-var TaskItem = require('./TaskItem');
+var CardDetail = require('./CardDetail');
 
 
-var TaskCategory = React.createClass({
+var CardList = React.createClass({
   componentWillMount: function() {
         console.log(this.props);
     this.props.dispatch(actions.fetchUser());
@@ -62,19 +62,16 @@ this.props.dispatch(actions.fetchUser());
     that.handleTaskDelete(this, event)
   };
 
-  var displayTasks = this.props.cards.map(function(data, index) {
+  var displayTasks = this.props.cardsData.map(function(data, index) {
      return (
          <div className="card-box" key={index}>
          <div className='card-top'>
-         <h1> {data.category}</h1>
-         
-         <input key={index} ref={'card-add-'+ data._id}  type='text' />
-         <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
-
          </div>
               <div className="task-item-container">
-             <TaskItem title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
+             <CardDetail title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
               </div>
+            <input key={index} ref={'card-add-'+ data._id}  type='text' />
+            <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
          </div>
        )
    });
@@ -90,13 +87,13 @@ this.props.dispatch(actions.fetchUser());
 
 
 var mapStateToProps = function(state, props) {
-	console.log(state.taskCategory.task);
-	return {
-    cards: state.taskCategory.task,
-    userId: state.taskCategory.userId
+	console.log(state.cardList.task);
+	return {  
+
+    userId: state.cardList.userId
 	}
 };
 
-var Container = connect(mapStateToProps)(TaskCategory);
+var Container = connect(mapStateToProps)(CardList);
 
 module.exports = Container;

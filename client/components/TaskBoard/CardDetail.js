@@ -1,14 +1,14 @@
 var React = require('react')
 
-var TaskItem = function(props) {
+var CardDetail = function(props) {
  console.log(props)
   return(
     <div className="task-item">
-      {props.title}
+     <h3>{props.title}</h3>
       <button className='delete-task-button' type='submit' onClick={props.handleTaskDelete}>Delete Task</button>
     </div>
 
   );
 }
 
-module.exports= TaskItem;
+module.exports= CardDetail;
