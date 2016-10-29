@@ -21,7 +21,7 @@ var CardList = React.createClass({
     event.preventDefault();
     console.log('delete/update this.refs', this.refs);
     console.log('delete data', data);
-    var taskId = data.title;
+    var taskId = data._id;
     var TaskConstruct = {
       owner: data.owner,
       title: data.title,
@@ -32,32 +32,14 @@ var CardList = React.createClass({
     }
     console.log('delete TaskConstruct', TaskConstruct);
 
-this.props.dispatch(actions.deleteTask(TaskConstruct, userId));
-
+  this.props.dispatch(actions.updateTasks(TaskConstruct.status, taskId));
+  this.props.dispatch(actions.fetchUser());
+  
   },
-  handleAddTask: function(data, event) {
-    event.preventDefault();
-    console.log('addTask this.refs', this.refs);
-    var taskId = data._id;
-    var TaskConstruct = {
-      owner: data.owner,
-      title: this.refs['card-add-' + taskId].value,
-      category: data.category,
-      subtask: data.subtask,
-      assignedTo: data.assignedTo,
-      status: 'active'
-    }
-    console.log('addTask', TaskConstruct);
-this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, this.props.userId));
-this.props.dispatch(actions.fetchUser());
 
-  },
  render: function(){
-  console.log("component data", this.props.cards);
   var that = this;
-  var handleAddTask = function(event){
-    that.handleAddTask(this, event)
-  };
+  console.log("component data", this.props.cards);
   var handleTaskDelete = function(event){
     that.handleTaskDelete(this, event)
   };
@@ -70,8 +52,6 @@ this.props.dispatch(actions.fetchUser());
               <div className="task-item-container">
              <CardDetail title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
               </div>
-            <input key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
          </div>
        )
    });
@@ -89,7 +69,7 @@ this.props.dispatch(actions.fetchUser());
 var mapStateToProps = function(state, props) {
 	console.log(state.cardList.task);
 	return {  
-
+    cards: state.cardList.task,
     userId: state.cardList.userId
 	}
 };

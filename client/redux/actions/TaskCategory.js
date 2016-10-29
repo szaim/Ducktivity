@@ -108,13 +108,13 @@ var postDataError = function(error) {
     };
 };
 
-var postCard = function(title, category, status, owner) {
+var postCard = function(title, category, status, categoryId) {
    return function(dispatch) {
     // var token = getToken();
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var token = Cookies.get('accessToken');
-       var url = 'http://localhost:8080/api/'+ owner;
+       var url = 'http://localhost:8080/api/userId/'+ categoryId;
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
@@ -164,15 +164,16 @@ var updateTasksError = function(error) {
 
 
 //UPDATE DATA ACTION
-var updateTasks = function(addTask, userId) {
+var updateTasks = function(deleteTask, cardId) {
    return function(dispatch) {
-       var url = 'http://localhost:8080/api/' + userId;
+        var token = Cookies.get('accessToken');
+       var url = 'http://localhost:8080/api/' + cardId;
        return fetch(url,
        {
           method: 'put',
-          headers: {'Content-type': 'application/json'},
+         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
           body: JSON.stringify({
-          newTask: [addTask]
+          status: deleteTask
         })
 
 
@@ -264,14 +265,14 @@ var updateTasks = function(addTask, userId) {
 // };
 
 
-var deleteTask = function(deleteTaskStatus, userId) {
+var deleteTask = function(deleteTaskStatus, cardId) {
    return function(dispatch) {
-       var url = 'http://localhost:8080/api/' + userId;
+       var url = 'http://localhost:8080/api/' + cardId;
        return fetch(url,
        {
           method: 'put',
           body: JSON.stringify({
-            deleteStatus: deleteTaskStatus
+            status: deleteTaskStatus
           }),
           //headers tells our application type json
           headers: {

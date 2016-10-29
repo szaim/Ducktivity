@@ -192,7 +192,7 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Category.find({
+        Category.find({                                                         
                 _id: req.params.categoryId
             })
             .exec(function(err, category) {
@@ -213,7 +213,7 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
                 console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
-                 res.json(category[0]);
+                 res.json();
             });
 });
 
@@ -227,7 +227,6 @@ app.put('/api/:cardId', passport.authenticate('bearer', {
             _id: req.params.cardId
         }, {
             $set: {
-                title: req.body.title,
                 status: req.body.status
             }
         }, {returnNewDocument : true}, function(err, cards) {

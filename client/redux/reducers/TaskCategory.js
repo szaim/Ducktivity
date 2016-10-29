@@ -24,7 +24,7 @@ var taskCategory = function(state, action) {
 
 	else if (action.type === actions.UPDATE_TASKS_SUCCESS) {
 		console.log("add task/update success in reducer", action.data)
-		return data;
+		return state;
 	}
 
 	else if (action.type === actions.UPDATE_TASKS_ERROR) {
@@ -48,7 +48,7 @@ var taskCategory = function(state, action) {
 	else if (action.type === actions.POST_DATA_SUCCESS) {
 		console.log("POST SUCCESS", action.data)
 		state = Object.assign({}, state, {
-			task: action.data
+			task: action.data.categories
 		});
 		return state;
 	}
