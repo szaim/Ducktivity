@@ -12,7 +12,7 @@
     "serve": "nodemon server/index",
     "watch": "npm run watch:html & npm run watch:js",
     "watch:html": "npm run build:html && chokidar index.html -c 'npm run build:html'",
-    "build:html": "npm run clean:html && cp index.html build/",
+    "build:html": "npm run clean:html && mkdir build/ && cp index.html build/",
     "clean:html": "rm -f build/index.html",
     "watch:js": "npm run build:js && webpack --watch",
     "build:js": "npm run clean:js && webpack",
