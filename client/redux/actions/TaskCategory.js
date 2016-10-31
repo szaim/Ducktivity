@@ -104,7 +104,7 @@ var postDataError = function(error) {
     };
 };
 
-var postCard = function(title, category, status, categoryId) {
+var postCard = function(TaskConstruct, categoryId) {
    return function(dispatch) {
     // var token = getToken();
     // const headers = new Headers();
@@ -115,11 +115,8 @@ var postCard = function(title, category, status, categoryId) {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          title: title,
-          category: category,
-          status: status
+          TaskConstruct: TaskConstruct
         })
-
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);

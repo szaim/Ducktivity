@@ -20,7 +20,7 @@ var CategoryDisplay = React.createClass({
       assignedTo: data.assignedTo,
       status: 'active'
     }
-    this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, taskId));
+    this.props.dispatch(actions.postCard(TaskConstruct, taskId));
     // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + taskId].value = "";
   },

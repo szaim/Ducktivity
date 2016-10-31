@@ -196,14 +196,15 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
                 _id: req.params.categoryId
             })
             .exec(function(err, category) {
-                console.log("category found", category);
-                 console.log("body", req.body);
+                // console.log("category found", category);
+                //  console.log("body", req.body);
+        console.log("req.body.TaskConstruct", req.body.TaskConstruct);
                 
                 var newCard = new Card({
-                    owner: req.body.owner,
-                    title: req.body.title,
-                    category: req.body.category,
-                    status: req.body.status
+                    owner: req.body.TaskConstruct.owner,
+                    title: req.body.TaskConstruct.title,
+                    category: req.body.TaskConstruct.category,
+                    status: req.body.TaskConstruct.status
                 });
                 newCard.save();
                 console.log("after user found", category);
