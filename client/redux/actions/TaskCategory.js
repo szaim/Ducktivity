@@ -44,13 +44,11 @@ var fetchUserError = function(error) {
 //      return response.json();
 //    })
 //     .then(function(data) {
-//      console.log("fetch TASKS promise: ", data);
 //      return dispatch(
 //        fetchTasksSuccess(data)
 //        );
 //    })
 //     .catch(function(error) {
-//        console.log("fetch tasks promise: ", error);
 //      return dispatch(
 //        fetchTasksError(error)
 //        );
@@ -69,7 +67,6 @@ var fetchUser = function() {
     var headers = new Headers({
         Authorization: 'bearer ' + token
       });
-    console.log('header', headers);
        var url = '/api';
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
@@ -80,7 +77,6 @@ var fetchUser = function() {
            return response.json();
        })
        .then(function(data) {
-               console.log("USER DATA", data);
            return dispatch(
                fetchUserSuccess(data)
            );
@@ -95,7 +91,6 @@ var fetchUser = function() {
 
 var POST_DATA_SUCCESS = 'POST_DATA_SUCCESS';
 var postDataSuccess = function(data) {
-  console.log('data', data)
     return {
         type: POST_DATA_SUCCESS,
         data: data
@@ -110,7 +105,6 @@ var postDataError = function(error) {
 };
 
 var postCard = function(title, category, status, categoryId) {
-  console.log('PSTCARD', title, category, status, categoryId)
    return function(dispatch) {
     // var token = getToken();
     // const headers = new Headers();
@@ -127,7 +121,6 @@ var postCard = function(title, category, status, categoryId) {
         })
 
       }).then(function(response) {
-        console.info(response)
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
                error.response = response;
@@ -143,7 +136,6 @@ var postCard = function(title, category, status, categoryId) {
            );
        })
        .catch(function(error) {
-          console.error(error)
            return dispatch(
                postDataError(error)
            );
@@ -194,13 +186,11 @@ var updateTasks = function(deleteTask, cardId) {
        })
 
        .then(function(data) {
-               console.log("DATA", data);
            return dispatch(
                updateTasksSuccess(data)
            );
        })
        .catch(function(error) {
-
            return dispatch(
                updateTasksError(error)
            );
@@ -295,13 +285,11 @@ var deleteTask = function(deleteTaskStatus, cardId) {
        })
 
        .then(function(data) {
-               console.log("POST DATA", data);
            return dispatch(
                deleteSuccess(data)
            );
        })
        .catch(function(error) {
-
            return dispatch(
                deleteError(error)
            );

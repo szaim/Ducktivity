@@ -1,7 +1,6 @@
 var React = require('react')
 
 var CardDetail = function(props) {
- console.log(props)
   return(
     <div className="task-item">
      <h3>{props.title}</h3>

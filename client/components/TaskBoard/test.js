@@ -6,7 +6,6 @@ var connect = require('react-redux').connect;
 
 var test = React.createClass({
   componentDidMount: function() {
-        console.log(this.props);
     this.props.dispatch(actions.fetchTasks());
 
   },
@@ -38,7 +37,6 @@ var test = React.createClass({
   },
 
  render: function(){
-    console.log('this.props', this.props);
    return (
      <div className='task-categories'>
       {this.displayTask()}
@@ -50,9 +48,6 @@ var test = React.createClass({
 
 
 var mapStateToProps = function(state, props) {
-	// console.log('state', state);
-  // console.log('testCategories', this props.testCategories);
-
 	return {
 		commentValue: state.commentValue,
     taskTitle: state.taskCategory.taskTitle,

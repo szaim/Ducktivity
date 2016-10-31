@@ -27,13 +27,11 @@ var fetchData = function() {
      return response.json();
    })
     .then(function(data) {
-     console.log("fetch DATA promise: ", data);
      return dispatch(
        fetchDataSuccess(data)
        );
    })
     .catch(function(error) {
-    console.log("fetch error promise: ", error);
      return dispatch(
        fetchDataError(error)
        );

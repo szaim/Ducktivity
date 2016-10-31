@@ -5,13 +5,11 @@ var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
   componentDidMount: function() {
-        console.log(this.props);
     this.props.dispatch(actions.fetchUser());
 
   },
   handleAddTask: function(data, event) {
     event.preventDefault();
-    console.log('addTask this.refs', this.refs);
     var taskId = data._id;
     var val = this.refs['card-add-' + taskId].value
     var TaskConstruct = {
@@ -22,20 +20,17 @@ var CategoryDisplay = React.createClass({
       assignedTo: data.assignedTo,
       status: 'active'
     }
-    console.log('addTask', TaskConstruct);
     this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, taskId));
     // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + taskId].value = "";
   },
  render: function(){
-  console.log("component data", this.props.categories);
   var that = this;
   var handleAddTask = function(event){
     that.handleAddTask(this, event)
   };
   //if(this.props.categories){
     var displayCategories = this.props.categories.map(function(data, index) {
-      console.log(index, data)
      return (
         <div className="task-list-container" key={index}>
         <h1>{data.title}</h1>
@@ -61,7 +56,6 @@ var CategoryDisplay = React.createClass({
 
 
 var mapStateToProps = function(state, props) {
-  console.log(state.categories);
 	return {
     categories: state.cardList.task || [],
     // categoryId: state

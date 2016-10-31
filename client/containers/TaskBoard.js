@@ -19,7 +19,6 @@ var TaskBoard = React.createClass({
 
 
 var mapStateToProps = function(state, props) {
-	console.log(state);
 	return {
 	}
 };

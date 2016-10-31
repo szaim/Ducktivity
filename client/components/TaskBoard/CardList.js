@@ -17,7 +17,6 @@ var CardList = React.createClass({
 
   },
   handleTaskDelete: function(data, event){
-    console.log('delete');
     event.preventDefault();
     console.log('delete/update this.refs', this.refs);
     console.log('delete data', data);
@@ -39,7 +38,6 @@ var CardList = React.createClass({
 
  render: function(){
   var that = this;
-  console.log("component data", this.props.cards);
   var handleTaskDelete = function(event){
     that.handleTaskDelete(this, event)
   };
@@ -67,7 +65,6 @@ var CardList = React.createClass({
 
 
 var mapStateToProps = function(state, props) {
-	console.log(state.cardList.task);
 	return {  
     cards: state.cardList.task,
     userId: state.cardList.userId
