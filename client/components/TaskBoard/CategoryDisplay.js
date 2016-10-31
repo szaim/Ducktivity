@@ -33,7 +33,8 @@ var CategoryDisplay = React.createClass({
   var handleAddTask = function(event){
     that.handleAddTask(this, event)
   };
-  var displayCategories = this.props.categories.map(function(data, index) {
+  if(this.props.categories){
+    var displayCategories = this.props.categories.map(function(data, index) {
      return (
         <div className="task-list-container" key={index}>
         <h1>{data.title}</h1>
@@ -45,6 +46,7 @@ var CategoryDisplay = React.createClass({
         </div>
        )
    });
+  }
 
    return (
      <div className='task-categories'>
