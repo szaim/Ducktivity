@@ -4,7 +4,7 @@ var connect = require('react-redux').connect;
 var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
-  componentWillMount: function() {
+  componentDidMount: function() {
         console.log(this.props);
     this.props.dispatch(actions.fetchUser());
 
@@ -17,14 +17,14 @@ var CategoryDisplay = React.createClass({
     var TaskConstruct = {
       owner: data.owner,
       title: val,
-      category: data.category,
+      category: data.title,
       subtask: data.subtask,
       assignedTo: data.assignedTo,
       status: 'active'
     }
     console.log('addTask', TaskConstruct);
     this.props.dispatch(actions.postCard(TaskConstruct.title, TaskConstruct.category, TaskConstruct.status, taskId));
-    this.props.dispatch(actions.fetchUser());
+    // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + taskId].value = "";
   },
  render: function(){
@@ -33,20 +33,22 @@ var CategoryDisplay = React.createClass({
   var handleAddTask = function(event){
     that.handleAddTask(this, event)
   };
-  if(this.props.categories){
+  //if(this.props.categories){
     var displayCategories = this.props.categories.map(function(data, index) {
+      console.log(index, data)
      return (
         <div className="task-list-container" key={index}>
         <h1>{data.title}</h1>
             <CardList cardsData={data.cards} categoryId={data._id}/>
             <div className="input-task">
+
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
             <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
             </div>
         </div>
        )
    });
-  }
+  // }
 
    return (
      <div className='task-categories'>
@@ -61,7 +63,7 @@ var CategoryDisplay = React.createClass({
 var mapStateToProps = function(state, props) {
   console.log(state.categories);
 	return {
-    categories: state.cardList.task,
+    categories: state.cardList.task || [],
     // categoryId: state
     userId: state.cardList.userId
 	}

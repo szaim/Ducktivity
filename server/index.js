@@ -213,7 +213,9 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
                 console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
-                 res.json();
+                 res.json({
+                    message: "new task added success!"
+                 });
             });
 });
 

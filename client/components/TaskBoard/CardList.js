@@ -49,8 +49,8 @@ var CardList = React.createClass({
          <div className="card-box" key={index}>
          <div className='card-top'>
          </div>
-              <div className="task-item-container">
-             <CardDetail title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
+              <div className="task-item-container">{index} 
+             <CardDetail key={index} title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
               </div>
          </div>
        )

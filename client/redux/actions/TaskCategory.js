@@ -95,6 +95,7 @@ var fetchUser = function() {
 
 var POST_DATA_SUCCESS = 'POST_DATA_SUCCESS';
 var postDataSuccess = function(data) {
+  console.log('data', data)
     return {
         type: POST_DATA_SUCCESS,
         data: data
@@ -109,6 +110,7 @@ var postDataError = function(error) {
 };
 
 var postCard = function(title, category, status, categoryId) {
+  console.log('PSTCARD', title, category, status, categoryId)
    return function(dispatch) {
     // var token = getToken();
     // const headers = new Headers();
@@ -125,20 +127,23 @@ var postCard = function(title, category, status, categoryId) {
         })
 
       }).then(function(response) {
+        console.info(response)
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
                error.response = response;
                throw error;
            }
-           return response.json();
+           return response.text(); //{}
        })
        .then(function(data) {
                console.log("POST DATA", data);
            return dispatch(
-               postDataSuccess(data)
+               // postDataSuccess(data)
+               fetchUser()
            );
        })
        .catch(function(error) {
+          console.error(error)
            return dispatch(
                postDataError(error)
            );
