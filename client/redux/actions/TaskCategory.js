@@ -294,6 +294,42 @@ var deleteTask = function(deleteTaskStatus, cardId) {
    }
 };
 
+var postCategory = function(CategoryConstruct, userId) {
+   return function(dispatch) {
+    // var token = getToken();
+    // const headers = new Headers();
+    // headers.append('Authorization', `Bearer ` + token);
+    var token = Cookies.get('accessToken');
+       var url = '/api/'+userId;
+       return fetch(url, {
+        method: 'post',
+        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+        body: JSON.stringify({
+          CategoryConstruct: CategoryConstruct
+        })
+      }).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.text(); //{}
+       })
+       .then(function(data) {
+               console.log("POST DATA", data);
+           return dispatch(
+               // postDataSuccess(data)
+               fetchUser()
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               postDataError(error)
+           );
+       });
+   }
+};
+
 // for the user
 exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
 exports.fetchUserSuccess = fetchUserSuccess;
@@ -331,3 +367,5 @@ exports.updateTasks = updateTasks;
 // exports.ADD_TASKS_ERROR = ADD_TASKS_ERROR;
 // exports.addTasksError = addTasksError;
 // exports.addTasks = addTasks;
+
+exports.postCategory = postCategory;

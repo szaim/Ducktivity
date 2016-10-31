@@ -7,21 +7,18 @@ var CategoryDisplay = React.createClass({
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
   },
-  handleAddCategory: function(data, event) {
+  handleAddCategory: function(event) {
+    console.log(this.props.userId);
+    console.log(this.refs.addCategory.value);
     event.preventDefault();
-    var taskId = data._id;
-    var val = this.refs['card-add-' + taskId].value
-    var TaskConstruct = {
-      owner: data.owner,
-      title: val,
-      category: data.title,
-      subtask: data.subtask,
-      assignedTo: data.assignedTo,
+    var CategoryConstruct = {
+      owner: '',
+      title: this.refs.addCategory.value,
+      assignedTo: '',
       status: 'active'
     }
-    this.props.dispatch(actions.postCard(TaskConstruct, taskId));
-    // this.props.dispatch(actions.fetchUser());
-    this.refs['card-add-' + taskId].value = "";
+    this.props.dispatch(actions.postCategory(CategoryConstruct, this.props.userId));
+    this.refs.addCategory.value = "";
   },
   handleAddTask: function(data, event) {
     event.preventDefault();
@@ -64,8 +61,14 @@ var CategoryDisplay = React.createClass({
   // }
 
    return (
+     <div className='category-container'>
+     <div className='add-category-input'>
+       <input ref={'addCategory'} type='text'></input>
+       <button type='submit' onClick={this.handleAddCategory}>Add Category</button>
+     </div>
      <div className='task-categories'>
      {displayCategories}
+     </div>
      </div>
    )
  }

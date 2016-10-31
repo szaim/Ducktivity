@@ -47,14 +47,10 @@ passport.use(new GoogleStrategy({
 
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('PROFILE', profile);
 
         User.find({
             'googleID': profile.id
         }, function(err, users) {
-            console.log('users', users.length);
-            console.log('Avatar', profile.photos[0].value);
-
             if (!users.length) {
 
                 User.create({
@@ -113,9 +109,9 @@ app.get('/auth/google/callback',
         session: false
     }),
     function(req, res) {
-        console.log('req', req);
-        console.log('req.user', req.user);
-        console.log('req.user.accessToken', req.user[0].accessToken);
+        // console.log('req', req);
+        // console.log('req.user', req.user);
+        // console.log('req.user.accessToken', req.user[0].accessToken);
         res.cookie("accessToken", req.user[0].accessToken, {
             expires: 0
         });
@@ -131,12 +127,12 @@ app.get('/api', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        User.find().populate({ 
+        User.find().populate({
                  path: 'categories',
                  populate: {
                    path: 'cards',
                    model: 'Card'
-                 } 
+                 }
               })
                 .exec(function(err, user) {
                     if (err) {
@@ -163,24 +159,25 @@ app.post('/api/:userId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
+        console.log('REQUEST BODY', req.body);
         User.find({
                 googleID: req.params.userId
             })
-            .exec(function(err, user) {              
+            .exec(function(err, user) {
                 var newCategory = new Category({
                     owner: user.fullName,
-                    title: req.body.title,
+                    title: req.body.CategoryConstruct.title,
                     cards: [],
-                    status: req.body.status
+                    status: req.body.CategoryConstruct.status
                 });
                 newCategory.save();
-                console.log("after user found", user);
+                // console.log("after user found", user);
                 console.log("task created", newCategory);
                 user[0].categories.push(newCategory);
                 user[0].save();
                 console.log("User cards", user[0].categories);
                 // res.json(user[0].cards);
-                console.log("request Params for User:", req.params.userId);
+                // console.log("request Params for User:", req.params.userId);
                  res.json(user[0]);
             });
 });
@@ -190,12 +187,12 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Category.find({                                                         
+        Category.find({
                 _id: req.params.categoryId
             })
             .exec(function(err, category) {
                 // console.log("category found", category);
-                //  console.log("body", req.body);               
+                //  console.log("body", req.body);
                 var newCard = new Card({
                     owner: req.body.TaskConstruct.owner,
                     title: req.body.TaskConstruct.title,
@@ -217,7 +214,7 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
 });
 
 /*Update Card Delete STATUS */
-//TODO: Refactor using User instead Directly the Card --> Quicker 
+//TODO: Refactor using User instead Directly the Card --> Quicker
 app.put('/api/:cardId', passport.authenticate('bearer', {
         session: false
     }),
