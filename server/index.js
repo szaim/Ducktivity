@@ -166,13 +166,11 @@ app.post('/api/:userId', passport.authenticate('bearer', {
         User.find({
                 googleID: req.params.userId
             })
-            .exec(function(err, user) {
-                console.log("user found", user);
-                 console.log("body", req.body);
-                
+            .exec(function(err, user) {              
                 var newCategory = new Category({
                     owner: user.fullName,
                     title: req.body.title,
+                    cards: [],
                     status: req.body.status
                 });
                 newCategory.save();
@@ -197,9 +195,7 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
             })
             .exec(function(err, category) {
                 // console.log("category found", category);
-                //  console.log("body", req.body);
-        console.log("req.body.TaskConstruct", req.body.TaskConstruct);
-                
+                //  console.log("body", req.body);               
                 var newCard = new Card({
                     owner: req.body.TaskConstruct.owner,
                     title: req.body.TaskConstruct.title,

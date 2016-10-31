@@ -6,7 +6,22 @@ var CardList = require('./CardList');
 var CategoryDisplay = React.createClass({
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
-
+  },
+  handleAddCategory: function(data, event) {
+    event.preventDefault();
+    var taskId = data._id;
+    var val = this.refs['card-add-' + taskId].value
+    var TaskConstruct = {
+      owner: data.owner,
+      title: val,
+      category: data.title,
+      subtask: data.subtask,
+      assignedTo: data.assignedTo,
+      status: 'active'
+    }
+    this.props.dispatch(actions.postCard(TaskConstruct, taskId));
+    // this.props.dispatch(actions.fetchUser());
+    this.refs['card-add-' + taskId].value = "";
   },
   handleAddTask: function(data, event) {
     event.preventDefault();
@@ -27,6 +42,9 @@ var CategoryDisplay = React.createClass({
  render: function(){
   var that = this;
   var handleAddTask = function(event){
+    that.handleAddTask(this, event)
+  };
+  var handleAddCategory = function(event){
     that.handleAddTask(this, event)
   };
   //if(this.props.categories){
