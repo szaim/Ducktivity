@@ -17,7 +17,7 @@ var fetchDataError = function(error) {
 
 var fetchData = function() {
  return function(dispatch) {
-    var url = 'http://localhost:8080/app';
+    var url = '/app';
     return fetch(url).then(function(response) {
      if (response.status < 200 || response.status >= 300) {
        var error = new Error(response.statusText);

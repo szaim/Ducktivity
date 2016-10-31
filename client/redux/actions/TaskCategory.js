@@ -34,7 +34,7 @@ var fetchUserError = function(error) {
 
 // var fetchTasks = function() {
 //  return function(dispatch) {
-//     var url = 'http://localhost:8080/api';
+//     var url = '/api';
 //     return fetch(url).then(function(response) {
 //      if (response.status < 200 || response.status >= 300) {
 //        var error = new Error(response.statusText);
@@ -70,7 +70,7 @@ var fetchUser = function() {
         Authorization: 'bearer ' + token
       });
     console.log('header', headers);
-       var url = 'http://localhost:8080/api';
+       var url = '/api';
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
@@ -114,7 +114,7 @@ var postCard = function(title, category, status, categoryId) {
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var token = Cookies.get('accessToken');
-       var url = 'http://localhost:8080/api/userId/'+ categoryId;
+       var url = '/api/userId/'+ categoryId;
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
@@ -167,7 +167,7 @@ var updateTasksError = function(error) {
 var updateTasks = function(deleteTask, cardId) {
    return function(dispatch) {
         var token = Cookies.get('accessToken');
-       var url = 'http://localhost:8080/api/' + cardId;
+       var url = '/api/' + cardId;
        return fetch(url,
        {
           method: 'put',
@@ -226,7 +226,7 @@ var updateTasks = function(deleteTask, cardId) {
 
 // var addTask = function(addTask, userId) {
 //    return function(dispatch) {
-//        var url = 'http://localhost:8080/api/' + userId;
+//        var url = '/api/' + userId;
 //        return fetch(url,
 //        {
 //        		method: 'post',
@@ -267,7 +267,7 @@ var updateTasks = function(deleteTask, cardId) {
 
 var deleteTask = function(deleteTaskStatus, cardId) {
    return function(dispatch) {
-       var url = 'http://localhost:8080/api/' + cardId;
+       var url = '/api/' + cardId;
        return fetch(url,
        {
           method: 'put',
