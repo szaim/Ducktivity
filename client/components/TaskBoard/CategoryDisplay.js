@@ -38,8 +38,10 @@ var CategoryDisplay = React.createClass({
         <div className="task-list-container" key={index}>
         <h1>{data.title}</h1>
             <CardList cardsData={data.cards} categoryId={data._id}/>
-            <input key={index} ref={'card-add-'+ data._id}  type='text' />
+            <div className="input-task">
+            <input  key={index} ref={'card-add-'+ data._id}  type='text' />
             <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
+            </div>
         </div>
        )
    });

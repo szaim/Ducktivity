@@ -4,6 +4,7 @@ var render = require("react-dom").render;
 var Provider = require("react-redux").Provider;
 var store = require("./redux/store");
 var routes = require("./Routes");
+require("../style.css");
 // var App = require("./containers/App");
 // var TaskBoard = require('./containers/TaskBoard');
 
