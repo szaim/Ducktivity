@@ -226,6 +226,8 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
         }, {
             $set: {
                 status: req.body.status
+                title: req.body.title,
+                category: req.body.category
             }
         }, {
             returnNewDocument: true
