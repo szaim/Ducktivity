@@ -168,9 +168,9 @@ app.post('/api/category', passport.authenticate('bearer', {
 
                 var newCategory = new Category({
                     owner: req.user.fullName,
-                    title: req.body.title,
+                    title: req.body.CategoryConstruct.title,
                     cards: [],
-                    status: req.body.status
+                    status: req.body.CategoryConstruct.status
                 });
                 newCategory.save();
                 // console.log("after user found", user);
@@ -197,10 +197,10 @@ app.post('/api/card', passport.authenticate('bearer', {
                 console.log("category found", category);
                  // console.log("body", req.body);
                 var newCard = new Card({
-                    owner: req.body.owner,
-                    title: req.body.title,
+                    owner: req.body.TaskConstruct.owner,
+                    title: req.body.TaskConstruct.title,
                     category: req.body.categoryId,
-                    status: req.body.status
+                    status: req.body.TaskConstruct.status
                 });
                 newCard.save();
                 console.log("after user found", category);
@@ -210,9 +210,8 @@ app.post('/api/card', passport.authenticate('bearer', {
                 console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
-                 res.json({
-                    message: "new task added success!"
-                 });
+                 res.json(newCard);
+                 
             });
 });
 

@@ -129,8 +129,8 @@ var postCard = function(TaskConstruct, categoryId) {
        .then(function(data) {
                console.log("POST DATA", data);
            return dispatch(
-               // postDataSuccess(data)
-               fetchUser()
+               postDataSuccess(data)
+               // fetchUser()
            );
        })
        .catch(function(error) {
@@ -376,8 +376,8 @@ var postCategory = function(CategoryConstruct, userId) {
        .then(function(data) {
                console.log("POST DATA", data);
            return dispatch(
-               // postDataSuccess(data)
-               fetchUser()
+               postDataSuccess(data)
+               // fetchUser()
            );
        })
        .catch(function(error) {

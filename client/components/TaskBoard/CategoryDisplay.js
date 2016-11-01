@@ -18,6 +18,7 @@ var CategoryDisplay = React.createClass({
       status: 'active'
     }
     this.props.dispatch(actions.postCategory(CategoryConstruct, this.props.userId));
+    this.props.dispatch(actions.fetchUser());
     this.refs.addCategory.value = "";
   },
 

@@ -47,6 +47,14 @@ var taskCategory = function(state, action) {
 
 	else if (action.type === actions.POST_DATA_SUCCESS) {
 		console.log("POST SUCCESS", action.data)
+		console.log('state tasks', state.task);
+
+		for(var i = 0; i < state.task.length; i++) {
+			if (action.data.category == state.task[i]._id){
+				state.task[i].cards.push(action.data)
+			}
+		}
+
 		state = Object.assign({}, state, {
 			task: action.data.categories
 		});
