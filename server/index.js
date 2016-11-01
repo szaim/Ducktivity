@@ -256,16 +256,18 @@ app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
         Category.findOne({
             _id: req.params.categoryId
         }).populate('cards').exec(function(err, category) {
-            for (var i = 0; i < category.cards.length; i++) {
+           if(category){
+             for (var i = 0; i < category.cards.length; i++) {
                 category.cards[i].status = "deleted";
                 category.cards[i].save();
             }
-
             category.save();
+           }
 
-        });
+            
 
-        Category.findOneAndRemove({
+        }).then(
+            Category.findOneAndRemove({
                 _id: req.params.categoryId
             })
             .exec(function(err, category) {
@@ -273,34 +275,33 @@ app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
                 res.json({
                     message: 'Category removed!'
                 });
-            });
-
+            })
+        );
     });
 
 
-    app.put('/api/category/:categoryId', passport.authenticate('bearer', {
-            session: false
-        }),
-        function(req, res) {
-            Category.update({
-                _id: req.params.categoryId
-            }, {
-                $set: {
-                  owner: req.body.owner,
-                  title: req.body.title
-                }
-            }, {
-                returnNewDocument: true
-            }, function(err, category) {
-                if (err) {
-                    console.log('category not found: ', err);
-                    return res.status(500).json({
-                        message: err
-                    });
-                }
-                res.json({
-                    message: "Category updated Successfully"
+app.put('/api/category/:categoryId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Category.update({
+            _id: req.params.categoryId
+        }, {
+            $set: {
+                owner: req.body.owner,
+                title: req.body.title
+            }
+        }, {
+            returnNewDocument: true
+        }, function(err, category) {
+            if (err) {
+                console.log('category not found: ', err);
+                return res.status(500).json({
+                    message: err
                 });
+            }
+            res.json({
+                message: "Category updated Successfully"
             });
         });
-
+    });
