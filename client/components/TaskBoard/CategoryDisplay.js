@@ -20,6 +20,25 @@ var CategoryDisplay = React.createClass({
     this.props.dispatch(actions.postCategory(CategoryConstruct, this.props.userId));
     this.refs.addCategory.value = "";
   },
+
+  handleCategoryDelete: function(data, event){
+    event.preventDefault();
+    console.log('delete category hit');
+    //add condition if user has project owner status run delete action / else return 'do not have access to remove'
+    console.log('delete category data', data);
+    var taskId = data._id;
+    var TaskConstruct = {
+      owner: data.owner,
+      title: data.title,
+      status: 'deleted'
+    }
+    console.log('delete TaskConstruct', TaskConstruct);
+
+  this.props.dispatch(actions.updateCategory(TaskConstruct, taskId));
+  this.props.dispatch(actions.fetchUser());
+  
+  },
+
   handleAddTask: function(data, event) {
     event.preventDefault();
     var taskId = data._id;
@@ -29,7 +48,6 @@ var CategoryDisplay = React.createClass({
       title: val,
       category: data.title,
       subtask: data.subtask,
-      assignedTo: data.assignedTo,
       status: 'active'
     }
     this.props.dispatch(actions.postCard(TaskConstruct, taskId));
@@ -44,11 +62,19 @@ var CategoryDisplay = React.createClass({
   var handleAddCategory = function(event){
     that.handleAddTask(this, event)
   };
+  var handleCategoryDelete = function(event){
+    that.handleTaskDelete(this, event)
+  };
   //if(this.props.categories){
     var displayCategories = this.props.categories.map(function(data, index) {
      return (
         <div className="task-list-container" key={index}>
+        <div className="category-option-container">
         <h1>{data.title}</h1>
+        <button type='submit' onClick={handleCategoryDelete.bind(data)}>Delete</button>
+        </div>
+        <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
+
             <CardList cardsData={data.cards} categoryId={data._id}/>
             <div className="input-task">
 

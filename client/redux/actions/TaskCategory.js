@@ -386,6 +386,60 @@ var postCategory = function(CategoryConstruct, userId) {
    }
 };
 
+var UPDATE_CATEGORY_SUCCESS = 'UPDATE_CATEGORY_SUCCESS';
+var updateCategorySuccess = function(data) {
+    return {
+        type: UPDATE_CATEGORY_SUCCESS,
+        data: data
+    };
+};
+var UPDATE_CATEGORY_ERROR= 'FETCH_CATEGORY_ERROR';
+var updateCategoryError = function(error) {
+    return {
+        type: UPDATE_CATEGORY_ERROR,
+        error: error
+    };
+};
+
+
+//UPDATE/DELETE CATEGORY ACTION
+var updateCategory = function(deleteCategory, categoryId) {
+   return function(dispatch) {
+        var token = Cookies.get('accessToken');
+       var url = '/api/' + categoryId;
+       return fetch(url,
+       {
+          method: 'put',
+         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+          body: JSON.stringify({
+          status: deleteCategory
+        })
+
+
+       }
+
+        ).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json();
+       })
+
+       .then(function(data) {
+           return dispatch(
+               updateCategorySuccess(data)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               updateCategoryError(error)
+           );
+       });
+   }
+};
+
 
 
 
@@ -422,6 +476,18 @@ exports.updateTasksSuccess = updateTasksSuccess;
 exports.UPDATE_TASKS_ERROR = UPDATE_TASKS_ERROR;
 exports.updateTasksError = updateTasksError;
 exports.updateTasks = updateTasks;
+
+exports.UPDATE_CATEGORY_SUCCESS = UPDATE_CATEGORY_SUCCESS;
+exports.updateCategorySuccess = updateCategorySuccess;
+exports.UPDATE_CATEGORY_ERROR = UPDATE_CATEGORY_ERROR;
+exports.updateCategoryError = updateCategoryError;
+exports.updateCategory = updateCategory;
+
+exports.MOVE_TASKS_SUCCESS = MOVE_TASKS_SUCCESS;
+exports.moveTasksSuccess = moveTasksSuccess;
+exports.MOVE_TASKS_ERROR = MOVE_TASKS_ERROR;
+exports.moveTasksError = moveTasksError;
+exports.moveTasks = moveTasks;
 
 // exports.ADD_TASKS_SUCCESS = ADD_TASKS_SUCCESS;
 // exports.addTasksSuccess = addTasksSuccess;
