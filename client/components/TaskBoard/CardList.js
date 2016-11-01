@@ -16,12 +16,12 @@ var CardList = React.createClass({
   handleCommentSubmit: function() {
 
   },
-  handleTaskDelete: function(data, event){
+  handleCardDelete: function(data, event){
     event.preventDefault();
     console.log('delete/update this.refs', this.refs);
     console.log('delete data', data);
-    var taskId = data._id;
-    var TaskConstruct = {
+    var cardId = data._id;
+    var CardConstruct = {
       owner: data.owner,
       title: data.title,
       category: data.category,
@@ -29,26 +29,26 @@ var CardList = React.createClass({
       assignedTo: data.assignedTo,
       status: 'deleted'
     }
-    console.log('delete TaskConstruct', TaskConstruct);
+    console.log('delete CardConstruct', CardConstruct);
 
-  this.props.dispatch(actions.updateTasks(TaskConstruct.status, taskId));
+  this.props.dispatch(actions.updateCards(CardConstruct.status, cardId));
   // this.props.dispatch(actions.fetchUser());
   
   },
 
  render: function(){
   var that = this;
-  var handleTaskDelete = function(event){
-    that.handleTaskDelete(this, event)
+  var handleCardDelete = function(event){
+    that.handleCardDelete(this, event)
   };
 
-  var displayTasks = this.props.cardsData.map(function(data, index) {
+  var displayCard = this.props.cardsData.map(function(data, index) {
      return (
          <div className="card-box" key={index}>
          <div className='card-top'>
          </div>
               <div className="task-item-container">{index} 
-             <CardDetail key={index} title={data.title} handleTaskDelete={handleTaskDelete.bind(data)} cardData={data} />
+             <CardDetail key={index} title={data.title} handleCardDelete={handleCardDelete.bind(data)} cardData={data} />
               </div>
          </div>
        )
@@ -56,7 +56,7 @@ var CardList = React.createClass({
 
    return (
      <div className='task-categories'>
-     {displayTasks}
+     {displayCard}
      </div>
    )
  }

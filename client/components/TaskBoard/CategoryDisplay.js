@@ -8,8 +8,8 @@ var CategoryDisplay = React.createClass({
     this.props.dispatch(actions.fetchUser());
   },
   handleAddCategory: function(event) {
-    console.log(this.props.userId);
-    console.log(this.refs.addCategory.value);
+    // console.log(this.props.userId);
+    // console.log(this.refs.addCategory.value);
     event.preventDefault();
     var CategoryConstruct = {
       owner: '',
@@ -26,23 +26,23 @@ var CategoryDisplay = React.createClass({
     console.log('delete category hit');
     //add condition if user has project owner status run delete action / else return 'do not have access to remove'
     console.log('delete category data', data);
-    var taskId = data._id;
+    var cardId = data._id;
     var TaskConstruct = {
       owner: data.owner,
       title: data.title,
       status: 'deleted'
     }
-    console.log('delete TaskConstruct', TaskConstruct);
+    // console.log('delete TaskConstruct', TaskConstruct);
 
-  this.props.dispatch(actions.deleteCategory(taskId));
+  this.props.dispatch(actions.deleteCategory(cardId));
   // this.props.dispatch(actions.fetchUser());
   
   },
 
-  handleAddTask: function(data, event) {
+  handleAddCard: function(data, event) {
     event.preventDefault();
-    var taskId = data._id;
-    var val = this.refs['card-add-' + taskId].value
+    var cardId = data._id;
+    var val = this.refs['card-add-' +cardId].value
     var TaskConstruct = {
       owner: data.owner,
       title: val,
@@ -50,14 +50,14 @@ var CategoryDisplay = React.createClass({
       subtask: data.subtask,
       status: 'active'
     }
-    this.props.dispatch(actions.postCard(TaskConstruct, taskId));
+    this.props.dispatch(actions.postCard(TaskConstruct, cardId));
     // this.props.dispatch(actions.fetchUser());
-    this.refs['card-add-' + taskId].value = "";
+    this.refs['card-add-' + cardId].value = "";
   },
  render: function(){
   var that = this;
-  var handleAddTask = function(event){
-    that.handleAddTask(this, event)
+  var handleAddCard = function(event){
+    that.handleAddCard(this, event)
   };
   var handleAddCategory = function(event){
     that.handleAddCategory(this, event)
@@ -77,7 +77,7 @@ var CategoryDisplay = React.createClass({
             <div className="input-task">
 
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
+            <button type='submit' onClick={handleAddCard.bind(data)}>Add Task</button>
             </div>
         </div>
        )
