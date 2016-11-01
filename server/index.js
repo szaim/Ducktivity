@@ -74,10 +74,17 @@ passport.use(new GoogleStrategy({
 
 passport.use(new BearerStrategy(
     function(token, done) {
-        User.find({
+        User.findOne({
                 accessToken: token
-            },
-            function(err, users) {
+            })
+            .populate({
+                 path: 'categories',
+                 populate: {
+                   path: 'cards',
+                   model: 'Card'
+                 }
+              })
+            .exec(function(err, users) {
                 if (err) {
                     return done(err)
                 }
@@ -86,11 +93,10 @@ passport.use(new BearerStrategy(
                 }
                 return done(null, users, {
                     scope: ['read']
-                });
-            }
-        );
-    }
-));
+                })
+            });
+
+}));
 
 // route for logging out
 app.get('/logout', function(req, res) {
@@ -123,7 +129,7 @@ app.get('/auth/google/callback',
     }
 );
 /*Returns The cards for that Particular user */
-app.get('/api', passport.authenticate('bearer', {
+app.get('/api/user/me', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -138,66 +144,63 @@ app.get('/api', passport.authenticate('bearer', {
                     if (err) {
                         res.send("Error has occured");
                     } else {
-                        console.log("user.cards", user[0].categories);
-                        for(var i = user[0].categories.length; i--;) {
-                            for(var j = user[0].categories[i].cards.length; j--;) {
-                                if(user[0].categories[i].cards[j].status == "deleted") {
-                                    user[0].categories[i].cards.splice(j, 1);
-                                    console.log("usercards", user[0].categories)
+                        console.log("user.cards", req.user.categories);
+                        for(var i = req.user.categories.length; i--;) {
+                            for(var j = req.user.categories[i].cards.length; j--;) {
+                                if(req.user.categories[i].cards[j].status == "deleted") {
+                                    req.user.categories[i].cards.splice(j, 1);
+                                    console.log("usercards", req.user.categories)
                                     // return user.cards
                                 }
                             }
                         }
-                        res.json(user[0]);
+                        res.json(req.user);
                     }
                 });
 });
 
 /*Assign a new Category to the User */
 //Refactor just sending the Array of cards
-app.post('/api/:userId', passport.authenticate('bearer', {
+app.post('/api/category', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        console.log('REQUEST BODY', req.body);
-        User.find({
-                googleID: req.params.userId
-            })
-            .exec(function(err, user) {
+
                 var newCategory = new Category({
-                    owner: user.fullName,
-                    title: req.body.CategoryConstruct.title,
+                    owner: req.user.fullName,
+                    title: req.body.title,
                     cards: [],
-                    status: req.body.CategoryConstruct.status
+                    status: req.body.status
                 });
                 newCategory.save();
                 // console.log("after user found", user);
                 console.log("task created", newCategory);
-                user[0].categories.push(newCategory);
-                user[0].save();
-                console.log("User cards", user[0].categories);
-                // res.json(user[0].cards);
+                req.user.categories.push(newCategory);
+                req.user.save();
+                console.log("User cards", req.user.categories);
+                // res.json(req.user.cards);
                 // console.log("request Params for User:", req.params.userId);
-                 res.json(user[0]);
+                 res.json(req.user);
             });
-});
+
 
 // POST FOR THE CARDS
-app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
+app.post('/api/card', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
+        console.log('categoryId', req.body.categoryId);
         Category.find({
-                _id: req.params.categoryId
+                _id: req.body.categoryId
             })
             .exec(function(err, category) {
-                // console.log("category found", category);
-                //  console.log("body", req.body);
+                console.log("category found", category);
+                 // console.log("body", req.body);
                 var newCard = new Card({
-                    owner: req.body.TaskConstruct.owner,
-                    title: req.body.TaskConstruct.title,
-                    category: req.body.TaskConstruct.category,
-                    status: req.body.TaskConstruct.status
+                    owner: req.body.owner,
+                    title: req.body.title,
+                    category: req.body.categoryId,
+                    status: req.body.status
                 });
                 newCard.save();
                 console.log("after user found", category);
@@ -215,7 +218,7 @@ app.post('/api/userId/:categoryId', passport.authenticate('bearer', {
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker
-app.put('/api/:cardId', passport.authenticate('bearer', {
+app.put('/api/card/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {

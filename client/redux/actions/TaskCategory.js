@@ -67,7 +67,7 @@ var fetchUser = function() {
     var headers = new Headers({
         Authorization: 'bearer ' + token
       });
-       var url = '/api';
+       var url = '/api/user/me';
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
@@ -110,12 +110,13 @@ var postCard = function(TaskConstruct, categoryId) {
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var token = Cookies.get('accessToken');
-       var url = '/api/userId/'+ categoryId;
+       var url = '/api/card';
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          TaskConstruct: TaskConstruct
+          TaskConstruct: TaskConstruct,
+          categoryId: categoryId
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
@@ -157,11 +158,11 @@ var updateTasksError = function(error) {
 };
 
 
-//UPDATE DATA ACTION
+//UPDATE + DELETE TASK DATA ACTION
 var updateTasks = function(deleteTask, cardId) {
    return function(dispatch) {
         var token = Cookies.get('accessToken');
-       var url = '/api/' + cardId;
+       var url = '/api/card' + cardId;
        return fetch(url,
        {
           method: 'put',
@@ -356,12 +357,13 @@ var postCategory = function(CategoryConstruct, userId) {
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var token = Cookies.get('accessToken');
-       var url = '/api/'+userId;
+       var url = '/api/category';
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          CategoryConstruct: CategoryConstruct
+          CategoryConstruct: CategoryConstruct,
+          userId: userId
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
