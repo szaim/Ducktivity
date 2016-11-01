@@ -225,7 +225,7 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
             _id: req.params.cardId
         }, {
             $set: {
-                status: req.body.status
+                status: req.body.status,
                 title: req.body.title,
                 category: req.body.category
             }
@@ -239,7 +239,7 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
                 });
             }
             res.json({
-                message: "deleted Successfully"
+                message: "Card updated Successfully"
             });
         });
     });
@@ -273,4 +273,29 @@ app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
             });
     });
 
-//5817c50dd5379c82d5a080ed
+
+    app.put('/api/category/:categoryId', passport.authenticate('bearer', {
+            session: false
+        }),
+        function(req, res) {
+            Category.update({
+                _id: req.params.categoryId
+            }, {
+                $set: {
+                  owner: req.body.owner,
+                  title: req.body.title
+                }
+            }, {
+                returnNewDocument: true
+            }, function(err, category) {
+                if (err) {
+                    console.log('category not found: ', err);
+                    return res.status(500).json({
+                        message: err
+                    });
+                }
+                res.json({
+                    message: "Category updated Successfully"
+                });
+            });
+        });
