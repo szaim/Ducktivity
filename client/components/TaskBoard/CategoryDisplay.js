@@ -1,5 +1,5 @@
 var React = require('react');
-var actions = require('../../redux/actions/TaskCategory');
+var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 var CardList = require('./CardList');
 
@@ -18,7 +18,6 @@ var CategoryDisplay = React.createClass({
       status: 'active'
     }
     this.props.dispatch(actions.postCategory(CategoryConstruct, this.props.userId));
-    this.props.dispatch(actions.fetchUser());
     this.refs.addCategory.value = "";
   },
 
@@ -35,8 +34,8 @@ var CategoryDisplay = React.createClass({
     }
     console.log('delete TaskConstruct', TaskConstruct);
 
-  this.props.dispatch(actions.updateCategory(TaskConstruct, taskId));
-  this.props.dispatch(actions.fetchUser());
+  this.props.dispatch(actions.deleteCategory(taskId));
+  // this.props.dispatch(actions.fetchUser());
   
   },
 
@@ -51,9 +50,8 @@ var CategoryDisplay = React.createClass({
       subtask: data.subtask,
       status: 'active'
     }
-    this.props.dispatch(actions.fetchUser());
     this.props.dispatch(actions.postCard(TaskConstruct, taskId));
-    this.props.dispatch(actions.fetchUser());
+    // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + taskId].value = "";
   },
  render: function(){
@@ -62,10 +60,10 @@ var CategoryDisplay = React.createClass({
     that.handleAddTask(this, event)
   };
   var handleAddCategory = function(event){
-    that.handleAddTask(this, event)
+    that.handleAddCategory(this, event)
   };
   var handleCategoryDelete = function(event){
-    that.handleTaskDelete(this, event)
+    that.handleCategoryDelete(this, event)
   };
   //if(this.props.categories){
     var displayCategories = this.props.categories.map(function(data, index) {

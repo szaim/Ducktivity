@@ -1,5 +1,5 @@
 var React = require('react');
-var actions = require('../../redux/actions/TaskCategory');
+var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 var CardDetail = require('./CardDetail');
 

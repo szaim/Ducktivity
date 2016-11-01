@@ -1,8 +1,8 @@
 var combineReducers = require('redux').combineReducers;
-var taskCategory = require('./TaskCategory');
+var CardCategoriesReducer = require('./CardCategoriesReducer');
 
 var rootReducer = combineReducers({
-		cardList: taskCategory,
+		cardList: CardCategoriesReducer,
  });
 
 
