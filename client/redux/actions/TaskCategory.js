@@ -196,6 +196,62 @@ var updateTasks = function(deleteTask, cardId) {
 };
 
 
+var MOVE_TASKS_SUCCESS = 'MOVE_TASKS_SUCCESS';
+var moveTasksSuccess = function(data) {
+    return {
+        type: MOVE_TASKS_SUCCESS,
+        data: data
+    };
+};
+var MOVE_TASKS_ERROR= 'MOVE_TASKS_ERROR';
+var moveTasksError = function(error) {
+    return {
+        type: UPDATE_TASKS_ERROR,
+        error: error
+    };
+};
+
+
+var moveTasks = function(task, category, userId) {
+   return function(dispatch) {
+       var url = '/api/' + userId;
+       return fetch(url,
+       {
+          method: 'put',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({
+          moveTask: task,
+          originalCategory: category
+        })
+
+
+       }
+
+        ).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json();
+       })
+
+       .then(function(data) {
+               console.log("DATA", data);
+           return dispatch(
+               moveTasksSuccess(data)
+           );
+       })
+       .catch(function(error) {
+
+           return dispatch(
+               moveTasksError(error)
+           );
+       });
+   }
+};
+
+
 
 
 
@@ -329,6 +385,11 @@ var postCategory = function(CategoryConstruct, userId) {
        });
    }
 };
+
+
+
+
+
 
 // for the user
 exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
