@@ -78,12 +78,12 @@ passport.use(new BearerStrategy(
                 accessToken: token
             })
             .populate({
-                 path: 'categories',
-                 populate: {
-                   path: 'cards',
-                   model: 'Card'
-                 }
-              })
+                path: 'categories',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            })
             .exec(function(err, users) {
                 if (err) {
                     return done(err)
@@ -96,7 +96,7 @@ passport.use(new BearerStrategy(
                 })
             });
 
-}));
+    }));
 
 // route for logging out
 app.get('/logout', function(req, res) {
@@ -134,30 +134,30 @@ app.get('/api/user/me', passport.authenticate('bearer', {
     }),
     function(req, res) {
         User.find().populate({
-                 path: 'categories',
-                 populate: {
-                   path: 'cards',
-                   model: 'Card'
-                 }
-              })
-                .exec(function(err, user) {
-                    if (err) {
-                        res.send("Error has occured");
-                    } else {
-                        console.log("user.cards", req.user.categories);
-                        for(var i = req.user.categories.length; i--;) {
-                            for(var j = req.user.categories[i].cards.length; j--;) {
-                                if(req.user.categories[i].cards[j].status == "deleted") {
-                                    req.user.categories[i].cards.splice(j, 1);
-                                    console.log("usercards", req.user.categories)
-                                    // return user.cards
-                                }
+                path: 'categories',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            })
+            .exec(function(err, user) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    console.log("user.cards", req.user.categories);
+                    for (var i = req.user.categories.length; i--;) {
+                        for (var j = req.user.categories[i].cards.length; j--;) {
+                            if (req.user.categories[i].cards[j].status == "deleted") {
+                                req.user.categories[i].cards.splice(j, 1);
+                                console.log("usercards", req.user.categories);
+                                // return user.cards
                             }
                         }
-                        res.json(req.user);
                     }
-                });
-});
+                    res.json(req.user);
+                }
+            });
+    });
 
 /*Assign a new Category to the User */
 //Refactor just sending the Array of cards
@@ -166,22 +166,22 @@ app.post('/api/category', passport.authenticate('bearer', {
     }),
     function(req, res) {
 
-                var newCategory = new Category({
-                    owner: req.user.fullName,
-                    title: req.body.CategoryConstruct.title,
-                    cards: [],
-                    status: req.body.CategoryConstruct.status
-                });
-                newCategory.save();
-                // console.log("after user found", user);
-                console.log("task created", newCategory);
-                req.user.categories.push(newCategory);
-                req.user.save();
-                console.log("User cards", req.user.categories);
-                // res.json(req.user.cards);
-                // console.log("request Params for User:", req.params.userId);
-                 res.json(req.user);
-            });
+        var newCategory = new Category({
+            owner: req.user.fullName,
+            title: req.body.CategoryConstruct.title,
+            cards: [],
+            status: req.body.CategoryConstruct.status
+        });
+        newCategory.save();
+        // console.log("after user found", user);
+        console.log("task created", newCategory);
+        req.user.categories.push(newCategory);
+        req.user.save();
+        console.log("User cards", req.user.categories);
+        // res.json(req.user.cards);
+        // console.log("request Params for User:", req.params.userId);
+        res.json(req.user);
+    });
 
 
 // POST FOR THE CARDS
@@ -194,8 +194,7 @@ app.post('/api/card', passport.authenticate('bearer', {
                 _id: req.body.categoryId
             })
             .exec(function(err, category) {
-                // console.log("category found", category);
-                 // console.log("body", req.body);
+
                 var newCard = new Card({
                     owner: req.body.TaskConstruct.owner,
                     title: req.body.TaskConstruct.title,
@@ -210,10 +209,12 @@ app.post('/api/card', passport.authenticate('bearer', {
                 console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
-                 res.json();
-                 
+
+                res.json(newCard);
+
+
             });
-});
+    });
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker
@@ -225,9 +226,13 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
             _id: req.params.cardId
         }, {
             $set: {
-                status: req.body.status
+                status: req.body.status,
+                title: req.body.title,
+                category: req.body.category
             }
-        }, {returnNewDocument : true}, function(err, cards) {
+        }, {
+            returnNewDocument: true
+        }, function(err, cards) {
             if (err) {
                 console.log('cards not found: ', err);
                 return res.status(500).json({
@@ -235,13 +240,14 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
                 });
             }
             res.json({
-                message: "deleted Successfully"
+                message: "Card updated Successfully"
             });
         });
     });
 
 
-//Delete Category
+/* DELETE Category*/
+
 
 app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
         session: false
@@ -268,7 +274,33 @@ app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
                     message: 'Category removed!'
                 });
             });
-});
+
+    });
 
 
+    app.put('/api/category/:categoryId', passport.authenticate('bearer', {
+            session: false
+        }),
+        function(req, res) {
+            Category.update({
+                _id: req.params.categoryId
+            }, {
+                $set: {
+                  owner: req.body.owner,
+                  title: req.body.title
+                }
+            }, {
+                returnNewDocument: true
+            }, function(err, category) {
+                if (err) {
+                    console.log('category not found: ', err);
+                    return res.status(500).json({
+                        message: err
+                    });
+                }
+                res.json({
+                    message: "Category updated Successfully"
+                });
+            });
+        });
 
