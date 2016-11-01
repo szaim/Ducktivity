@@ -129,7 +129,7 @@ var postCard = function(TaskConstruct, categoryId) {
        .then(function(data) {
                console.log("POST DATA", data);
            return dispatch(
-               postDataSuccess(data)
+               postDataSuccess()
                // fetchUser()
            );
        })
@@ -162,7 +162,7 @@ var updateTasksError = function(error) {
 var updateTasks = function(deleteTask, cardId) {
    return function(dispatch) {
         var token = Cookies.get('accessToken');
-       var url = '/api/card' + cardId;
+       var url = '/api/card/' + cardId;
        return fetch(url,
        {
           method: 'put',
@@ -185,7 +185,7 @@ var updateTasks = function(deleteTask, cardId) {
 
        .then(function(data) {
            return dispatch(
-               updateTasksSuccess(data)
+               fetchUser()
            );
        })
        .catch(function(error) {

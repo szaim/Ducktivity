@@ -32,7 +32,7 @@ var CardList = React.createClass({
     console.log('delete TaskConstruct', TaskConstruct);
 
   this.props.dispatch(actions.updateTasks(TaskConstruct.status, taskId));
-  this.props.dispatch(actions.fetchUser());
+  // this.props.dispatch(actions.fetchUser());
   
   },
 

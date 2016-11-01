@@ -51,8 +51,9 @@ var CategoryDisplay = React.createClass({
       subtask: data.subtask,
       status: 'active'
     }
+    this.props.dispatch(actions.fetchUser());
     this.props.dispatch(actions.postCard(TaskConstruct, taskId));
-    // this.props.dispatch(actions.fetchUser());
+    this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + taskId].value = "";
   },
  render: function(){
@@ -74,8 +75,6 @@ var CategoryDisplay = React.createClass({
         <h1>{data.title}</h1>
         <button type='submit' onClick={handleCategoryDelete.bind(data)}>Delete</button>
         </div>
-        <button type='submit' onClick={handleAddTask.bind(data)}>Add Task</button>
-
             <CardList cardsData={data.cards} categoryId={data._id}/>
             <div className="input-task">
 

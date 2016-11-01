@@ -189,12 +189,12 @@ app.post('/api/card', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        console.log('categoryId', req.body.categoryId);
+        // console.log('categoryId', req.body.categoryId);
         Category.find({
                 _id: req.body.categoryId
             })
             .exec(function(err, category) {
-                console.log("category found", category);
+                // console.log("category found", category);
                  // console.log("body", req.body);
                 var newCard = new Card({
                     owner: req.body.TaskConstruct.owner,
@@ -210,7 +210,7 @@ app.post('/api/card', passport.authenticate('bearer', {
                 console.log("User cards", category[0].cards);
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
-                 res.json(newCard);
+                 res.json();
                  
             });
 });
@@ -239,3 +239,36 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
             });
         });
     });
+
+
+//Delete Category
+
+app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Category.findOne({
+            _id: req.params.categoryId
+        }).populate('cards').exec(function(err, category) {
+            for (var i = 0; i < category.cards.length; i++) {
+                category.cards[i].status = "deleted";
+                category.cards[i].save();
+            }
+
+            category.save();
+
+        });
+
+        Category.findOneAndRemove({
+                _id: req.params.categoryId
+            })
+            .exec(function(err, category) {
+
+                res.json({
+                    message: 'Category removed!'
+                });
+            });
+});
+
+
+
