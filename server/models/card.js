@@ -7,7 +7,7 @@ var CardSchema = new mongoose.Schema({
 	category: {type: String, require: true}, //ObjectId --> Category/Stage
 	subtask: [{type: Schema.Types.ObjectId, ref: 'SubTask'}],
 	status: {type: String},
-	objective: {type: Schema.Types.ObjectId, ref: '#objective'}
+	objective: {type: Schema.Types.ObjectId, ref: 'Objective'}
 });
 
 var Card = mongoose.model('Card', CardSchema);

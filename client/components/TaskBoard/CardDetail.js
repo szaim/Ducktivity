@@ -6,7 +6,6 @@ var CardDetail = function(props) {
      <h3>{props.title}</h3>
       <button className='delete-task-button' type='submit' onClick={props.handleCardDelete}>Delete Task</button>
     </div>
-
   );
 }
 

@@ -163,78 +163,7 @@ var updateCards = function(CardConstruct, cardId) {
 //    }
 // };
 
-var postCategory = function(CategoryConstruct, userId) {
-   return function(dispatch) {
-    var token = Cookies.get('accessToken');
-       var url = '/api/category';
-       return fetch(url, {
-        method: 'post',
-        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
-        body: JSON.stringify({
-          CategoryConstruct: CategoryConstruct,
-          userId: userId
-        })
-      }).then(function(response) {
-           if (response.status < 200 || response.status >= 300) {
-               var error = new Error(response.statusText);
-               error.response = response;
-               throw error;
-           }
-           return response.json(); 
-       })
-       .then(function(data) {
-               console.log("POST DATA", data);
-           return dispatch(
-               fetchUser()
-           );
-       })
-       .catch(function(error) {
-           return dispatch(
-              Constants.fetchUserError(error)
-           );
-       });
-   }
-};
-
-//UPDATE/DELETE CATEGORY ACTION
-var deleteCategory = function(categoryId) {
-   return function(dispatch) {
-        var token = Cookies.get('accessToken');
-       var url = '/api/category/' + categoryId;
-       return fetch(url,
-       {
-          method: 'delete',
-         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
-          body: JSON.stringify({})
-       }
-
-        ).then(function(response) {
-           if (response.status < 200 || response.status >= 300) {
-               var error = new Error(response.statusText);
-               error.response = response;
-               throw error;
-           }
-           return response.json();
-       })
-
-       .then(function(data) {
-           return dispatch(
-              fetchUser()
-           );
-       })
-       .catch(function(error) {
-           return dispatch(
-              Constants.fetchUserError(error)
-           );
-       });
-   }
-};
-
-
-
 // for the user
 exports.fetchUser = fetchUser;
 exports.postCard = postCard;
 exports.updateCards = updateCards;
-exports.postCategory = postCategory;
-exports.deleteCategory = deleteCategory;
