@@ -22,6 +22,7 @@ var CardList = React.createClass({
     console.log('delete data', data);
     var cardId = data._id;
     var CardConstruct = {
+      _id: data._id,
       owner: data.owner,
       title: data.title,
       category: data.category,
@@ -31,7 +32,7 @@ var CardList = React.createClass({
     }
     console.log('delete CardConstruct', CardConstruct);
 
-  this.props.dispatch(actions.updateCards(CardConstruct.status, cardId));
+  this.props.dispatch(actions.updateCards(CardConstruct));
   // this.props.dispatch(actions.fetchUser());
   
   },
@@ -66,7 +67,7 @@ var CardList = React.createClass({
 
 var mapStateToProps = function(state, props) {
 	return {  
-    cards: state.cardList.task,
+    cards: state.cardList.categories,
     userId: state.cardList.userId
 	}
 };

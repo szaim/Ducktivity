@@ -222,26 +222,25 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Card.update({
+        Card.findOneAndUpdate({
             _id: req.params.cardId
         }, {
             $set: {
-                status: req.body.status,
-                title: req.body.title,
-                category: req.body.category
+                status: req.body.CardConstruct.status,
+                title: req.body.CardConstruct.title,
+                category: req.body.CardConstruct.category
             }
         }, {
             returnNewDocument: true
-        }, function(err, cards) {
+        }, function(err, card) {
             if (err) {
                 console.log('cards not found: ', err);
                 return res.status(500).json({
                     message: err
                 });
             }
-            res.json({
-                message: "Card updated Successfully"
-            });
+            console.log('updated card,' card);
+            res.json(card);
         });
     });
 

@@ -57,12 +57,12 @@ var postCard = function(TaskConstruct, categoryId) {
        .then(function(data) {
                console.log("POST DATA", data);
            return dispatch(
-               fetchUser()
+               Constants.postCardSuccess(data)
            );
        })
        .catch(function(error) {
            return dispatch(
-               Constants.fetchUserError(error)
+               Constants.postCardError(error)
            );
        });
    }
@@ -70,18 +70,16 @@ var postCard = function(TaskConstruct, categoryId) {
 
 
 //UPDATE + DELETE TASK DATA ACTION
-var updateCards = function(status, cardId, title, category) {
+var updateCards = function(CardConstruct) {
    return function(dispatch) {
         var token = Cookies.get('accessToken');
-       var url = '/api/card/' + cardId;
+       var url = '/api/card/' + CardConstruct._id;
        return fetch(url,
        {
           method: 'put',
          headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
           body: JSON.stringify({
-          status: status,
-          title: title,
-          category: category
+          CardConstruct: CardConstruct
 
         })
 
@@ -99,12 +97,12 @@ var updateCards = function(status, cardId, title, category) {
 
        .then(function(data) {
            return dispatch(
-               fetchUser()
+               Constants.updateCardSuccess(data)
            );
        })
        .catch(function(error) {
            return dispatch(
-               Constants.fetchUserError(error)
+               Constants.updateCardError(error)
            );
        });
    }
@@ -166,8 +164,9 @@ var updateCards = function(status, cardId, title, category) {
 //    }
 // };
 
-var postCategory = function(CategoryConstruct, userId) {
-   return function(dispatch) {
+var postCategory = function(CategoryConstruct) {
+   return function(dispatch, getState) {
+    var state = getState();
     var token = Cookies.get('accessToken');
        var url = '/api/category';
        return fetch(url, {
@@ -175,7 +174,7 @@ var postCategory = function(CategoryConstruct, userId) {
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
           CategoryConstruct: CategoryConstruct,
-          userId: userId
+          userId: state.cardList.userId
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {

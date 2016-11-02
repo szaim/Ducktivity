@@ -30,7 +30,7 @@ var CardDetail = React.createClass({
 	  		
 			    
 
-	  	this.props.dispatch(actions.updateCards(updateCardTitle.status, updateCardTitle._id, updateCardTitle.title, updateCardTitle.category));
+	  	this.props.dispatch(actions.updateCards(updateCardTitle));
 
 	  	}else{
 	  	this.setState({
