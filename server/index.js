@@ -242,12 +242,6 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
             console.log('updated card', card);
             res.json(card);
         });
-        // Card.findOne({
-        //     _id: req.params.cardId
-        // }), function(err, data) {
-        //     console.log('updated data', data);
-        //     res.json(data);
-        // }
     });
 
 
