@@ -59,7 +59,21 @@ passport.use(new GoogleStrategy({
                     fullName: profile.displayName,
                     avatar: profile.photos[0].value
 
-                }, function(err, users) {
+                }, function(err, user) {
+
+                    var categoryTitles = ['BLOCKED', 'TO DO', 'IN PROGRESS', 'COMPLETED'];
+                    var newCategory = '';
+                    for(var i = 0; i < categoryTitles.length; i++){
+                         newCategory = new Category({
+                            owner: user.googleID,
+                            title: categoryTitles[i],
+                            cards: []
+                        });
+                         newCategory.save();
+                         user.categories.push(newCategory);
+                    }
+                    
+                    user.save();
                     console.log('=======>>', err, users);
                     return done(err, users);
                 });
@@ -70,8 +84,6 @@ passport.use(new GoogleStrategy({
             }
         });
     }));
-
-
 passport.use(new BearerStrategy(
     function(token, done) {
         User.findOne({

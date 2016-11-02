@@ -4,7 +4,6 @@ var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 var $ = require("jquery");
 
-
 var CardDetail = React.createClass({
 	  getInitialState: function() {
 	  	return {
@@ -12,7 +11,6 @@ var CardDetail = React.createClass({
 	  		buttonAction: 'Edit'
 	  	};
 	  },
-
 	  editable: function(props) {
 	  	var updateCardTitle = {
 	  			  _id: this.props.cardData._id,	
@@ -39,12 +37,6 @@ var CardDetail = React.createClass({
 	  	});
 	  }
 	},
-
-
-
-
-
-
 	  render: function() {
 
 	  return(
