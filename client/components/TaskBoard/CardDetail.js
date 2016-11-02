@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 
 var CardDetail = React.createClass({
@@ -10,12 +11,25 @@ var CardDetail = React.createClass({
 	  	};
 	  },
 
-	  editable: function() {
+	  editable: function(props) {
+	  	var updateCardTitle = {
+	  			  _id: this.props.cardData._id,	
+			      title: 'need to fix',
+			      category: this.props.cardData.category,
+			      status: 'active'
+			    }
+			    console.log('updateCardTitle', updateCardTitle);
+
 	  	if(this.state.buttonAction == 'Save') {
 	  		this.setState({
 	  			contentEditable: false,
 	  			buttonAction: 'Edit'
-	  		})
+	  		});
+	  		
+			    
+
+	  	this.props.dispatch(actions.updateCards(updateCardTitle.status, updateCardTitle._id, updateCardTitle.title));
+
 	  	}else{
 	  	this.setState({
 	  		contentEditable: true,
@@ -30,6 +44,7 @@ var CardDetail = React.createClass({
 
 
 	  render: function() {
+	  	console.log('card data', this.props.cardData);
 
 	  return(
 	    <div className="task-item">
@@ -41,4 +56,15 @@ var CardDetail = React.createClass({
 	}
 });
 
-module.exports= CardDetail;
+
+var mapStateToProps = function(state, props) {
+	return {
+    // categories: state.cardList.task || [],
+    // // categoryId: state
+    // userId: state.cardList.userId
+	}
+};
+
+var Container = connect(mapStateToProps)(CardDetail);
+
+module.exports = Container;
