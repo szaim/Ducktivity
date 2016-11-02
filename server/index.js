@@ -4,6 +4,8 @@ var app = express();
 var Card = require('./models/card');
 var Category = require('./models/category');
 var User = require('./models/user');
+var Project = require('./models/project');
+var Objective = require('./models/objective');
 var mongoose = require('mongoose');
 var config = require('./config');
 var googleConfig = require('./googleConfig');
@@ -72,7 +74,7 @@ passport.use(new GoogleStrategy({
                          newCategory.save();
                          user.categories.push(newCategory);
                     }
-                    
+
                     user.save();
                     console.log('=======>>', err, users);
                     return done(err, users);
@@ -250,7 +252,7 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
                 return res.status(500).json({
                     message: err
                 });
-            } 
+            }
             console.log('updated card', card);
             res.json(card);
         });
@@ -275,7 +277,7 @@ app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
             category.save();
            }
 
-            
+
 
         }).then(
             Category.findOneAndRemove({
@@ -316,3 +318,38 @@ app.put('/api/category/:categoryId', passport.authenticate('bearer', {
             });
         });
     });
+
+app.post('/api/project/', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        var newProject = new Project({
+            owner: req.user,
+            title: req.body.title,
+            objectives: [],
+        });
+        newProject.save();
+        // console.log("after user found", user);
+        console.log("project created", newProject);
+        res.json({message: 'new project created'});
+    });
+
+app.get('/api/project/:projectId', passport.authenticate('bearer', {
+            session: false
+        }),
+        function(req, res) {
+            Project.find().populate({
+                    path: 'objectives',
+                    populate: {
+                        path: 'cards',
+                        model: 'Card'
+                    }
+                })
+                .exec(function(err, project) {
+                    if (err) {
+                        res.send("Error has occured");
+                    } else {
+                        res.json(project);
+                    }
+                });
+        });
