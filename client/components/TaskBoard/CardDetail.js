@@ -2,6 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
+var $ = require("jquery");
+
 
 var CardDetail = React.createClass({
 	  getInitialState: function() {
@@ -14,12 +16,12 @@ var CardDetail = React.createClass({
 	  editable: function(props) {
 	  	var updateCardTitle = {
 	  			  _id: this.props.cardData._id,	
-			      title: 'need to fix',
+			      title: $(".editNow").html(),
 			      category: this.props.cardData.category,
 			      status: 'active'
 			    }
 			    console.log('updateCardTitle', updateCardTitle);
-
+			    console.log('jquery', $(".editNow").html())
 	  	if(this.state.buttonAction == 'Save') {
 	  		this.setState({
 	  			contentEditable: false,
@@ -28,7 +30,7 @@ var CardDetail = React.createClass({
 	  		
 			    
 
-	  	this.props.dispatch(actions.updateCards(updateCardTitle.status, updateCardTitle._id, updateCardTitle.title));
+	  	this.props.dispatch(actions.updateCards(updateCardTitle.status, updateCardTitle._id, updateCardTitle.title, updateCardTitle.category));
 
 	  	}else{
 	  	this.setState({
@@ -44,11 +46,10 @@ var CardDetail = React.createClass({
 
 
 	  render: function() {
-	  	console.log('card data', this.props.cardData);
 
 	  return(
 	    <div className="task-item">
-	     <h3 contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
+	     <h3  className='editNow' contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
 	      <button className='delete-task-button' type='submit' onClick={this.props.handleCardDelete}>Delete Task</button>
 	    </div>
 

@@ -70,7 +70,7 @@ var postCard = function(TaskConstruct, categoryId) {
 
 
 //UPDATE + DELETE TASK DATA ACTION
-var updateCards = function(status, cardId, title) {
+var updateCards = function(status, cardId, title, category) {
    return function(dispatch) {
         var token = Cookies.get('accessToken');
        var url = '/api/card/' + cardId;
@@ -80,7 +80,9 @@ var updateCards = function(status, cardId, title) {
          headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
           body: JSON.stringify({
           status: status,
-          title: title
+          title: title,
+          category: category
+
         })
 
 
