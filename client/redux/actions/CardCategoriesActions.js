@@ -96,6 +96,7 @@ var updateCards = function(CardConstruct) {
        })
 
        .then(function(data) {
+          console.log('updateCardSuccess', data)
            return dispatch(
                Constants.updateCardSuccess(data)
            );
@@ -107,6 +108,9 @@ var updateCards = function(CardConstruct) {
        });
    }
 };
+
+
+
 
 
 // var MOVE_TASKS_SUCCESS = 'MOVE_TASKS_SUCCESS';

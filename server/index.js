@@ -231,17 +231,23 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
                 category: req.body.CardConstruct.category
             }
         }, {
-            returnNewDocument: true
+            new: true
         }, function(err, card) {
             if (err) {
                 console.log('cards not found: ', err);
                 return res.status(500).json({
                     message: err
                 });
-            }
-            console.log('updated card,' card);
+            } 
+            console.log('updated card', card);
             res.json(card);
         });
+        // Card.findOne({
+        //     _id: req.params.cardId
+        // }), function(err, data) {
+        //     console.log('updated data', data);
+        //     res.json(data);
+        // }
     });
 
 
