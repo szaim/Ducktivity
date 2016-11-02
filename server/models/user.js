@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserBoard = new mongoose.Schema({
-
   googleID: { type: String, index: true },
   accessToken: {
       type: String,

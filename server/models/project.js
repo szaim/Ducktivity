@@ -2,12 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new mongoose.Schema({
-	owner: {type: String},
-	userType: {type: String, default: 'Project Creator'},
+	owner: {type: Schema.Types.ObjectId, ref: 'User'},
 	title: {type: String, require: true},
-	users: [{type: Schema.Types.ObjectId, ref: 'User'}], 
-	department: [{type: Schema.Types.ObjectId, ref: '#TODO'}],
-	completed: {type: String}
+	objectives: [{type: Schema.Types.ObjectId, ref: 'Objective'}]
 });
 
 var Project = mongoose.model('Project', ProjectSchema);
