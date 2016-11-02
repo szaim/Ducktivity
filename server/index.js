@@ -60,35 +60,18 @@ passport.use(new GoogleStrategy({
                     avatar: profile.photos[0].value
 
                 }, function(err, user) {
-                    var blockedCategory = new Category({
-                        owner: user.googleID,
-                        title: 'BLOCKED',
-                        cards: []
-                    });
-                    blockedCategory.save();
 
-                    var toDoCategory = new Category({
-                        owner: user.googleID,
-                        title: 'TO DO',
-                        cards: []
-                    });
-                    toDoCategory.save();
-
-                    var inProgressCategory = new Category({
-                        owner: user.googleID,
-                        title: 'IN PROGRESS',
-                        cards: []
-                    });
-                    inProgressCategory.save();
-
-                   var completedCategory = new Category({
-                        owner: user.googleID,
-                        title: 'COMPLETED',
-                        cards: []
-                    });
-                    completedCategory.save();
-
-                    user.categories.push(blockedCategory,toDoCategory,inProgressCategory,completedCategory);
+                    var categoryTitles = ['BLOCKED', 'TO DO', 'IN PROGRESS', 'COMPLETED'];
+                    var newCategory = '';
+                    for(var i = 0; i < categoryTitles.length; i++){
+                         newCategory = new Category({
+                            owner: user.googleID,
+                            title: categoryTitles[i],
+                            cards: []
+                        });
+                         newCategory.save();
+                         user.categories.push(newCategory);
+                    }
                     
                     user.save();
                     console.log('=======>>', err, users);
