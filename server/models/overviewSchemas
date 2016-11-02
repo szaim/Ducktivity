@@ -1,0 +1,25 @@
+Project Schema {
+	owner : 
+	userType: Project Creator
+	title:
+	users : []
+	department :
+	completed: True -- 90%
+}
+
+Department Schema {
+	owner: 
+	userType: Project Manager
+	title:
+	assignedUsers: []
+	objectives:
+}
+
+Objective Schema {
+	owner: 
+	userType: Team Leader
+	title: 
+	departmentUsers: [] 
+	cards: 
+}
+
