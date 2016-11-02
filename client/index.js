@@ -15,6 +15,6 @@ require("../style.css");
 
 document.addEventListener('DOMContentLoaded', function() {
     render(
-    	routes, 
+    	routes,
     	document.getElementById('app'));
 });

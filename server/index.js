@@ -65,14 +65,14 @@ passport.use(new GoogleStrategy({
 
                     var categoryTitles = ['BLOCKED', 'TO DO', 'IN PROGRESS', 'COMPLETED'];
                     var newCategory = '';
-                    for(var i = 0; i < categoryTitles.length; i++){
-                         newCategory = new Category({
+                    for (var i = 0; i < categoryTitles.length; i++) {
+                        newCategory = new Category({
                             owner: user.googleID,
                             title: categoryTitles[i],
                             cards: []
                         });
-                         newCategory.save();
-                         user.categories.push(newCategory);
+                        newCategory.save();
+                        user.categories.push(newCategory);
                     }
 
                     user.save();
@@ -173,30 +173,6 @@ app.get('/api/user/me', passport.authenticate('bearer', {
             });
     });
 
-/*Assign a new Category to the User */
-//Refactor just sending the Array of cards
-app.post('/api/category', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-
-        var newCategory = new Category({
-            owner: req.user.fullName,
-            title: req.body.CategoryConstruct.title,
-            cards: [],
-            status: req.body.CategoryConstruct.status
-        });
-        newCategory.save();
-        // console.log("after user found", user);
-        console.log("task created", newCategory);
-        req.user.categories.push(newCategory);
-        req.user.save();
-        console.log("User cards", req.user.categories);
-        // res.json(req.user.cards);
-        // console.log("request Params for User:", req.params.userId);
-        res.json(req.user);
-    });
-
 
 // POST FOR THE CARDS
 app.post('/api/card', passport.authenticate('bearer', {
@@ -225,8 +201,6 @@ app.post('/api/card', passport.authenticate('bearer', {
                 console.log("request Params for Category:", req.params.categoryId);
 
                 res.json(newCard);
-
-
             });
     });
 
@@ -258,41 +232,6 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
         });
     });
 
-
-/* DELETE Category*/
-
-
-app.delete('/api/category/:categoryId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Category.findOne({
-            _id: req.params.categoryId
-        }).populate('cards').exec(function(err, category) {
-           if(category){
-             for (var i = 0; i < category.cards.length; i++) {
-                category.cards[i].status = "deleted";
-                category.cards[i].save();
-            }
-            category.save();
-           }
-
-
-
-        }).then(
-            Category.findOneAndRemove({
-                _id: req.params.categoryId
-            })
-            .exec(function(err, category) {
-
-                res.json({
-                    message: 'Category removed!'
-                });
-            })
-        );
-    });
-
-
 app.put('/api/category/:categoryId', passport.authenticate('bearer', {
         session: false
     }),
@@ -305,7 +244,7 @@ app.put('/api/category/:categoryId', passport.authenticate('bearer', {
                 title: req.body.title
             }
         }, {
-            returnNewDocument: true
+            new: true
         }, function(err, category) {
             if (err) {
                 console.log('category not found: ', err);
@@ -331,25 +270,183 @@ app.post('/api/project/', passport.authenticate('bearer', {
         newProject.save();
         // console.log("after user found", user);
         console.log("project created", newProject);
-        res.json({message: 'new project created'});
+        res.json({
+            message: 'new project created'
+        });
     });
 
 app.get('/api/project/:projectId', passport.authenticate('bearer', {
-            session: false
-        }),
-        function(req, res) {
-            Project.find().populate({
-                    path: 'objectives',
-                    populate: {
-                        path: 'cards',
-                        model: 'Card'
-                    }
-                })
-                .exec(function(err, project) {
-                    if (err) {
-                        res.send("Error has occured");
-                    } else {
-                        res.json(project);
-                    }
+        session: false
+    }),
+    function(req, res) {
+        Project.find().populate({
+                path: 'objectives',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            })
+            .exec(function(err, project) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    res.json(project);
+                }
+            });
+    });
+
+app.put('/api/project/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.update({
+            _id: req.params.projectId
+        }, {
+            $set: {
+                owner: req.body.owner,
+                title: req.body.title
+            }
+        }, {
+            new: true
+        }, function(err, project) {
+            if (err) {
+                console.log('project not found: ', err);
+                return res.status(500).json({
+                    message: err
                 });
+            }
+            res.json({
+                project
+            });
         });
+    });
+app.delete('/api/project/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.findOne({
+            _id: req.params.projectId
+        }).populate({
+            path: 'objectives',
+            populate: {
+                path: 'cards',
+                model: 'Card'
+            }
+        }).exec(function(err, project) {
+            if (project) {
+                for (var i = 0; i < project.objectives.length; i++) {
+                    project.objectives[i].status = "deleted";
+                    project.objectives[i].save();
+                    for (var j = 0; j < project.objectives.cards.length; j++) {
+                        project.objectives.cards[j].status = "deleted";
+                        project.objectives.cards[j].save();
+                    }
+                }
+                project.save();
+            }
+        }).then(
+            Project.findOneAndRemove({
+                _id: req.params.projectId
+            })
+            .exec(function(err, category) {
+
+                res.json({
+                    message: 'Project removed!'
+                });
+            })
+        );
+    });
+
+app.post('/api/objective/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.findOne({
+                _id: req.params.projectId
+            })
+            .exec(function(err, project) {
+                var newObjective = new Objective({
+                    owner: req.user,
+                    assignedTo: req.body.assignedTo,
+                    title: req.body.title,
+                    cards: [],
+                    status: 'active'
+                });
+                newObjective.save();
+                console.log("after project found", project);
+                console.log("objective created", newObjective);
+                project.objectives.push(newObjective);
+                project.save();
+                // console.log("User cards", project.objectives);
+                res.json(newObjective);
+            });
+    });
+
+app.get('/api/objective/:objectiveId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Objective.findOne({
+          _id: req.params.objectiveId
+        }).populate('cards')
+            .exec(function(err, objective) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    res.json(objective);
+                }
+            });
+    });
+
+app.put('/api/objective/:objectiveId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Objective.update({
+            _id: req.params.objectiveId
+        }, {
+            $set: {
+                owner: req.body.owner,
+                title: req.body.title,
+                assignedTo: req.body.assignedTo
+            }
+        }, {
+            new: true
+        }, function(err, objective) {
+            if (err) {
+                console.log('objective not found: ', err);
+                return res.status(500).json({
+                    message: err
+                });
+            }
+            res.json({
+                objective
+            });
+        });
+    });
+app.delete('/api/objective/:objectiveId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Objective.findOne({
+            _id: req.params.objectId
+        }).populate('cards').exec(function(err, objective) {
+            if (objective) {
+                for (var i = 0; i < objective.cards.length; i++) {
+                    objective.cards[i].status = "deleted";
+                    objective.cards[i].save();
+                }
+                objective.save();
+            }
+        }).then(
+            Objective.findOneAndRemove({
+                _id: req.params.objectiveId
+            })
+            .exec(function(err, objective) {
+
+                res.json({
+                    message: 'Objective removed!'
+                });
+            })
+        );
+    });
