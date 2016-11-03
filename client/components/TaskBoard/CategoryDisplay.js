@@ -3,6 +3,7 @@ var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { DropTarget } from 'react-dnd';
 var update = require('react-addons-update');
 var CardList = require('./CardList');
 
@@ -119,7 +120,12 @@ var CategoryDisplay = React.createClass({
      </div>
    )
  }
-});
+
+ });
+
+
+
+
 
 
 
@@ -132,4 +138,28 @@ var mapStateToProps = function(state, props) {
 };
 
 var Container = connect(mapStateToProps)(CategoryDisplay);
+
+const cardTarget = {
+  drop(props, monitor, component ) {
+    const { id } = props;
+    const sourceObj = monitor.getItem();    
+    if ( id !== sourceObj.listId ) component.pushCard(sourceObj.card);
+    return {
+      listId: id
+    };
+  }
+}
+ 
+export default DropTarget("CARD", cardTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+}))(Container);
+
+
+
+
 module.exports = DragDropContext(HTML5Backend)(Container);
+
+
+

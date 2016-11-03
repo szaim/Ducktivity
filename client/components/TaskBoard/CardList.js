@@ -1,8 +1,16 @@
 var React = require('react');
 var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
+import { DragSource, DropTarget } from 'react-dnd';
 var CardDetail = require('./CardDetail');
 
+const style = {
+  border: '1px dashed gray',
+  padding: '0.5rem 1rem',
+  margin: '.5rem',
+  backgroundColor: 'white',
+  cursor: 'move'
+};
 
 
 var CardList = React.createClass({
@@ -33,6 +41,10 @@ var CardList = React.createClass({
   },
 
  render: function(){
+
+  const { card, isDragging, connectDragSource, connectDropTarget } = this.props;
+  const opacity = isDragging ? 0 : 1;
+
   var that = this;
   var handleCardDelete = function(event){
     that.handleCardDelete(this, event)
