@@ -9,7 +9,7 @@ var update = require('react-addons-update');
 var CardDetail = require('./CardDetail');
 
 
-
+var selectedItem;
 var CardList = React.createClass({
 
   componentWillMount: function() {
@@ -38,24 +38,41 @@ var CardList = React.createClass({
   
   },
 
+    onDrag: function(data) {
+    console.log('this was selected', data);
+    selectedItem = data._id;
+
+  },
+
+
   onDrop: function(data) {
         console.log('category id', data)
         // => banana
-      var cardId = data._id;
+      // var cardId = data._id;
      
-      var dropId = {
-        owner: data.owner,
-        title: val,
-        category: data.title,
-        subtask: data.subtask,
-        status: 'active'
-      }; 
-      // this.props.dispatch(actions.postCard(dropId, cardId));
-      return dropId;
+      // var dropId = {
+      //   owner: data.owner,
+      //   title: data.title,
+      //   category: data.title,
+      //   subtask: data.subtask,
+      //   status: 'active'
+      // }; 
+      // var dropedItem = {
+      //   selectedId: data._id,
+      //   dropId: data.category,
+      //   title: data.title
+      // }
+      var droppedItem = data.category;
+
+
+      console.log('dropedItem', droppedItem);
+      console.log('selectedItem', selectedItem);
+
+
+      // this.props.dispatch(actions.updateCards(draggedItem));
+
     },
-    onDrag: function(data) {
-    console.log('this was selected', data);
-  },
+
 
  render: function(){
 
@@ -74,7 +91,7 @@ var CardList = React.createClass({
 
   var displayCard = this.props.cardsData.map(function(data, index) {
      return (
-          <Droppable types={['cards']} onDrop={onDrop.bind(data.category)} onDrag={onDrag.bind(data)}>
+          <Droppable types={['cards']} onDrop={onDrop.bind(data)} onDrag={onDrag.bind(data)}>
          <ul className="card-box" key={index}>
              <CardDetail key={index} title={data.title} handleCardDelete={handleCardDelete.bind(data)} cardData={data} />
          </ul>
