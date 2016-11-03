@@ -40,7 +40,7 @@ var CardList = React.createClass({
 
     onDrag: function(data) {
     console.log('this was selected', data);
-    selectedItem = data._id;
+    selectedItem = data;
 
   },
 
@@ -49,27 +49,17 @@ var CardList = React.createClass({
         console.log('category id', data)
         // => banana
       // var cardId = data._id;
-     
-      // var dropId = {
-      //   owner: data.owner,
-      //   title: data.title,
-      //   category: data.title,
-      //   subtask: data.subtask,
-      //   status: 'active'
-      // }; 
-      // var dropedItem = {
-      //   selectedId: data._id,
-      //   dropId: data.category,
-      //   title: data.title
-      // }
-      var droppedItem = data.category;
+      var TaskConstruct = {
+        owner: selectedItem.owner,
+        title: selectedItem.title,
+        category: data.category,
+        subtask: selectedItem .subtask,
+        status: 'active'
+      };
 
 
-      console.log('dropedItem', droppedItem);
-      console.log('selectedItem', selectedItem);
 
-
-      // this.props.dispatch(actions.updateCards(draggedItem));
+      this.props.dispatch(actions.postCard(TaskConstruct, data.category));
 
     },
 
