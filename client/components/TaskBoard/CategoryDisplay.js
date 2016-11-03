@@ -3,48 +3,10 @@ var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { DropTarget } from 'react-dnd';
-var update = require('react-addons-update');
+
 var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
- getInitialState: function() {
-      return {
-        cards: this.props.categories
-      };
-    },
-    pushCard: function(card) {
-    this.setState(update(this.state, {
-      cards: {
-        $push: [ card ]
-      }
-    }));
-  },
- 
-  removeCard: function(index) {   
-    this.setState(update(this.state, {
-      cards: {
-        $splice: [
-          [index, 1]
-        ]
-      }
-    }));
-  },
- 
-  moveCard: function(dragIndex, hoverIndex) {
-    const { cards } = this.state;   
-    const dragCard = cards[dragIndex];
- 
-    this.setState(update(this.state, {
-      cards: {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragCard]
-        ]
-      }
-    }));
-  },
-
 
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
@@ -66,27 +28,11 @@ var CategoryDisplay = React.createClass({
   },
  render: function(){
 
-    const { cards } = this.state;
-    const { canDrop, isOver, connectDropTarget } = this.props;
-    const isActive = canDrop && isOver;
-    const style = {
-      width: "200px",
-      height: "404px",
-      border: '1px dashed gray'
-    };
- 
-    const backgroundColor = isActive ? 'lightgreen' : '#FFF';
-
   var that = this;
   var handleAddCard = function(event){
     that.handleAddCard(this, event)
   };
-   var removeCard = function(event){
-    that.removeCard(this, event)
-  };
-   var moveCard = function(event){
-    that.moveCard(this, event)
-  };
+  
   var displayCategories = this.props.categories.map(function(data, index) {
      return (
         <div className="task-list-container" key={index}>
@@ -94,11 +40,7 @@ var CategoryDisplay = React.createClass({
         <h1>{data.title}</h1>
         </div>
             <CardList 
-            key={data._id} 
-            index={index} 
-            listId={index}                     
-            removeCard={removeCard.bind()}
-            moveCard={moveCard.bind()}
+            
 
             cardsData={data.cards} 
             categoryId={data._id}/>
@@ -139,27 +81,8 @@ var mapStateToProps = function(state, props) {
 
 var Container = connect(mapStateToProps)(CategoryDisplay);
 
-const cardTarget = {
-  drop(props, monitor, component ) {
-    const { id } = props;
-    const sourceObj = monitor.getItem();    
-    if ( id !== sourceObj.listId ) component.pushCard(sourceObj.card);
-    return {
-      listId: id
-    };
-  }
-}
- 
-export default DropTarget("CARD", cardTarget, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-  canDrop: monitor.canDrop()
-}))(Container);
-
-
-
-
 module.exports = DragDropContext(HTML5Backend)(Container);
+
 
 
 
