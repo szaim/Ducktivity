@@ -7,7 +7,7 @@ var fetchProject = function(projectId) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
     // var token = getToken();
-    console.log('token=', token);
+    // console.log('token=', token);
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var headers = new Headers({
@@ -23,7 +23,7 @@ var fetchProject = function(projectId) {
            return response.json();
        })
        .then(function(data) {
-       	console.log("Success fetchProject", data);
+       	// console.log("Success fetchProject", data);
            return dispatch(
                Constants.fetchProjectSuccess(data)
            );

@@ -30,7 +30,7 @@ var OverviewObjectivePanel = React.createClass({
     });
   },
 render: function() {
-  console.log('this.props.objectives',this.props.objectives);
+  // console.log('this.props.objectives',this.props.objectives);
   var objectivePanel = this.props.objectives.map(function(objective, index) {
      return (
          <Panel header={objective.title} key={index} >
@@ -60,7 +60,7 @@ render: function() {
 });
 
 var mapStateToProps = function(state, props) {
-  console.log("state in overview",state);
+  // console.log("state in overview",state);
   return {
     projectTitle: state.overview.projectTitle,
     objectives: state.overview.objectives

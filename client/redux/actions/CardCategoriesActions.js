@@ -55,7 +55,7 @@ var postCard = function(TaskConstruct, categoryId) {
            return response.json(); 
        })
        .then(function(data) {
-               console.log("POST DATA", data);
+               // console.log("POST DATA", data);
            return dispatch(
                Constants.postCardSuccess(data)
            );
@@ -96,7 +96,7 @@ var updateCards = function(CardConstruct) {
        })
 
        .then(function(data) {
-          console.log('updateCardSuccess', data)
+          // console.log('updateCardSuccess', data)
            return dispatch(
                Constants.updateCardSuccess(data)
            );

@@ -6,7 +6,7 @@ var CardDetail = require('./CardDetail');
 
 var CardList = React.createClass({
   componentWillMount: function() {
-        console.log(this.props);
+        // console.log(this.props);
     this.props.dispatch(actions.fetchUser());
 
   },
@@ -18,8 +18,8 @@ var CardList = React.createClass({
   },
   handleCardDelete: function(data, event){
     event.preventDefault();
-    console.log('delete/update this.refs', this.refs);
-    console.log('delete data', data);
+    // console.log('delete/update this.refs', this.refs);
+    // console.log('delete data', data);
     var cardId = data._id;
     var CardConstruct = {
       _id: data._id,
@@ -30,7 +30,7 @@ var CardList = React.createClass({
       assignedTo: data.assignedTo,
       status: 'deleted'
     }
-    console.log('delete CardConstruct', CardConstruct);
+    // console.log('delete CardConstruct', CardConstruct);
 
   this.props.dispatch(actions.updateCards(CardConstruct));
   // this.props.dispatch(actions.fetchUser());

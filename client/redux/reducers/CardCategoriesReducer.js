@@ -11,13 +11,13 @@ var CardCategoriesReducer = function(state, action) {
     state = state || initialState;
 
     if (action.type === Constants.FETCH_USER_SUCCESS) {
-        console.log("add USER success in reducer", action.data.categories)
+        // console.log("add USER success in reducer", action.data.categories)
         state = Object.assign({}, state, {
             categories: action.data.categories,
             userId: action.data.googleID
         });
 
-        console.log('fetch user success', state);
+        // console.log('fetch user success', state);
         return state;
     } else if (action.type === Constants.FETCH_USER_ERROR) {
         return action.error
@@ -59,7 +59,7 @@ var CardCategoriesReducer = function(state, action) {
             }
             return category;
         });
-        console.log('categories!!', categories);
+        // console.log('categories!!', categories);
 
         state = Object.assign({}, state, {
             categories: categories
@@ -71,10 +71,7 @@ var CardCategoriesReducer = function(state, action) {
         return action.error
     }
 
-
-
-
-    console.log('state', state);
+    // console.log('state', state);
     return state;
 
 };

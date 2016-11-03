@@ -24,7 +24,6 @@ var OverviewCardPanel = React.createClass({
   },
 render: function() {
   var cards=this.props.cards;
-  console.log(cards);
   var cardPanels = cards.map(function(card, index) {
      return (
          <Panel header={card.title} key={index} >
