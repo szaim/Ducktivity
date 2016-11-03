@@ -50,10 +50,10 @@ passport.use(new GoogleStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
 
-        User.find({
+        User.findOne({
             'googleID': profile.id
-        }, function(err, users) {
-            if (!users.length) {
+        }, function(err, user) {
+            if (!user) {
 
                 User.create({
                     googleID: profile.id,
@@ -76,16 +76,17 @@ passport.use(new GoogleStrategy({
                     }
 
                     user.save();
-                    console.log('=======>>', err, users);
-                    return done(err, users);
+                    console.log('=======>>', err, user);
+                    return done(err, user);
                 });
 
             } else {
                 // update user with new tokens
-                return done(err, users);
+                return done(err, user);
             }
         });
     }));
+
 passport.use(new BearerStrategy(
     function(token, done) {
         User.findOne({
@@ -98,20 +99,18 @@ passport.use(new BearerStrategy(
                     model: 'Card'
                 }
             })
-            .exec(function(err, users) {
+            .exec(function(err, user) {
                 if (err) {
                     return done(err)
                 }
-                if (!users) {
+                if (!user) {
                     return done(null, false)
                 }
-                return done(null, users, {
+                return done(null, user, {
                     scope: ['read']
                 })
             });
-
     }));
-
 // route for logging out
 app.get('/logout', function(req, res) {
     req.logout();
@@ -132,7 +131,7 @@ app.get('/auth/google/callback',
         // console.log('req', req);
         // console.log('req.user', req.user);
         // console.log('req.user.accessToken', req.user[0].accessToken);
-        res.cookie("accessToken", req.user[0].accessToken, {
+        res.cookie("accessToken", req.user.accessToken, {
             expires: 0
         });
         //res.redirect(/success?accessToken= + req.user.accessToken);
@@ -232,33 +231,7 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
         });
     });
 
-app.put('/api/category/:categoryId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Category.update({
-            _id: req.params.categoryId
-        }, {
-            $set: {
-                owner: req.body.owner,
-                title: req.body.title
-            }
-        }, {
-            new: true
-        }, function(err, category) {
-            if (err) {
-                console.log('category not found: ', err);
-                return res.status(500).json({
-                    message: err
-                });
-            }
-            res.json({
-                message: "Category updated Successfully"
-            });
-        });
-    });
-
-app.post('/api/project/', passport.authenticate('bearer', {
+app.post('/api/project', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -268,6 +241,7 @@ app.post('/api/project/', passport.authenticate('bearer', {
             objectives: [],
         });
         newProject.save();
+        //Add error handling callback
         // console.log("after user found", user);
         console.log("project created", newProject);
         res.json({
@@ -357,12 +331,12 @@ app.delete('/api/project/:projectId', passport.authenticate('bearer', {
         );
     });
 
-app.post('/api/objective/:projectId', passport.authenticate('bearer', {
+app.post('/api/objective/', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         Project.findOne({
-                _id: req.params.projectId
+                _id: req.body.projectId
             })
             .exec(function(err, project) {
                 var newObjective = new Objective({
@@ -387,8 +361,8 @@ app.get('/api/objective/:objectiveId', passport.authenticate('bearer', {
     }),
     function(req, res) {
         Objective.findOne({
-          _id: req.params.objectiveId
-        }).populate('cards')
+                _id: req.params.objectiveId
+            }).populate('cards')
             .exec(function(err, objective) {
                 if (err) {
                     res.send("Error has occured");
