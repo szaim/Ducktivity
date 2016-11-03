@@ -3,6 +3,7 @@ var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Draggable, Droppable } from 'react-drag-and-drop'
 
 var CardList = require('./CardList');
 
@@ -81,7 +82,7 @@ var mapStateToProps = function(state, props) {
 
 var Container = connect(mapStateToProps)(CategoryDisplay);
 
-module.exports = DragDropContext(HTML5Backend)(Container);
+module.exports = Container;
 
 
 
