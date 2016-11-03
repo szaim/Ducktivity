@@ -39,10 +39,23 @@ var CardList = React.createClass({
   },
 
   onDrop: function(data) {
-        console.log('refs', this.refs);
-        console.log(data)
-        // => banana  
+        console.log('category id', data)
+        // => banana
+      var cardId = data._id;
+     
+      var dropId = {
+        owner: data.owner,
+        title: val,
+        category: data.title,
+        subtask: data.subtask,
+        status: 'active'
+      }; 
+      // this.props.dispatch(actions.postCard(dropId, cardId));
+      return dropId;
     },
+    onDrag: function(data) {
+    console.log('this was selected', data);
+  },
 
  render: function(){
 
@@ -55,9 +68,13 @@ var CardList = React.createClass({
       that.onDrop(this,event)
     }
 
+     var onDrag = function(event) {
+      that.onDrag(this,event)
+    }
+
   var displayCard = this.props.cardsData.map(function(data, index) {
      return (
-          <Droppable types={['cards']} onDrop={onDrop.bind(data.category)}>
+          <Droppable types={['cards']} onDrop={onDrop.bind(data.category)} onDrag={onDrag.bind(data)}>
          <ul className="card-box" key={index}>
              <CardDetail key={index} title={data.title} handleCardDelete={handleCardDelete.bind(data)} cardData={data} />
          </ul>
