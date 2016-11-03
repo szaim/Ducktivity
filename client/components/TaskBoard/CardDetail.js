@@ -41,7 +41,7 @@ var CardDetail = React.createClass({
 
 	  return(
 	    <div className="task-item">
-	     <h3 id={this.props.cardData._id} contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
+	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
 	      <button className='delete-task-button' type='submit' onClick={this.props.handleCardDelete}>Delete Task</button>
 	    </div>
 
