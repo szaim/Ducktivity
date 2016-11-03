@@ -1,5 +1,6 @@
 var React = require('react');
 var actions = require('../../redux/actions/CardCategoriesActions');
+var actionsOverview = require('../../redux/actions/overviewActions');
 var connect = require('react-redux').connect;
 var CardList = require('./CardList');
 
@@ -16,10 +17,10 @@ var CategoryDisplay = React.createClass({
       title: val,
       category: data.title,
       subtask: data.subtask,
-      status: 'active'
+      status: 'active' ,
+      objective: '581b99035626253e933a2f85'
     }
     this.props.dispatch(actions.postCard(TaskConstruct, cardId));
-    // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + cardId].value = "";
   },
  render: function(){
@@ -59,7 +60,6 @@ var CategoryDisplay = React.createClass({
 var mapStateToProps = function(state, props) {
 	return {
     categories: state.cardList.categories || [],
-    // categoryId: state
     userId: state.cardList.userId
 	}
 };

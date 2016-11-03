@@ -3,30 +3,16 @@ var Collapse = require('rc-collapse');
 var Panel = require('rc-collapse').Panel;
 var React = require('react');
 var ReactDOM = require('react-dom');
-var OverviewCardPanel = require('./OverviewCardPanel')
+var actions = require('../../redux/actions/overviewActions');
+var connect = require('react-redux').connect;
+var OverviewCardPanel = require('./OverviewCardPanel');
 
-var text = [
-  {	owner: 'test1' ,
-	title: 'test1',
-	cards: [{title:'test3'}],
-	assignedTo: 'test1',
-	status: 'test1'
-},
-{	owner: 'test2' ,
-title: 'test2',
-cards: [{title:'test3'}],
-assignedTo: 'test2',
-status: 'test2'
-},
-{	owner: 'test3' ,
-title: 'test3',
-cards: [{title:'test3'}],
-assignedTo: 'test3',
-status: 'test3'
-}
-]
 var OverviewObjectivePanel = React.createClass({
+  componentDidMount: function() {
+    this.props.dispatch(actions.fetchProject('581b92369273743a75b84f90'))
+  },
   getInitialState: function () {
+
     return {
       accordion: false,
       activeKey: ['2']
@@ -44,12 +30,12 @@ var OverviewObjectivePanel = React.createClass({
     });
   },
 render: function() {
-
-  var objectivePanel = text.map(function(text, index) {
+  console.log('this.props.objectives',this.props.objectives);
+  var objectivePanel = this.props.objectives.map(function(objective, index) {
      return (
-         <Panel header={text.title} key={index} >
-           <p>{text.owner}</p>
-           <OverviewCardPanel cards={text.cards}/>
+         <Panel header={objective.title} key={index} >
+           <p>Description Objective here</p>
+           <OverviewCardPanel cards={objective.cards}/>
          </Panel>
        )
    });
@@ -59,7 +45,7 @@ render: function() {
   var activeKey = this.state.activeKey;
 
   return (<div style={{ margin: 10, width: 500 }}>
-
+    {this.props.projectTitle}
     <Collapse
       accordion={accordion}
       onChange={this.onChange}
@@ -73,4 +59,14 @@ render: function() {
 
 });
 
-module.exports = OverviewObjectivePanel;
+var mapStateToProps = function(state, props) {
+  console.log("state in overview",state);
+  return {
+    projectTitle: state.overview.projectTitle,
+    objectives: state.overview.objectives
+  }
+};
+var Container = connect(mapStateToProps)(OverviewObjectivePanel);
+
+module.exports = Container;
+

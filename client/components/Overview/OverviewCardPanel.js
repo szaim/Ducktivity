@@ -4,16 +4,6 @@ var Panel = require('rc-collapse').Panel;
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var text = [
-  {
-  	owner: 'innertest',
-  	title: 'innertest',
-  	category: 'innertest',
-  	subtask: 'innertest',
-  	status: 'innertest',
-  	objective: 'innertest',
-  }
-]
 var OverviewCardPanel = React.createClass({
   getInitialState: function () {
     return {
@@ -35,10 +25,10 @@ var OverviewCardPanel = React.createClass({
 render: function() {
   var cards=this.props.cards;
   console.log(cards);
-  var cardPanels = cards.map(function(data, index) {
+  var cardPanels = cards.map(function(card, index) {
      return (
-         <Panel header={data.title} key={index} >
-           <p>{data.owner}</p>
+         <Panel header={card.title} key={index} >
+           <p>"Assigned to Card here"</p>
          </Panel>
        )
    });
@@ -48,7 +38,7 @@ render: function() {
   var activeKey = this.state.activeKey;
 
   return (
-    <div style={{ margin: 10, width: 500 }}>
+    <div style={{ margin: 10, width: 250 }}>
 
       <Collapse
         accordion={accordion}

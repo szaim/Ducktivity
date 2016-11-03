@@ -179,23 +179,30 @@ app.post('/api/card', passport.authenticate('bearer', {
     }),
     function(req, res) {
         // console.log('categoryId', req.body.categoryId);
-        Category.find({
+        Category.findOne({
                 _id: req.body.categoryId
             })
             .exec(function(err, category) {
-
                 var newCard = new Card({
                     owner: req.body.TaskConstruct.owner,
                     title: req.body.TaskConstruct.title,
                     category: req.body.categoryId,
-                    status: req.body.TaskConstruct.status
+                    status: req.body.TaskConstruct.status,
+                    objective: req.body.TaskConstruct.objective
                 });
                 newCard.save();
                 console.log("after user found", category);
                 console.log("task created", newCard);
-                category[0].cards.push(newCard);
-                category[0].save();
-                console.log("User cards", category[0].cards);
+                category.cards.push(newCard);
+                category.save();
+                console.log("User cards", category.cards);
+
+                Objective.findOne({
+                    _id: req.body.TaskConstruct.objective
+                }).exec(function(err, objective){
+                    objective.cards.push(newCard);
+                    objective.save();
+                });
                 // res.json(user[0].cards);
                 console.log("request Params for Category:", req.params.categoryId);
 
@@ -240,20 +247,23 @@ app.post('/api/project', passport.authenticate('bearer', {
             title: req.body.title,
             objectives: [],
         });
-        newProject.save();
-        //Add error handling callback
+        newProject.save(function(err, data){
+            if(err){
+                res.send(err);
+            }
+        });
         // console.log("after user found", user);
         console.log("project created", newProject);
-        res.json({
-            message: 'new project created'
-        });
+        res.json(newProject._id);
     });
 
 app.get('/api/project/:projectId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Project.find().populate({
+        Project.findOne({
+            _id: req.params.projectId
+        }).populate({
                 path: 'objectives',
                 populate: {
                     path: 'cards',
@@ -339,7 +349,10 @@ app.post('/api/objective/', passport.authenticate('bearer', {
                 _id: req.body.projectId
             })
             .exec(function(err, project) {
-                var newObjective = new Objective({
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                   var newObjective = new Objective({
                     owner: req.user,
                     assignedTo: req.body.assignedTo,
                     title: req.body.title,
@@ -353,6 +366,8 @@ app.post('/api/objective/', passport.authenticate('bearer', {
                 project.save();
                 // console.log("User cards", project.objectives);
                 res.json(newObjective);
+                }
+                
             });
     });
 
