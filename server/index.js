@@ -257,6 +257,30 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
     });
 
 
+/* DELETE Card*/
+
+
+app.delete('/api/card/:cardId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+            Card.findOneAndRemove({
+                _id: req.params.cardId
+            })
+            .exec(function(err, card) {
+                if (err) {
+                    console.log('cards not found: ', err);
+                    return res.status(500).json({
+                        message: err
+                    });
+                } 
+                res.json({
+                    message: 'Card removed!'
+                });
+            })
+
+    });
+
 /* DELETE Category*/
 
 
