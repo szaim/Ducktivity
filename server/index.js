@@ -298,7 +298,7 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-            Card.findOneAndRemove({
+            Card.findAndRemove({
                 category: req.body.originalCategory,
                 _id: req.params.cardId
             })

@@ -89,38 +89,38 @@ var CardCategoriesReducer = function(state, action) {
     } else if (action.type === Constants.MOVE_CARD_ERROR) {
         return action.error;
     }
-    // else if (action.type === Constants.DELETE_CARD_SUCCESS) {
-    //      var categories = state.categories.map(function(category, index) {
-    //         // console.log('action data update', action.data);
-    //         // console.log('status', action.data.status);
-    //         // console.log('action.data._id', action.data._id);
-    //         if ('deleted' == action.data.status) {
-    //             for (var i = 0; i < category.cards.length; i++) {
-    //                 // console.log('looking for category id', category.cards[i]._id);
-    //                 if (category.cards[i]._id == action.data._id) {
-    //                     // console.log('category cards', category.cards);
-    //                     // console.log('updated category', category.cards[i]);
-    //                     // console.log('i index', i);
-    //                     category.cards.splice(i, 1);
+    else if (action.type === Constants.DELETE_CARD_SUCCESS) {
+         var categories = state.categories.map(function(category, index) {
+            // console.log('action data update', action.data);
+            // console.log('status', action.data.status);
+            // console.log('action.data._id', action.data._id);
+            if ('deleted' == action.data.status) {
+                for (var i = 0; i < category.cards.length; i++) {
+                    // console.log('looking for category id', category.cards[i]._id);
+                    if (category.cards[i]._id == action.data._id) {
+                        // console.log('category cards', category.cards);
+                        // console.log('updated category', category.cards[i]);
+                        // console.log('i index', i);
+                        category.cards.splice(i, 1);
 
-    //                 }
+                    }
 
-    //             }
-    //         }
-    //         return category;
-    //     });
-    //     console.log('categories!!', categories);
+                }
+            }
+            return category;
+        });
+        console.log('categories!!', categories);
 
-    //     state = Object.assign({}, state, {
-    //         categories: categories
-    //     });        
+        state = Object.assign({}, state, {
+            categories: categories
+        });        
 
-    //     return state;
+        return state;
 
-    // } 
-    // else if (action.type === Constants.DELETE_CARD_ERROR) {
-    //     return action.error;
-    // } 
+    } 
+    else if (action.type === Constants.DELETE_CARD_ERROR) {
+        return action.error;
+    } 
 
 
 
