@@ -7,6 +7,20 @@ var actions = require('../../redux/actions/overviewActions');
 var CardActions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 var OverviewCardPanel = require('./OverviewCardPanel');
+var Modal = require('react-modal');
+
+
+var customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
 
 var OverviewObjectivePanel = React.createClass({
   componentDidMount: function() {
@@ -17,8 +31,25 @@ var OverviewObjectivePanel = React.createClass({
     return {
       accordion: false,
       activeKey: ['2'],
-      taskInputActive: false
+      taskInputActive: false,
+      modalIsOpen: false
     }
+  },
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+ 
+  afterOpenModal: function() {
+    // references are now sync'd and can be accessed. 
+    this.refs.subtitle.style.color = '#f00';
+  },
+ 
+  closeModal: function(objective, event) {
+    var newCardTitle = this.refs["cardTitle"+objective._id].value;
+    var cardAssignedTo = this.refs["assignTo"+objective._id].value;
+
+    console.log(this.refs, newCardTitle, cardAssignedTo, "stuff from Modal");
+    this.setState({modalIsOpen: false});
   },
   onChange: function(activeKey) {
     this.setState({
@@ -40,9 +71,10 @@ var OverviewObjectivePanel = React.createClass({
     var TaskConstruct = {
       owner: objective.owner,
       title: val,
-      category: objective.title,
+      category: 'TO DO',
       subtask: objective.subtask,
       status: 'active',
+      AssignTo: '#USER ID',
       objective: '581b99035626253e933a2f85'
     }
     //this.props.dispatch(CardActions.postCard(TaskConstruct));
@@ -71,14 +103,32 @@ render: function() {
   var activateTaskInput = function(event){
     that.activateTaskInput(this, event)
   };
+  var closeAndAddCard = function(event){
+    that.closeModal(this, event);
+  }
 
   var objectivePanel = this.props.objectives.map(function(objective, index) {
       return (
          <Panel header={<span>{objective.title}
-           <button className='add-card' onClick={activateTaskInput}>Add Card</button>
+           <button className='add-card' onClick={that.openModal}>Add Card</button>          
            <button className='assign-to' onClick={activateTaskInput}>AssignTo</button>
            <button className='show-cards' onClick={activateTaskInput}>Go to..</button>
           </span>} key={index} >
+          <Modal
+          isOpen={that.state.modalIsOpen}
+          onAfterOpen={that.afterOpenModal}
+          onRequestClose={that.closeModal}
+          style={customStyles} >
+ 
+          <h2 ref="subtitle">Hello</h2>
+          <button onClick={that.closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle"+objective._id}/>
+            <label htmlFor="assign-to">Assign to:</label><input name="assign-to" ref={"assignTo"+objective._id} />
+          </form>
+          <button onClick={closeAndAddCard.bind(this, objective)}>add new Card</button>
+        </Modal>
          <div className='objective-buttons'>
          <button className='addCard' type='submit' onClick={that.activateTaskInput}>Add Task</button>
          </div>
@@ -101,6 +151,8 @@ render: function() {
     >
       {objectivePanel}
     </Collapse>
+
+
   </div>);
 },
 

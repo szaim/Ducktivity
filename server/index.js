@@ -188,6 +188,7 @@ app.post('/api/card', passport.authenticate('bearer', {
                     title: req.body.TaskConstruct.title,
                     category: req.body.categoryId,
                     status: req.body.TaskConstruct.status,
+                    assignedTo: req.body.TaskConstruct.status,
                     objective: req.body.TaskConstruct.objective
                 });
                 newCard.save();
@@ -255,7 +256,7 @@ app.post('/api/project', passport.authenticate('bearer', {
         // console.log("after user found", user);
         console.log("project created", newProject);
         res.json(newProject._id);
-    });
+});
 
 app.get('/api/project/:projectId', passport.authenticate('bearer', {
         session: false
