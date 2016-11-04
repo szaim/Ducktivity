@@ -68,6 +68,39 @@ var postCard = function(TaskConstruct, categoryId) {
    }
 };
 
+var moveCard = function(TaskConstruct, categoryId) {
+   return function(dispatch) {
+    var token = Cookies.get('accessToken');
+       var url = '/api/movecard';
+       return fetch(url, {
+        method: 'post',
+        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+        body: JSON.stringify({
+          TaskConstruct: TaskConstruct,
+          categoryId: categoryId
+        })
+      }).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json(); 
+       })
+       .then(function(data) {
+               console.log("MOVE DATA", data);
+           return dispatch(
+               Constants.moveCardSuccess(data)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               Constants.moveCardError(error)
+           );
+       });
+   }
+};
+
 
 //UPDATE + DELETE TASK DATA ACTION
 var updateCards = function(CardConstruct) {
@@ -109,66 +142,43 @@ var updateCards = function(CardConstruct) {
    }
 };
 
+var deleteCard = function(cardId, originalCategory) {
+  return function(dispatch) {
+    var token = Cookies.get('accessToken');
+    var url = '/api/card/' + cardId;
+    return fetch(url, {
+          method: 'delete',
+         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+          body: JSON.stringify({
+            originalCategory: originalCategory
+          })
 
-
-
-
-// var MOVE_TASKS_SUCCESS = 'MOVE_TASKS_SUCCESS';
-// var moveTasksSuccess = function(data) {
-//     return {
-//         type: MOVE_TASKS_SUCCESS,
-//         data: data
-//     };
-// };
-// var MOVE_TASKS_ERROR= 'MOVE_TASKS_ERROR';
-// var moveTasksError = function(error) {
-//     return {
-//         type: UPDATE_TASKS_ERROR,
-//         error: error
-//     };
-// };
-
-
-// var moveTasks = function(task, category, userId) {
-//    return function(dispatch) {
-//        var url = '/api/' + userId;
-//        return fetch(url,
-//        {
-//           method: 'put',
-//           headers: {'Content-type': 'application/json'},
-//           body: JSON.stringify({
-//           moveTask: task,
-//           originalCategory: category
-//         })
-
-
-//        }
-
-//         ).then(function(response) {
-//            if (response.status < 200 || response.status >= 300) {
-//                var error = new Error(response.statusText);
-//                error.response = response;
-//                throw error;
-//            }
-//            return response.json();
-//        })
-
-//        .then(function(data) {
-//                console.log("DATA", data);
-//            return dispatch(
-//                moveTasksSuccess(data)
-//            );
-//        })
-//        .catch(function(error) {
-
-//            return dispatch(
-//                moveTasksError(error)
-//            );
-//        });
-//    }
-// };
+       }).then(function(response) {
+      if (response.status < 200 || response.status >= 300) {
+        var error = new Error(response.statusText)
+        error.response = response
+        throw error;
+      }
+      return response.json();
+    })
+    .then(function(data) {
+     console.log("DELETE DATA: ", data);
+     return dispatch(
+          deleteCardSuccess(data)
+      );
+   })
+    .catch(function(error) {
+       console.log("DELETE DATA ERROR: ", error);
+      return dispatch(
+        deleteCardError(error)
+        );
+    });
+  };
+};
 
 // for the user
 exports.fetchUser = fetchUser;
 exports.postCard = postCard;
 exports.updateCards = updateCards;
+exports.deleteCard = deleteCard;
+exports.moveCard = moveCard;

@@ -228,6 +228,40 @@ app.post('/api/card', passport.authenticate('bearer', {
             });
     });
 
+// POST FOR THE  MOVE CARDS
+app.post('/api/movecard', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        // console.log('categoryId', req.body.categoryId);
+        Category.find({
+                _id: req.body.categoryId
+            })
+            .exec(function(err, category) {
+
+                var newCard = new Card({
+                    _id: req.body.TaskConstruct._id,
+                    owner: req.body.TaskConstruct.owner,
+                    title: req.body.TaskConstruct.title,
+                    category: req.body.categoryId,
+                    status: req.body.TaskConstruct.status
+                });
+                newCard.save();
+                console.log("after user found", category);
+                console.log("task created", newCard);
+                category[0].cards.push(newCard);
+                category[0].save();
+                console.log("User cards", category[0].cards);
+                // res.json(user[0].cards);
+                console.log("request Params for Category:", req.params.categoryId);
+
+                res.json(newCard);
+
+
+            });
+    });
+
+
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker
 app.put('/api/card/:cardId', passport.authenticate('bearer', {
@@ -265,6 +299,7 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
     }),
     function(req, res) {
             Card.findOneAndRemove({
+                category: req.body.originalCategory,
                 _id: req.params.cardId
             })
             .exec(function(err, card) {
@@ -274,9 +309,7 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
                         message: err
                     });
                 } 
-                res.json({
-                    message: 'Card removed!'
-                });
+                res.json(card);
             })
 
     });

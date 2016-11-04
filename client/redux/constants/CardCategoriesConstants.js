@@ -29,6 +29,21 @@ var postCardError = function(error) {
     };
 };
 
+var MOVE_CARD_SUCCESS = 'MOVE_CARD_SUCCESS';
+var moveCardSuccess = function(data) {
+    return {
+        type: MOVE_CARD_SUCCESS,
+        data: data
+    };
+};
+var MOVE_CARD_ERROR= 'MOVE_CARD_ERROR';
+var moveCardError = function(error) {
+    return {
+        type: MOVE_CARD_ERROR,
+        error: error
+    };
+};
+
 var UPDATE_CARD_SUCCESS = 'UPDATE_CARD_SUCCESS';
 var updateCardSuccess = function(data) {
     return {
@@ -44,6 +59,20 @@ var updateCardError = function(error) {
     };
 };
 
+var DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS';
+var deleteCardSuccess = function(data) {
+    return {
+        type: DELETE_CARD_SUCCESS,
+        data: data
+    };
+};
+var DELETE_CARD_ERROR= 'DELETE_CARD_ERROR';
+var deleteCardError = function(error) {
+    return {
+        type: DELETE_CARD_ERROR,
+        error: error
+    };
+};
 
 exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
 exports.fetchUserSuccess = fetchUserSuccess;
@@ -55,7 +84,17 @@ exports.postCardSuccess = postCardSuccess;
 exports.POST_CARD_ERROR = POST_CARD_ERROR;
 exports.postCardError = postCardError;
 
+exports.MOVE_CARD_SUCCESS = MOVE_CARD_SUCCESS;
+exports.moveCardSuccess = moveCardSuccess;
+exports.MOVE_CARD_ERROR = MOVE_CARD_ERROR;
+exports.moveCardError = moveCardError;
+
 exports.UPDATE_CARD_SUCCESS = UPDATE_CARD_SUCCESS;
 exports.updateCardSuccess = updateCardSuccess;
 exports.UPDATE_CARD_ERROR = POST_CARD_ERROR;
 exports.updateCardError = updateCardError;
+
+exports.DELETE_CARD_SUCCESS = DELETE_CARD_SUCCESS;
+exports.deleteCardSuccess = deleteCardSuccess;
+exports.DELETE_CARD_ERROR = DELETE_CARD_ERROR;
+exports.deleteCardError = deleteCardError;

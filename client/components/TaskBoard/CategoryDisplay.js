@@ -39,6 +39,7 @@ var CategoryDisplay = React.createClass({
   }
   
       var TaskConstruct = {
+        _id: card._id,
         owner: card.owner,
         title: card.title,
         category: category._id,
@@ -47,8 +48,8 @@ var CategoryDisplay = React.createClass({
       };
 
 
-      this.props.dispatch(actions.postCard(TaskConstruct, category._id));
-
+      this.props.dispatch(actions.moveCard(TaskConstruct, category._id));
+      // this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
     },
 
  render: function(){
