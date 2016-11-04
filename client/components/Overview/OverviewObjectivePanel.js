@@ -4,6 +4,7 @@ var Panel = require('rc-collapse').Panel;
 var React = require('react');
 var ReactDOM = require('react-dom');
 var actions = require('../../redux/actions/overviewActions');
+var CardActions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 var OverviewCardPanel = require('./OverviewCardPanel');
 
@@ -15,7 +16,8 @@ var OverviewObjectivePanel = React.createClass({
 
     return {
       accordion: false,
-      activeKey: ['2']
+      activeKey: ['2'],
+      taskInputActive: false
     }
   },
   onChange: function(activeKey) {
@@ -29,11 +31,57 @@ var OverviewObjectivePanel = React.createClass({
       accordion: !this.state.accordion,
     });
   },
+  handleAddCard: function(objective, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log(objective);
+    var val = this.refs['overviewCardAdd'+objective._id].value
+    console.log(val);
+    var TaskConstruct = {
+      owner: objective.owner,
+      title: val,
+      category: objective.title,
+      subtask: objective.subtask,
+      status: 'active',
+      objective: '581b99035626253e933a2f85'
+    }
+    //this.props.dispatch(CardActions.postCard(TaskConstruct));
+    this.setState({
+      taskInputActive: !this.state.taskInputActive
+    })
+  },
+  activateTaskInput: function(objective, event) {
+    console.log('TASK INPUT ACTIVATE!');
+    event.stopPropagation();
+    this.setState({
+      taskInputActive: !this.state.taskInputActive
+    })
+
+  },
 render: function() {
-  // console.log('this.props.objectives',this.props.objectives);
+
+// objectives.map(objective => {});
+// <button onClick={this.onClick.bind(this, objective)} />
+// onClick(objective, event) {}
+
+  var that = this;
+  var handleAddCard = function(event){
+    that.handleAddCard(this, event)
+  };
+  var activateTaskInput = function(event){
+    that.activateTaskInput(this, event)
+  };
+
   var objectivePanel = this.props.objectives.map(function(objective, index) {
-     return (
-         <Panel header={objective.title} key={index} >
+      return (
+         <Panel header={<span>{objective.title}
+           <button className='add-card' onClick={activateTaskInput}>Add Card</button>
+           <button className='assign-to' onClick={activateTaskInput}>AssignTo</button>
+           <button className='show-cards' onClick={activateTaskInput}>Go to..</button>
+          </span>} key={index} >
+         <div className='objective-buttons'>
+         <button className='addCard' type='submit' onClick={that.activateTaskInput}>Add Task</button>
+         </div>
            <p>Description Objective here</p>
            <OverviewCardPanel cards={objective.cards}/>
          </Panel>
@@ -69,4 +117,3 @@ var mapStateToProps = function(state, props) {
 var Container = connect(mapStateToProps)(OverviewObjectivePanel);
 
 module.exports = Container;
-
