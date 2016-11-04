@@ -9,7 +9,7 @@ var update = require('react-addons-update');
 var CardDetail = require('./CardDetail');
 
 
-var selectedItem;
+
 var CardList = React.createClass({
 
   componentWillMount: function() {
@@ -38,54 +38,18 @@ var CardList = React.createClass({
   
   },
 
-    onDrag: function(data) {
-    console.log('this was selected', data);
-    selectedItem = data;
-
-  },
-
-
-  onDrop: function(data) {
-        console.log('category id', data)
-        // => banana
-      // var cardId = data._id;
-      var TaskConstruct = {
-        owner: selectedItem.owner,
-        title: selectedItem.title,
-        category: data.category,
-        subtask: selectedItem .subtask,
-        status: 'active'
-      };
-
-
-
-      this.props.dispatch(actions.postCard(TaskConstruct, data.category));
-
-    },
-
-
  render: function(){
 
-  var that = this;
-  var handleCardDelete = function(event){
-    that.handleCardDelete(this, event)
-  };
-
-    var onDrop = function(event) {
-      that.onDrop(this,event)
-    }
-
-     var onDrag = function(event) {
-      that.onDrag(this,event)
-    }
-
-  var displayCard = this.props.cardsData.map(function(data, index) {
+  var displayCard = this.props.cardsData.map((data, index)=>{
      return (
-          <Droppable types={['cards']} onDrop={onDrop.bind(data)} onDrag={onDrag.bind(data)}>
+
+      <div>
+          <Draggable type='cards' data={JSON.stringify(data)}>
          <ul className="card-box" key={index}>
-             <CardDetail key={index} title={data.title} handleCardDelete={handleCardDelete.bind(data)} cardData={data} />
+             <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
          </ul>
-         </Droppable>
+         </Draggable>
+      </div>
        );
    });
 
@@ -102,7 +66,7 @@ var CardList = React.createClass({
 
 var mapStateToProps = function(state, props) {
 	return {  
-    cards: state.cardList.categories,
+    categories: state.cardList.categories,
     userId: state.cardList.userId
 	}
 };

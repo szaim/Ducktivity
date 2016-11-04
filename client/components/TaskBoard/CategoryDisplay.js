@@ -4,7 +4,6 @@ var connect = require('react-redux').connect;
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { Draggable, Droppable } from 'react-drag-and-drop'
-
 var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
@@ -27,31 +26,61 @@ var CategoryDisplay = React.createClass({
     // this.props.dispatch(actions.fetchUser());
     this.refs['card-add-' + cardId].value = "";
   },
+
+
+
+  onDrop: function(category, card) {
+
+    console.log("drop", card);
+      card = JSON.parse(card.cards);
+     console.log("drop after", card); 
+  if(category._id == card.category) {
+  return;
+  }
+  
+      var TaskConstruct = {
+        owner: card.owner,
+        title: card.title,
+        category: category._id,
+        subtask: card.subtask,
+        status: 'active'
+      };
+
+
+      this.props.dispatch(actions.postCard(TaskConstruct, category._id));
+
+    },
+
  render: function(){
 
-  var that = this;
-  var handleAddCard = function(event){
-    that.handleAddCard(this, event)
-  };
   
-  var displayCategories = this.props.categories.map(function(data, index) {
+  var displayCategories = this.props.categories.map((data, index)=> {
+ 
+  
+
      return (
         <div className="task-list-container" key={index}>
-        <div className="category-option-container">
-        <h1>{data.title}</h1>
-        </div>
-            <CardList 
-            
+        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)}>
 
-            cardsData={data.cards} 
-            categoryId={data._id}/>
+        <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
 
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={handleAddCard.bind(data)}>Add Task</button>
+            <button type='submit' onClick={this.handleAddCard.bind(this, data)}>Add Task</button>
             </div>
+
+            <CardList 
+
+            cardsData={data.cards} 
+            categoryId={data._id}/>
+
+      </Droppable>
+             
         </div>
+
        )
+     
+
    });
   // }
 
