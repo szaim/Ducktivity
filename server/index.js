@@ -247,13 +247,13 @@ app.post('/api/movecard', passport.authenticate('bearer', {
                     status: req.body.TaskConstruct.status
                 });
                 newCard.save();
-                console.log("after user found", category);
-                console.log("task created", newCard);
+                // console.log("after user found", category);
+                // console.log("task created", newCard);
                 category[0].cards.push(newCard);
                 category[0].save();
-                console.log("User cards", category[0].cards);
-                // res.json(user[0].cards);
-                console.log("request Params for Category:", req.params.categoryId);
+                // console.log("User cards", category[0].cards);
+                // // res.json(user[0].cards);
+                // console.log("request Params for Category:", req.params.categoryId);
 
                 res.json(newCard);
 
@@ -298,7 +298,9 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-            Card.findAndRemove({
+            console.log('category delete', req.body.originalCategory);
+            console.log('_id delete', req.params.cardId);
+            Card.findOneAndRemove({
                 category: req.body.originalCategory,
                 _id: req.params.cardId
             })

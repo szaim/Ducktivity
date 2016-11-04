@@ -47,9 +47,10 @@ var CategoryDisplay = React.createClass({
         status: 'active'
       };
 
-
+      console.log('delete cardId', TaskConstruct._id);
+       console.log('delete original categoryId', card.category);
       this.props.dispatch(actions.moveCard(TaskConstruct, category._id));
-      // this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
+      this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
     },
 
  render: function(){

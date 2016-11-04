@@ -39,7 +39,7 @@ var CardCategoriesReducer = function(state, action) {
 
     } else if (action.type === Constants.POST_CARD_ERROR) {
         return action.error;
-    } else if (action.type === Constants.UPDATE_CARD_SUCCESS) {
+    } else if (action.type === Constants.DELETE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
             // console.log('action data update', action.data);
             // console.log('status', action.data.status);
@@ -66,7 +66,7 @@ var CardCategoriesReducer = function(state, action) {
 
         return state;
 
-    } else if (action.type === Constants.UPDATE_CARD_ERROR) {
+    } else if (action.type === Constants.DELETE_CARD_ERROR) {
         return action.error
     
     } 
@@ -89,7 +89,7 @@ var CardCategoriesReducer = function(state, action) {
     } else if (action.type === Constants.MOVE_CARD_ERROR) {
         return action.error;
     }
-    else if (action.type === Constants.DELETE_CARD_SUCCESS) {
+    else if (action.type === Constants.UPDATE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
             // console.log('action data update', action.data);
             // console.log('status', action.data.status);
@@ -118,7 +118,7 @@ var CardCategoriesReducer = function(state, action) {
         return state;
 
     } 
-    else if (action.type === Constants.DELETE_CARD_ERROR) {
+    else if (action.type === Constants.UPDATE_CARD_ERROR) {
         return action.error;
     } 
 
