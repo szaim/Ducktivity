@@ -164,13 +164,13 @@ var deleteCard = function(cardId, originalCategory) {
     .then(function(data) {
      console.log("DELETE DATA: ", data);
      return dispatch(
-          deleteCardSuccess(data)
+          Constants.deleteCardSuccess(data)
       );
    })
     .catch(function(error) {
        console.log("DELETE DATA ERROR: ", error);
       return dispatch(
-        deleteCardError(error)
+        Constants.deleteCardError(error)
         );
     });
   };
