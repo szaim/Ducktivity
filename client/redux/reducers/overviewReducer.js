@@ -5,6 +5,7 @@ var update = require('react-addons-update');
 var initialState = {
     projectTitle: "",
     objectives: [],
+    users: []
 };
 
 var overviewReducer = function(state, action) {
@@ -58,7 +59,17 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
-        return action.error
+        return action.error;
+    } else if (action.type === Constants.FETCH_USERS_SUCCESS) {
+        console.log("users arrived to REDUCER", action.data);
+         state = Object.assign({}, state, {
+            users: action.data
+        });
+
+        return state;
+
+    } else if (action.type === Constants.FETCH_USERS_ERROR) {
+        return action.error;
     }
     return state;
  };

@@ -141,7 +141,7 @@ app.get('/auth/google/callback',
         res.redirect('/#/ducktivity');
     }
 );
-/*Returns The cards for that Particular user */
+/*Returns the User with Cards */
 app.get('/api/user/me', passport.authenticate('bearer', {
         session: false
     }),
@@ -170,7 +170,23 @@ app.get('/api/user/me', passport.authenticate('bearer', {
                     res.json(req.user);
                 }
             });
-    });
+});
+
+/*get all the users */
+app.get('/api/users', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        User.find().select('fullName').select('googleID').exec(function(err, users) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    console.log("users found", users);
+                    res.json(users);
+                }
+            });
+});
+
 
 
 // POST FOR THE CARDS
@@ -188,7 +204,7 @@ app.post('/api/card', passport.authenticate('bearer', {
                     title: req.body.TaskConstruct.title,
                     category: req.body.categoryId,
                     status: req.body.TaskConstruct.status,
-                    assignedTo: req.body.TaskConstruct.status,
+                    assignedTo: req.body.TaskConstruct.assignedTo,
                     objective: req.body.TaskConstruct.objective
                 });
                 newCard.save();
@@ -205,7 +221,7 @@ app.post('/api/card', passport.authenticate('bearer', {
                     objective.save();
                 });
                 // res.json(user[0].cards);
-                console.log("request Params for Category:", req.params.categoryId);
+                console.log("newCARD CREATED ", newCard);
 
                 res.json(newCard);
             });
