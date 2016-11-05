@@ -5,6 +5,10 @@ var connect = require('react-redux').connect;
 var empty = '';
 var NewProject = React.createClass({
 
+componentDidMount: function() {
+
+},
+
 submitProject: function(event) {
   event.preventDefault();
 if(!this.refs.projectTitle.value) {
@@ -24,7 +28,7 @@ onSelect: function() {
 },
 
  render: function(){
-    var projectList = this.props.categories.map(function(title, index){
+    var projectList = this.props.projectList.map(function(title, index){
       return (
         //try and sort by project titles
         <option key={index} value={title.title}>{empty + title.title}</option>
@@ -64,7 +68,7 @@ onSelect: function() {
 
 var mapStateToProps = function(state, props) {
 	return {
-    //projectList: state.cardList.project || [],
+    projectList: state.projectList.projects || [],
     categories: state.cardList.categories || [],
     // categoryId: state
     userId: state.cardList.userId

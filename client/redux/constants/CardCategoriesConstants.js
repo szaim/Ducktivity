@@ -14,6 +14,23 @@ var fetchUserError = function(error) {
     };
 };
 
+var FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
+var fetchProjectSuccess = function(data) {
+    return {
+        type: FETCH_PROJECT_SUCCESS,
+        data: data
+    };
+};
+var FETCH_PROJECT_ERROR= 'FETCH_PROJECT_ERROR';
+var fetchProjectError = function(error) {
+    return {
+        type: FETCH_PROJECT_ERROR,
+        error: error
+    };
+};
+
+
+
 var POST_CARD_SUCCESS = 'POST_CARD_SUCCESS';
 var postCardSuccess = function(data) {
     return {
@@ -78,6 +95,11 @@ exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
 exports.fetchUserSuccess = fetchUserSuccess;
 exports.FETCH_USER_ERROR = FETCH_USER_ERROR;
 exports.fetchUserError = fetchUserError;
+
+exports.FETCH_PROJECT_SUCCESS = FETCH_PROJECT_SUCCESS;
+exports.fetchProjectSuccess = fetchProjectSuccess;
+exports.FETCH_PROJECT_ERROR = FETCH_PROJECT_ERROR;
+exports.fetchProjectError = fetchUserError;
 
 exports.POST_CARD_SUCCESS = POST_CARD_SUCCESS;
 exports.postCardSuccess = postCardSuccess;

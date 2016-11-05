@@ -7,7 +7,7 @@ var fetchUser = function() {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
     // var token = getToken();
-    console.log('token=', token);
+    // console.log('token=', token);
     // const headers = new Headers();
     // headers.append('Authorization', `Bearer ` + token);
     var headers = new Headers({
