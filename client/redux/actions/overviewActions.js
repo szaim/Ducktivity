@@ -69,6 +69,28 @@ var fetchUsers = function() {
    }
 };
 
+
+var OPEN_MODAL = 'OPEN_MODAL';
+var openModal = function(data) {
+    return {
+        type: OPEN_MODAL,
+        data: data
+    };
+};
+var CLOSE_MODAL= 'CLOSE_MODAL';
+var closeModal = function(data) {
+    return {
+        type: CLOSE_MODAL,
+        error: data
+    };
+};
+
+exports.OPEN_MODAL = OPEN_MODAL;
+exports.openModal = openModal;
+exports.CLOSE_MODAL = CLOSE_MODAL;
+exports.closeModal = closeModal;
+
+
 exports.fetchProject = fetchProject;
 exports.fetchUsers = fetchUsers;
 

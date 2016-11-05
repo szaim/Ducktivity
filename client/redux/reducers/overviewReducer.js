@@ -1,11 +1,14 @@
 var Constants = require('../constants/overviewConstants');
+var actions = require('../actions/overviewActions');
 var cardConstants = require('../constants/CardCategoriesConstants');
 var update = require('react-addons-update');
 
 var initialState = {
     projectTitle: "",
     objectives: [],
-    users: []
+    users: [],
+    isOpen : false,
+    objectiveId: ''
 };
 
 var overviewReducer = function(state, action) {
@@ -70,6 +73,20 @@ var overviewReducer = function(state, action) {
 
     } else if (action.type === Constants.FETCH_USERS_ERROR) {
         return action.error;
+    } else if (action.type === actions.OPEN_MODAL) {
+        console.log("users arrived to REDUCER", action.data);
+         state = Object.assign({}, state, {
+            isOpen: true,
+            objectiveId : action.data
+        });
+
+        return state;
+
+    } else if (action.type === actions.CLOSE_MODAL) {
+           state = Object.assign({}, state, {
+            isOpen: false
+        });
+        return state;
     }
     return state;
  };

@@ -46,6 +46,7 @@ var updateCardError = function(error) {
 
 
 
+
 exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
 exports.fetchUserSuccess = fetchUserSuccess;
 exports.FETCH_USER_ERROR = FETCH_USER_ERROR;
@@ -60,4 +61,6 @@ exports.UPDATE_CARD_SUCCESS = UPDATE_CARD_SUCCESS;
 exports.updateCardSuccess = updateCardSuccess;
 exports.UPDATE_CARD_ERROR = POST_CARD_ERROR;
 exports.updateCardError = updateCardError;
+
+
 

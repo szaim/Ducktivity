@@ -32,12 +32,17 @@ var OverviewObjectivePanel = React.createClass({
     return {
       accordion: false,
       activeKey: ['2'],
-      taskInputActive: false,
-      modalIsOpen: false
+      taskInputActive: false
     }
   },
-  openModal: function() {
-    this.setState({modalIsOpen: true});
+  openModal: function(objective, event) {
+        event.stopPropagation();
+    // event.preventDefault();
+
+    console.log(objective._id, ' in openModal')
+   this.props.dispatch(actions.openModal(objective._id));
+   console.log(this.props.isOpen);
+
   },
  
   afterOpenModal: function() {
@@ -45,10 +50,10 @@ var OverviewObjectivePanel = React.createClass({
     this.refs.subtitle.style.color = '#f00';
   },
  
-  addCardAndCloseModal: function(objective, event) {
-    event.stopPropagation();
-        var newCardTitle = this.refs["cardTitle" + objective._id].value;
-        var cardAssignedTo = this.refs["assignTo" + objective._id].value;
+  closeModal: function(objective, event) {
+    console.log(this.props.objectiveId, "this.props.objectiveId")
+        var newCardTitle = this.refs["cardTitle" + this.props.objectiveId].value;
+        var cardAssignedTo = this.refs["assignTo" + this.props.objectiveId].value;
 
         var TaskConstruct = {
             owner: this.props.userId,
@@ -56,20 +61,20 @@ var OverviewObjectivePanel = React.createClass({
             category: "TO DO",
             assignedTo: cardAssignedTo,
             status: 'active',
-            objective: objective._id
+            objective: this.props.objectiveId
         };
         console.log("CardActions", CardActions, "actions:", actions);
 
         this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
-        this.setState({
-            modalIsOpen: false
-        })
-  },
-  closeModal: function(){
-    console.log(this.state.modalIsOpen);
-    this.setState({
-            modalIsOpen: false
-        })
+        // alert("clicked on closeModal")
+        // this.setState({
+        //     modalIsOpen: false
+        // })
+ 
+     console.log(this.refs,newCardTitle,cardAssignedTo, "stuff from Modal");
+      this.props.dispatch(actions.closeModal());
+     console.log(this.props.isOpen);
+     // this.setState({modalIsOpen: false});
   },
   onChange: function(activeKey) {
     this.setState({
@@ -124,30 +129,21 @@ render: function() {
     that.activateTaskInput(this, event)
   };
   var closeAndAddCard = function(event){
-    that.addCardAndCloseModal(this, event);
-  }
-    var closeTheModal = function(event){
     that.closeModal(this, event);
+  }
+    var openTheModal = function(event){
+    that.openModal(this, event);
   }
   var usersOptions = this.props.users.map(function(user, index){
     return (
       <option key={index} value={user.fullName}>{user.fullName}</option>
     )
   });
-  var objectivePanel = this.props.objectives.map(function(objective, index) {
-      return (
-         <Panel header={<span>{objective.title}
-           <button className='add-card' onClick={that.openModal}>Add Card</button>          
-           <button className='assign-to' onClick={activateTaskInput}>AssignTo</button>
-           <button className='show-cards' onClick={activateTaskInput}>Go to..</button>
-          </span>} key={index} >
-          <Modal
-          isOpen={that.state.modalIsOpen}
-          onAfterOpen={that.afterOpenModal}
-          onRequestClose={that.closeModal}
-          style={customStyles} >
- 
-          <h2 ref="subtitle">Add a new Card</h2>
+
+  var ModalContent = this.props.objectives.map(function(objective, index){
+    return (
+     <div key={index} className="model-content">
+        <h2 ref="subtitle">Add a new Card</h2>
           <form>
             <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle"+objective._id}/>
             <label htmlFor="assign-to">Assign to:</label>
@@ -156,11 +152,18 @@ render: function() {
           </select>
           </form>
           <button onClick={closeAndAddCard.bind(objective)}>add new Card</button>
-          <button onClick={closeTheModal}>Cancel</button>
+     </div>
+      )
+  })
 
-        </Modal>
-
-           <p>Description Objective here</p>
+  var objectivePanel = this.props.objectives.map(function(objective, index) {
+      return (
+         <Panel header={<span>{objective.title}
+           <button className='add-card' onClick={openTheModal.bind(objective)}>Add Card</button>          
+           <button className='assign-to' onClick={activateTaskInput}>AssignTo</button>
+           <button className='show-cards' onClick={activateTaskInput}>Go to..</button>
+          </span>} key={index} >
+             <p>Description Objective here</p>
            <OverviewCardPanel cards={objective.cards}/>
          </Panel>
        )
@@ -179,6 +182,26 @@ render: function() {
     >
       {objectivePanel}
     </Collapse>
+    {this.props.isOpen ?
+      <div> 
+      <Modal
+          isOpen={that.props.isOpen}
+          onAfterOpen={that.afterOpenModal}
+          onRequestClose={that.closeModal}
+          style={customStyles} >
+ 
+         <h2 ref="subtitle">Add a new Card</h2>
+          <form>
+            <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle"+this.props.objectiveId}/>
+            <label htmlFor="assign-to">Assign to:</label>
+          <select  ref={"assignTo"+this.props.objectiveId}>
+            {usersOptions}
+          </select>
+          </form>
+          <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>add new Card</button>
+        </Modal>
+        </div>
+    :null}
 
 
   </div>);
@@ -194,7 +217,9 @@ var mapStateToProps = function(state, props) {
     objectives: state.overview.objectives,
     userId: state.cardList.userId,
     users: state.overview.users,
-    categoryId: state.cardList.categories
+    categoryId: state.cardList.categories,
+    isOpen: state.overview.isOpen,
+    objectiveId: state.overview.objectiveId
   }
 };
 var Container = connect(mapStateToProps)(OverviewObjectivePanel);
