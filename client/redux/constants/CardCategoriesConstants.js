@@ -29,6 +29,20 @@ var fetchProjectError = function(error) {
     };
 };
 
+var CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
+var createProjectSuccess = function(data) {
+    return {
+        type: CREATE_PROJECT_SUCCESS,
+        data: data
+    };
+};
+var CREATE_PROJECT_ERROR= 'CREATE_PROJECT_ERROR';
+var createProjectError = function(error) {
+    return {
+        type: CREATE_PROJECT_ERROR,
+        error: error
+    };
+};
 
 
 var POST_CARD_SUCCESS = 'POST_CARD_SUCCESS';
@@ -100,6 +114,11 @@ exports.FETCH_PROJECT_SUCCESS = FETCH_PROJECT_SUCCESS;
 exports.fetchProjectSuccess = fetchProjectSuccess;
 exports.FETCH_PROJECT_ERROR = FETCH_PROJECT_ERROR;
 exports.fetchProjectError = fetchUserError;
+
+exports.CREATE_PROJECT_SUCCESS = CREATE_PROJECT_SUCCESS;
+exports.createProjectSuccess = createProjectSuccess;
+exports.CREATE_PROJECT_ERROR = CREATE_PROJECT_ERROR;
+exports.createProjectError = createUserError;
 
 exports.POST_CARD_SUCCESS = POST_CARD_SUCCESS;
 exports.postCardSuccess = postCardSuccess;

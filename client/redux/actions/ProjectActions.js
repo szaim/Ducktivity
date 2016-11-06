@@ -38,4 +38,37 @@ var fetchProject = function() {
    }
 };
 
+var createProject = function(projectTitle) {
+   return function(dispatch) {
+    var token = Cookies.get('accessToken');
+       var url = '/api/card';
+       return fetch(url, {
+        method: 'post',
+        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+        body: JSON.stringify({
+          projectTitle: projectTitle
+        })
+      }).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json(); 
+       })
+       .then(function(data) {
+               console.log("POST DATA", data);
+           return dispatch(
+               Constants.createProjectSuccess(data)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               Constants.createProjectError(error)
+           );
+       });
+   }
+};
+
 exports.fetchProject = fetchProject;
+exports.createProject = createProject;
