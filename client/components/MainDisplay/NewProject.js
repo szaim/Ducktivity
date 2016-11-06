@@ -1,12 +1,12 @@
 var React = require('react');
-var actions = require('../../redux/actions/CardCategoriesActions');
+var actions = require('../../redux/actions/ProjectActions');
 var connect = require('react-redux').connect;
 
-var empty = '';
+
 var NewProject = React.createClass({
 
 componentDidMount: function() {
-
+  this.props.dispatch(actions.fetchProject());
 },
 
 submitProject: function(event) {
@@ -31,7 +31,7 @@ onSelect: function() {
     var projectList = this.props.projectList.map(function(title, index){
       return (
         //try and sort by project titles
-        <option key={index} value={title.title}>{empty + title.title}</option>
+        <option key={index} value={title.title}>{title.title}</option>
       )
     });
 

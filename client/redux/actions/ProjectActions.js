@@ -14,7 +14,7 @@ var fetchProject = function() {
     var headers = new Headers({
         Authorization: 'bearer ' + token
       });
-       var url = '/api/user/me';
+       var url = '/api/project';
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
@@ -24,14 +24,18 @@ var fetchProject = function() {
            return response.json();
        })
        .then(function(data) {
-           return dispatch(
+        console.log('fetchProject success', data);
+           return dispatch(  
                Constants.fetchProjectSuccess(data)
            );
        })
        .catch(function(error) {
+        console.log('fetchProject error', error);
            return dispatch(
                Constants.fetchProjectError(error)
            );
        });
    }
 };
+
+exports.fetchProject = fetchProject;
