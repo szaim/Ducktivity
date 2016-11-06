@@ -29,6 +29,16 @@ var ProjectReducer = function(state, action) {
         return action.error
     } 
 
+    else if (action.type === Constants.CREATE_PROJECT_SUCCESS) {
+        console.log("post PROJECT success in reducer", action.data)
+        return state;
+
+        
+        return state;
+    } else if (action.type === Constants.CREATE_PROJECT_ERROR) {
+        return action.error
+    } 
+
 
 
 

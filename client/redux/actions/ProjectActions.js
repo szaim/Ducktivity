@@ -38,7 +38,7 @@ var fetchProject = function() {
    }
 };
 
-var createProject = function(projectTitle) {
+var createProject = function(projectTitle, owner) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
        var url = '/api/card';
@@ -46,7 +46,8 @@ var createProject = function(projectTitle) {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          projectTitle: projectTitle
+          projectTitle: projectTitle,
+          owner: owner
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
