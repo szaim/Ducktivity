@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var app = express();
 var Card = require('./models/card');
 var Category = require('./models/category');
+var Project = require('./models/project');
 var User = require('./models/user');
 var mongoose = require('mongoose');
 var config = require('./config');
@@ -378,18 +379,18 @@ app.put('/api/category/:categoryId', passport.authenticate('bearer', {
 
 
 
-//get Project List
-// app.get('/api/project', passport.authenticate('bearer', {
-//         session: false
-//     }),
-//     function(req, res) {
-//         Project.find().select('title').select('owner').exec(function(err, projects) {
-//                 if (err) {
-//                     res.send("Error has occured");
-//                 } else {
-//                     console.log("projects found", projects);
-//                     res.json(projects);
-//                 }
-//             });
-// });
+// get Project List
+app.get('/api/project', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.find().exec(function(err, projects) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    console.log("projects found", projects);
+                    res.json(projects);
+                }
+            });
+});
 
