@@ -134,11 +134,13 @@ render: function() {
     var openTheModal = function(event){
     that.openModal(this, event);
   }
-  var usersOptions = this.props.users.map(function(user, index){
+  if(this.props.users){
+    var usersOptions = this.props.users.map(function(user, index){
     return (
       <option key={index} value={user.fullName}>{user.fullName}</option>
     )
   });
+  }
 
 if(this.props.objectives){
     var ModalContent = this.props.objectives.map(function(objective, index){
