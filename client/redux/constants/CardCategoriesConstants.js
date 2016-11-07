@@ -14,17 +14,17 @@ var fetchUserError = function(error) {
     };
 };
 
-var FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
-var fetchProjectSuccess = function(data) {
+var GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
+var getProjectSuccess = function(data) {
     return {
-        type: FETCH_PROJECT_SUCCESS,
+        type: GET_PROJECT_SUCCESS,
         data: data
     };
 };
-var FETCH_PROJECT_ERROR= 'FETCH_PROJECT_ERROR';
-var fetchProjectError = function(error) {
+var GET_PROJECT_ERROR= 'GET_PROJECT_ERROR';
+var getProjectError = function(error) {
     return {
-        type: FETCH_PROJECT_ERROR,
+        type: GET_PROJECT_ERROR,
         error: error
     };
 };
@@ -112,10 +112,10 @@ exports.fetchUserSuccess = fetchUserSuccess;
 exports.FETCH_USER_ERROR = FETCH_USER_ERROR;
 exports.fetchUserError = fetchUserError;
 
-exports.FETCH_PROJECT_SUCCESS = FETCH_PROJECT_SUCCESS;
-exports.fetchProjectSuccess = fetchProjectSuccess;
-exports.FETCH_PROJECT_ERROR = FETCH_PROJECT_ERROR;
-exports.fetchProjectError = fetchUserError;
+exports.GET_PROJECT_SUCCESS = GET_PROJECT_SUCCESS;
+exports.getProjectSuccess = getProjectSuccess;
+exports.GET_PROJECT_ERROR = GET_PROJECT_ERROR;
+exports.getProjectError = getProjectError;
 
 exports.CREATE_PROJECT_SUCCESS = CREATE_PROJECT_SUCCESS;
 exports.createProjectSuccess = createProjectSuccess;

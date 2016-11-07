@@ -10,7 +10,7 @@ var initialState = {
 var ProjectReducer = function(state, action) {
     state = state || initialState;
 
-    if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
+    if (action.type === Constants.GET_PROJECT_SUCCESS) {
         console.log("get PROJECT success in reducer", action.data);
         state = Object.assign({}, state, {
             projects: action.data,
@@ -19,7 +19,7 @@ var ProjectReducer = function(state, action) {
 
         console.log('fetch PROJECT success', state);
         return state;
-    } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
+    } else if (action.type === Constants.GET_PROJECT_ERROR) {
         return action.error;
     } 
     else if (action.type === Constants.CREATE_PROJECT_SUCCESS) {

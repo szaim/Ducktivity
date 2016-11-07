@@ -4,7 +4,7 @@ var Constants = require("../constants/CardCategoriesConstants");
 
 
 
-var fetchProject = function() {
+var getProject = function() {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
     // var token = getToken();
@@ -24,15 +24,15 @@ var fetchProject = function() {
            return response.json();
        })
        .then(function(data) {
-        console.log('fetchProject success', data);
+        console.log('getProject success', data);
            return dispatch(  
-               Constants.fetchProjectSuccess(data)
+               Constants.getProjectSuccess(data)
            );
        })
        .catch(function(error) {
-        console.log('fetchProject error', error);
+        console.log('getProject error', error);
            return dispatch(
-               Constants.fetchProjectError(error)
+               Constants.getProjectError(error)
            );
        });
    }
@@ -71,5 +71,5 @@ var createProject = function(projectTitle, owner) {
    }
 };
 
-exports.fetchProject = fetchProject;
+exports.getProject = getProject;
 exports.createProject = createProject;
