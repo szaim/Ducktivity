@@ -4,7 +4,7 @@ var actionsOverview = require('../../redux/actions/overviewActions');
 var connect = require('react-redux').connect;
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { Draggable, Droppable } from 'react-drag-and-drop'
+import { Draggable, Droppable } from 'react-drag-and-drop';
 var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
@@ -55,36 +55,26 @@ var CategoryDisplay = React.createClass({
     },
 
  render: function(){
-
-  
-  var displayCategories = this.props.categories.map((data, index)=> {
- 
-  
-
+  if(this.props.categories){
+    var displayCategories = this.props.categories.map((data, index)=> {
      return (
         <div className="task-list-container" key={index}>
         <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)}>
-
         <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
-
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
             <button type='submit' onClick={this.handleAddCard.bind(this, data)}>Add Task</button>
             </div>
-
             <CardList 
-
             cardsData={data.cards} 
             categoryId={data._id}/>
-
-      </Droppable>
-             
+      </Droppable>   
         </div>
 
        )
-     
-
    });
+  }
+  
   // }
 
    return (
