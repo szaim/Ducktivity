@@ -25,9 +25,9 @@ var CategoryDisplay = React.createClass({
   },
  render: function(){
   var that = this;
-  var handleAddCard = function(event){
-    that.handleAddCard(this, event)
-  };
+  // var handleAddCard = function(event){
+  //   that.handleAddCard(this, event)
+  // };
   var displayCategories = this.props.categories.map(function(data, index) {
      return (
         <div className="task-list-container" key={index}>
@@ -38,7 +38,6 @@ var CategoryDisplay = React.createClass({
             <div className="input-task">
 
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={handleAddCard.bind(data)}>Add Task</button>
             </div>
         </div>
        )

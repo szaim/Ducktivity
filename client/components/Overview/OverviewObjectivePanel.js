@@ -65,15 +65,20 @@ var OverviewObjectivePanel = React.createClass({
         };
         console.log("CardActions", CardActions, "actions:", actions);
 
-        this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
+        if (!newCardTitle) {
+            this.props.dispatch(actions.closeModal());
+        } else {
+            this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
+            this.props.dispatch(actions.closeModal());
+        }
+
         // alert("clicked on closeModal")
         // this.setState({
         //     modalIsOpen: false
         // })
  
-     console.log(this.refs,newCardTitle,cardAssignedTo, "stuff from Modal");
-      this.props.dispatch(actions.closeModal());
-     console.log(this.props.isOpen);
+     // console.log(this.refs,newCardTitle,cardAssignedTo, "stuff from Modal");
+     // console.log(this.props.isOpen);
      // this.setState({modalIsOpen: false});
   },
   onChange: function(activeKey) {
@@ -160,8 +165,6 @@ render: function() {
       return (
          <Panel header={<span>{objective.title}
            <button className='add-card' onClick={openTheModal.bind(objective)}>Add Card</button>          
-           <button className='assign-to' onClick={activateTaskInput}>AssignTo</button>
-           <button className='show-cards' onClick={activateTaskInput}>Go to..</button>
           </span>} key={index} >
              <p>Description Objective here</p>
            <OverviewCardPanel cards={objective.cards}/>
