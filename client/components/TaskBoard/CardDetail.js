@@ -4,7 +4,7 @@ var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
-import { Draggable, Droppable } from 'react-drag-and-drop'
+import { Draggable, Droppable } from 'react-drag-and-drop';
 var $ = require("jquery");
 
 var CardDetail = React.createClass({

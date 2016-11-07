@@ -58,6 +58,7 @@ var OverviewObjectivePanel = React.createClass({
         var TaskConstruct = {
             owner: this.props.userId,
             title: newCardTitle,
+            _id: this.props.updateCardId,
             category: "TO DO",
             assignedTo: cardAssignedTo,
             status: 'active',
@@ -66,6 +67,7 @@ var OverviewObjectivePanel = React.createClass({
         console.log("CardActions", CardActions, "actions:", actions);
 
         this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
+        this.props.dispatch(CardActions.updateCard(TaskConstruct));
         // alert("clicked on closeModal")
         // this.setState({
         //     modalIsOpen: false
@@ -134,14 +136,14 @@ render: function() {
     var openTheModal = function(event){
     that.openModal(this, event);
   }
-  if(this.props.users){
-    var usersOptions = this.props.users.map(function(user, index){
+
+  if(this.props.users) {
+  var usersOptions = this.props.users.map(function(user, index){
     return (
       <option key={index} value={user.fullName}>{user.fullName}</option>
     )
   });
-  }
-
+}
 if(this.props.objectives){
     var ModalContent = this.props.objectives.map(function(objective, index){
     return (
@@ -225,7 +227,8 @@ var mapStateToProps = function(state, props) {
     users: state.overview.users,
     categoryId: state.cardList.categories,
     isOpen: state.overview.isOpen,
-    objectiveId: state.overview.objectiveId
+    objectiveId: state.overview.objectiveId,
+    updateCardId: state.cardList.updateCardId
   }
 };
 var Container = connect(mapStateToProps)(OverviewObjectivePanel);

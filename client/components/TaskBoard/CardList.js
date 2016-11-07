@@ -40,10 +40,11 @@ var CardList = React.createClass({
 
  render: function(){
 
+
   var displayCard = this.props.cardsData.map((data, index)=>{
      return (
 
-      <div>
+      <div key={index}>
           <Draggable type='cards' data={JSON.stringify(data)}>
          <ul className="card-box" key={index}>
              <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />

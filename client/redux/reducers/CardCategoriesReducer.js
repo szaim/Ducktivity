@@ -3,7 +3,8 @@ var update = require('react-addons-update');
 
 var initialState = {
     categories: [],
-    userId: ""
+    userId: "",
+    updateCardId: ''
 };
 
 var CardCategoriesReducer = function(state, action) {
@@ -88,9 +89,10 @@ var CardCategoriesReducer = function(state, action) {
     }
     else if (action.type === Constants.UPDATE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
-            // console.log('action data update', action.data);
+            console.log('action data update', action.data);
             // console.log('status', action.data.status);
             // console.log('action.data._id', action.data._id);
+            
             if ('deleted' == action.data.status) {
                 for (var i = 0; i < category.cards.length; i++) {
                     // console.log('looking for category id', category.cards[i]._id);
@@ -109,7 +111,8 @@ var CardCategoriesReducer = function(state, action) {
         // console.log('categories!!', categories);
 
         state = Object.assign({}, state, {
-            categories: categories
+            categories: categories,
+            updateCardId: action.data._id
         });        
 
         return state;
