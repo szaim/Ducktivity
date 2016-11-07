@@ -35,6 +35,15 @@ var OverviewObjectivePanel = React.createClass({
       taskInputActive: false
     }
   },
+  openObjectiveModal: function(){
+   this.props.dispatch(actions.openObjectiveModal());
+  },
+  closeAndAddObjective: function(){
+    var newObjectiveTitle = this.refs["objectiveTitle"+this.props.projectTitle].value;
+    console.log("newObjectiveTitle", newObjectiveTitle);
+   this.props.dispatch(actions.postObjective(newObjectiveTitle, this.props.projectTitle));
+
+  },
   openModal: function(objective, event) {
         event.stopPropagation();
     // event.preventDefault();
@@ -44,7 +53,6 @@ var OverviewObjectivePanel = React.createClass({
    console.log(this.props.isOpen);
 
   },
- 
   afterOpenModal: function() {
     // references are now sync'd and can be accessed. 
     this.refs.subtitle.style.color = '#f00';
@@ -184,6 +192,7 @@ if(this.props.objectives){
 
   return (<div style={{ margin: 10, width: 350 }}>
     {this.props.projectTitle}
+    <button onClick={this.openObjectiveModal}>Add Objective</button>
     <Collapse
       accordion={accordion}
       onChange={this.onChange}
@@ -201,13 +210,30 @@ if(this.props.objectives){
  
          <h2 ref="subtitle">Add a new Card</h2>
           <form>
-            <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle"+this.props.objectiveId}/>
+            <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"objectiveTitle"+this.props.projectTitle}/>
             <label htmlFor="assign-to">Assign to:</label>
           <select  ref={"assignTo"+this.props.objectiveId}>
             {usersOptions}
           </select>
           </form>
           <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>add new Card</button>
+        </Modal>
+        </div>
+    :null}
+
+    {this.props.isObjectiveOpen ?
+      <div> 
+      <Modal
+          isOpen={that.props.isObjectiveOpen}
+          onAfterOpen={that.afterOpenModal}
+          onRequestClose={that.closeModal}
+          style={customStyles} >
+ 
+         <h2 ref="subtitle">Add a New Objective</h2>
+          <form>
+            <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle"+this.props.projectTitle}/>
+          </form>
+          <button onClick={this.closeAndAddObjective}>add new Objective</button>
         </Modal>
         </div>
     :null}
@@ -229,7 +255,8 @@ var mapStateToProps = function(state, props) {
     categoryId: state.cardList.categories,
     isOpen: state.overview.isOpen,
     objectiveId: state.overview.objectiveId,
-    updateCardId: state.cardList.updateCardId
+    updateCardId: state.cardList.updateCardId,
+    isObjectiveOpen: state.overview.isObjectiveOpen
   }
 };
 var Container = connect(mapStateToProps)(OverviewObjectivePanel);

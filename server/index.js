@@ -324,7 +324,7 @@ app.post('/api/objective/', passport.authenticate('bearer', {
     }),
     function(req, res) {
         Project.findOne({
-                _id: req.body.projectId
+                title: req.body.projectTitle
             })
             .exec(function(err, project) {
                 if (err) {
@@ -332,7 +332,6 @@ app.post('/api/objective/', passport.authenticate('bearer', {
                 } else {
                     var newObjective = new Objective({
                         owner: req.user,
-                        assignedTo: req.body.assignedTo,
                         title: req.body.title,
                         cards: [],
                         status: 'active'

@@ -9,7 +9,8 @@ var initialState = {
     objectives: [],
     users: [],
     isOpen: false,
-    objectiveId: ''
+    objectiveId: '',
+    isObjectiveOpen: false
 };
 
 var overviewReducer = function(state, action) {
@@ -115,7 +116,30 @@ var overviewReducer = function(state, action) {
             isOpen: false
         });
         return state;
+    } else if (action.type === actions.OPEN_OBJECTIVE_MODAL) {
+        console.log("users arrived to REDUCER", action.data);
+        state = Object.assign({}, state, {
+            isObjectiveOpen: true,
+        });
+
+        return state;
+
+    } else if (action.type === actions.CLOSE_OBJECTIVE_MODAL) {
+        state = Object.assign({}, state, {
+            isObjectiveOpen: false
+        });
+        return state;
+    } else if (action.type === actions.POST_OBJECTIVE_SUCCESS) {
+        console.log("POST OBJECTIVE IN REDUCER Success: ", action.data);
+
+        return state;
+
+    } else if (action.type === actions.POST_OBJECTIVE_ERROR) {
+        console.log("POST OBJECTIVE IN REDUCER Error: ", action.data);
+        
+        return state;
     }
+
     return state;
 };
 
