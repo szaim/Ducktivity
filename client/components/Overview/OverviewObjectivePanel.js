@@ -140,7 +140,8 @@ render: function() {
     )
   });
 
-  var ModalContent = this.props.objectives.map(function(objective, index){
+if(this.props.objectives){
+    var ModalContent = this.props.objectives.map(function(objective, index){
     return (
      <div key={index} className="model-content">
         <h2 ref="subtitle">Add a new Card</h2>
@@ -155,8 +156,10 @@ render: function() {
      </div>
       )
   })
+}
 
-  var objectivePanel = this.props.objectives.map(function(objective, index) {
+  if(this.props.objectives){
+    var objectivePanel = this.props.objectives.map(function(objective, index) {
       return (
          <Panel header={<span>{objective.title}
            <button className='add-card' onClick={openTheModal.bind(objective)}>Add Card</button>          
@@ -168,6 +171,7 @@ render: function() {
          </Panel>
        )
    });
+  }
 
   var accordion = this.state.accordion;
   //var btn = accordion ? 'accordion' : 'collapse';

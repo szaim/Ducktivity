@@ -1,19 +1,20 @@
 var React = require('react');
 var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DropTarget } from 'react-dnd';
+import { Draggable, Droppable } from 'react-drag-and-drop';
+var update = require('react-addons-update');
 var CardDetail = require('./CardDetail');
 
 
+
 var CardList = React.createClass({
+
   componentWillMount: function() {
         // console.log(this.props);
     this.props.dispatch(actions.fetchUser());
-
-  },
-  handleCommentChange: function() {
-
-  },
-  handleCommentSubmit: function() {
 
   },
   handleCardDelete: function(data, event){
@@ -38,22 +39,20 @@ var CardList = React.createClass({
   },
 
  render: function(){
-  var that = this;
-  var handleCardDelete = function(event){
-    that.handleCardDelete(this, event)
-  };
 
-  var displayCard = this.props.cardsData.map(function(data, index) {
+  var displayCard = this.props.cardsData.map((data, index)=>{
      return (
-         <div className="card-box" key={index}>
-         <div className='card-top'>
-         </div>
-              <div className="task-item-container">{index} 
-             <CardDetail key={index} title={data.title} handleCardDelete={handleCardDelete.bind(data)} cardData={data} />
-              </div>
-         </div>
-       )
+
+      <div>
+          <Draggable type='cards' data={JSON.stringify(data)}>
+         <ul className="card-box" key={index}>
+             <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
+         </ul>
+         </Draggable>
+      </div>
+       );
    });
+
 
    return (
      <div className='task-categories'>
@@ -67,11 +66,14 @@ var CardList = React.createClass({
 
 var mapStateToProps = function(state, props) {
 	return {  
-    cards: state.cardList.categories,
+    categories: state.cardList.categories,
     userId: state.cardList.userId
 	}
 };
 
 var Container = connect(mapStateToProps)(CardList);
 
+
 module.exports = Container;
+
+

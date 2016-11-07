@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var app = express();
 var Card = require('./models/card');
 var Category = require('./models/category');
+var Project = require('./models/project');
 var User = require('./models/user');
 var Project = require('./models/project');
 var Objective = require('./models/objective');
@@ -170,7 +171,7 @@ app.get('/api/user/me', passport.authenticate('bearer', {
                     res.json(req.user);
                 }
             });
-});
+    });
 
 /*get all the users */
 app.get('/api/users', passport.authenticate('bearer', {
@@ -178,14 +179,14 @@ app.get('/api/users', passport.authenticate('bearer', {
     }),
     function(req, res) {
         User.find().select('fullName').select('googleID').exec(function(err, users) {
-                if (err) {
-                    res.send("Error has occured");
-                } else {
-                    console.log("users found", users);
-                    res.json(users);
-                }
-            });
-});
+            if (err) {
+                res.send("Error has occured");
+            } else {
+                console.log("users found", users);
+                res.json(users);
+            }
+        });
+    });
 
 
 
@@ -216,7 +217,7 @@ app.post('/api/card', passport.authenticate('bearer', {
 
                 Objective.findOne({
                     _id: req.body.TaskConstruct.objective
-                }).exec(function(err, objective){
+                }).exec(function(err, objective) {
                     objective.cards.push(newCard);
                     objective.save();
                 });
@@ -226,6 +227,40 @@ app.post('/api/card', passport.authenticate('bearer', {
                 res.json(newCard);
             });
     });
+
+// POST FOR THE  MOVE CARDS
+app.post('/api/movecard', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        // console.log('categoryId', req.body.categoryId);
+        Category.find({
+                _id: req.body.categoryId
+            })
+            .exec(function(err, category) {
+
+                var newCard = new Card({
+                    _id: req.body.TaskConstruct._id,
+                    owner: req.body.TaskConstruct.owner,
+                    title: req.body.TaskConstruct.title,
+                    category: req.body.categoryId,
+                    status: req.body.TaskConstruct.status
+                });
+                newCard.save();
+                // console.log("after user found", category);
+                // console.log("task created", newCard);
+                category[0].cards.push(newCard);
+                category[0].save();
+                // console.log("User cards", category[0].cards);
+                // // res.json(user[0].cards);
+                // console.log("request Params for Category:", req.params.categoryId);
+
+                res.json(newCard);
+
+
+            });
+    });
+
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker
@@ -255,108 +290,34 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
         });
     });
 
-app.post('/api/project', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        var newProject = new Project({
-            owner: req.user,
-            title: req.body.title,
-            objectives: [],
-        });
-        newProject.save(function(err, data){
-            if(err){
-                res.send(err);
-            }
-        });
-        // console.log("after user found", user);
-        console.log("project created", newProject);
-        res.json(newProject._id);
-});
 
-app.get('/api/project/:projectId', passport.authenticate('bearer', {
+
+/* DELETE Card*/
+
+
+app.delete('/api/card/:cardId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Project.findOne({
-            _id: req.params.projectId
-        }).populate({
-                path: 'objectives',
-                populate: {
-                    path: 'cards',
-                    model: 'Card'
-                }
+        console.log('category delete', req.body.originalCategory);
+        console.log('_id delete', req.params.cardId);
+        Card.findOneAndRemove({
+                category: req.body.originalCategory,
+                _id: req.params.cardId
             })
-            .exec(function(err, project) {
+            .exec(function(err, card) {
                 if (err) {
-                    res.send("Error has occured");
-                } else {
-                    res.json(project);
+                    console.log('cards not found: ', err);
+                    return res.status(500).json({
+                        message: err
+                    });
                 }
+                res.json(card);
             });
+
     });
 
-app.put('/api/project/:projectId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Project.update({
-            _id: req.params.projectId
-        }, {
-            $set: {
-                owner: req.body.owner,
-                title: req.body.title
-            }
-        }, {
-            new: true
-        }, function(err, project) {
-            if (err) {
-                console.log('project not found: ', err);
-                return res.status(500).json({
-                    message: err
-                });
-            }
-            res.json({
-                project
-            });
-        });
-    });
-app.delete('/api/project/:projectId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Project.findOne({
-            _id: req.params.projectId
-        }).populate({
-            path: 'objectives',
-            populate: {
-                path: 'cards',
-                model: 'Card'
-            }
-        }).exec(function(err, project) {
-            if (project) {
-                for (var i = 0; i < project.objectives.length; i++) {
-                    project.objectives[i].status = "deleted";
-                    project.objectives[i].save();
-                    for (var j = 0; j < project.objectives.cards.length; j++) {
-                        project.objectives.cards[j].status = "deleted";
-                        project.objectives.cards[j].save();
-                    }
-                }
-                project.save();
-            }
-        }).then(
-            Project.findOneAndRemove({
-                _id: req.params.projectId
-            })
-            .exec(function(err, category) {
 
-                res.json({
-                    message: 'Project removed!'
-                });
-            })
-        );
-    });
 
 app.post('/api/objective/', passport.authenticate('bearer', {
         session: false
@@ -369,22 +330,22 @@ app.post('/api/objective/', passport.authenticate('bearer', {
                 if (err) {
                     res.send("Error has occured");
                 } else {
-                   var newObjective = new Objective({
-                    owner: req.user,
-                    assignedTo: req.body.assignedTo,
-                    title: req.body.title,
-                    cards: [],
-                    status: 'active'
-                });
-                newObjective.save();
-                console.log("after project found", project);
-                console.log("objective created", newObjective);
-                project.objectives.push(newObjective);
-                project.save();
-                // console.log("User cards", project.objectives);
-                res.json(newObjective);
+                    var newObjective = new Objective({
+                        owner: req.user,
+                        assignedTo: req.body.assignedTo,
+                        title: req.body.title,
+                        cards: [],
+                        status: 'active'
+                    });
+                    newObjective.save();
+                    console.log("after project found", project);
+                    console.log("objective created", newObjective);
+                    project.objectives.push(newObjective);
+                    project.save();
+                    // console.log("User cards", project.objectives);
+                    res.json(newObjective);
                 }
-                
+
             });
     });
 
@@ -430,6 +391,7 @@ app.put('/api/objective/:objectiveId', passport.authenticate('bearer', {
             });
         });
     });
+
 app.delete('/api/objective/:objectiveId', passport.authenticate('bearer', {
         session: false
     }),
@@ -452,6 +414,133 @@ app.delete('/api/objective/:objectiveId', passport.authenticate('bearer', {
 
                 res.json({
                     message: 'Objective removed!'
+                });
+            })
+        );
+    });
+
+
+
+// get Project List
+// may need to adjust to get specific user projects only***
+app.get('/api/user/project', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.find().exec(function(err, projects) {
+            if (err) {
+                res.send("Error has occured");
+            } else {
+                console.log("projects found", projects);
+                res.json(projects);
+            }
+        });
+    });
+
+
+// POST FOR THE CARDS
+app.post('/api/project/create', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        // console.log('categoryId', req.body.categoryId);
+        User.find({
+                owner: req.user.fullName
+            })
+            .exec(function(err, project) {
+                console.log('project', project);
+                var newProject = new Card({
+                    owner: req.user.fullName,
+                    title: req.body.title,
+                    objectives: []
+                });
+                newProject.save();
+                console.log('newProject', newProject);
+                res.json(req.user);
+            });
+    });
+
+
+app.get('/api/project/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.findOne({
+                _id: req.params.projectId
+            }).populate({
+                path: 'objectives',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            })
+            .exec(function(err, project) {
+                if (err) {
+                    res.send("Error has occured");
+                } else {
+                    res.json(project);
+                }
+            });
+    });
+
+app.put('/api/project/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.update({
+            _id: req.params.projectId
+        }, {
+            $set: {
+                owner: req.body.owner,
+                title: req.body.title
+            }
+        }, {
+            new: true
+        }, function(err, project) {
+            if (err) {
+                console.log('project not found: ', err);
+                return res.status(500).json({
+                    message: err
+                });
+            }
+            res.json({
+                project
+            });
+        });
+    });
+
+app.delete('/api/project/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.findOne({
+            _id: req.params.projectId
+        }).populate({
+            path: 'objectives',
+            populate: {
+                path: 'cards',
+                model: 'Card'
+            }
+        }).exec(function(err, project) {
+            if (project) {
+                for (var i = 0; i < project.objectives.length; i++) {
+                    project.objectives[i].status = "deleted";
+                    project.objectives[i].save();
+                    for (var j = 0; j < project.objectives.cards.length; j++) {
+                        project.objectives.cards[j].status = "deleted";
+                        project.objectives.cards[j].save();
+                    }
+                }
+                project.save();
+            }
+        }).then(
+            Project.findOneAndRemove({
+                _id: req.params.projectId
+            })
+            .exec(function(err, category) {
+
+                res.json({
+                    message: 'Project removed!'
                 });
             })
         );

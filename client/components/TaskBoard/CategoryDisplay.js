@@ -2,9 +2,13 @@ var React = require('react');
 var actions = require('../../redux/actions/CardCategoriesActions');
 var actionsOverview = require('../../redux/actions/overviewActions');
 var connect = require('react-redux').connect;
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { Draggable, Droppable } from 'react-drag-and-drop'
 var CardList = require('./CardList');
 
 var CategoryDisplay = React.createClass({
+
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
   },
@@ -23,25 +27,63 @@ var CategoryDisplay = React.createClass({
     this.props.dispatch(actions.postCard(TaskConstruct, cardId));
     this.refs['card-add-' + cardId].value = "";
   },
+
+
+
+  onDrop: function(category, card) {
+
+    console.log("drop", card);
+      card = JSON.parse(card.cards);
+     console.log("drop after", card); 
+  if(category._id == card.category) {
+  return;
+  }
+  
+      var TaskConstruct = {
+        _id: card._id,
+        owner: card.owner,
+        title: card.title,
+        category: category._id,
+        subtask: card.subtask,
+        status: 'active'
+      };
+
+      console.log('delete cardId', TaskConstruct._id);
+       console.log('delete original categoryId', card.category);
+      this.props.dispatch(actions.moveCard(TaskConstruct, category._id));
+      this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
+    },
+
  render: function(){
-  var that = this;
-  var handleAddCard = function(event){
-    that.handleAddCard(this, event)
-  };
-  var displayCategories = this.props.categories.map(function(data, index) {
+
+  
+  var displayCategories = this.props.categories.map((data, index)=> {
+ 
+  
+
      return (
         <div className="task-list-container" key={index}>
-        <div className="category-option-container">
-        <h1>{data.title}</h1>
-        </div>
-            <CardList cardsData={data.cards} categoryId={data._id}/>
+        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)}>
+
+        <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
 
             <input  key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={handleAddCard.bind(data)}>Add Task</button>
+            <button type='submit' onClick={this.handleAddCard.bind(this, data)}>Add Task</button>
             </div>
+
+            <CardList 
+
+            cardsData={data.cards} 
+            categoryId={data._id}/>
+
+      </Droppable>
+             
         </div>
+
        )
+     
+
    });
   // }
 
@@ -53,7 +95,12 @@ var CategoryDisplay = React.createClass({
      </div>
    )
  }
-});
+
+ });
+
+
+
+
 
 
 
@@ -67,3 +114,7 @@ var mapStateToProps = function(state, props) {
 var Container = connect(mapStateToProps)(CategoryDisplay);
 
 module.exports = Container;
+
+
+
+

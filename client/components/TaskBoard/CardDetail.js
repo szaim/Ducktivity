@@ -2,12 +2,16 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var actions = require('../../redux/actions/CardCategoriesActions');
 var connect = require('react-redux').connect;
+import { DragSource, DropTarget } from 'react-dnd';
+import flow from 'lodash/flow';
+import { Draggable, Droppable } from 'react-drag-and-drop'
 var $ = require("jquery");
 
 var CardDetail = React.createClass({
 	  getInitialState: function() {
 	  	return {
 	  		contentEditable: false,
+	  		drag: true,
 	  		buttonAction: 'Edit'
 	  	};
 	  },
@@ -37,13 +41,21 @@ var CardDetail = React.createClass({
 	  	});
 	  }
 	},
+
+	// onDrag: function() {
+	// 	console.log('this was selected', this.props.cardData._id);
+	// },
+
+
 	  render: function() {
 
-	  return(
-	    <div className="task-item">
-	     <h3 id={this.props.cardData._id} contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
+	  return (
+	
+	    <li className="task-item" >
+	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3><button type='submit' onClick={this.editable}>{this.state.buttonAction}</button>
 	      <button className='delete-task-button' type='submit' onClick={this.props.handleCardDelete}>Delete Task</button>
-	    </div>
+	    </li>
+	   
 
 	  );
 	}
@@ -59,5 +71,6 @@ var mapStateToProps = function(state, props) {
 };
 
 var Container = connect(mapStateToProps)(CardDetail);
+
 
 module.exports = Container;
