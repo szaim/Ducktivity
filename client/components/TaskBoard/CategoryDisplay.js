@@ -32,12 +32,10 @@ var CategoryDisplay = React.createClass({
      return (
         <div className="task-list-container" key={index}>
         <div className="category-option-container">
-        <h1>{data.title}</h1>
+        <h4>{data.title}</h4>
         </div>
             <CardList cardsData={data.cards} categoryId={data._id}/>
             <div className="input-task">
-
-            <input  key={index} ref={'card-add-'+ data._id}  type='text' />
             </div>
         </div>
        )

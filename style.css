@@ -1,3 +1,20 @@
+.taskBoard-wrapper {
+  border: 2px solid red;
+  width: 65%;
+  float: right;
+}
+
+.overview-wrapper {
+  border: 2px solid blue;
+  width: 35%;
+  float: left;
+
+
+}
+
+.projectList-wrapper{
+
+}
 .task-list-container {
 
 	display: -webkit-flex;
@@ -76,11 +93,13 @@
   border-top: none;
 }
 .rc-collapse > .rc-collapse-item > .rc-collapse-header {
-  height: 38px;
+  // height: 38px;
   line-height: 38px;
-  text-indent: 16px;
+  // text-indent: 16px;
   color: #666;
   cursor: pointer;
+  // overflow: auto;
+  word-wrap: break-word
 }
 .rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
   display: inline-block;

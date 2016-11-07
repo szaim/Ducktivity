@@ -9,8 +9,12 @@ var Landing = function(){
 
 	return (
 		<div id="landing">
-			<TaskBoard />
-			<Overview/>
+
+		<div className="taskBoard-wrapper"> <TaskBoard/> </div>
+			
+		<div className="overview-wrapper"> <Overview/> </div>
+			
+		<div className="projectList-wrapper">  </div>
 		</div>
 
 		)

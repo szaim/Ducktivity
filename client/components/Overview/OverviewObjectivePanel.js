@@ -176,7 +176,7 @@ render: function() {
   //var btn = accordion ? 'accordion' : 'collapse';
   var activeKey = this.state.activeKey;
 
-  return (<div style={{ margin: 10, width: 500 }}>
+  return (<div style={{ margin: 10, width: 350 }}>
     {this.props.projectTitle}
     <Collapse
       accordion={accordion}
