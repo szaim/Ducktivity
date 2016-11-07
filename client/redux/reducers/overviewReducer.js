@@ -9,8 +9,7 @@ var initialState = {
     objectives: [],
     users: [],
     isOpen: false,
-    objectiveId: '',
-    isObjectiveOpen: false
+    objectiveId: ''
 };
 
 var overviewReducer = function(state, action) {
@@ -43,31 +42,51 @@ var overviewReducer = function(state, action) {
         return action.error;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
-
-
-        var new1Objectives = state.objectives.map(function(objective, index) {
-            console.log('action data update', action.data);
-            // console.log('status', action.data.status);
-            // console.log('action.data._id', action.data._id);
-
+         var new1Objectives = state.objectives.map(function(objective, index) {
+            console.log("action data in UPDATE CARD overviewReducer", action.data);
             if ('deleted' == action.data.status) {
                 for (var i = 0; i < objective.cards.length; i++) {
-                    // console.log('looking for objective id', objective.cards[i]._id);
                     if (objective.cards[i]._id == action.data._id) {
-                        // console.log('objective cards', objective.cards);
-                        // console.log('updated objective', objective.cards[i]);
-                        // console.log('i index', i);
+                        console.log('objective', objective);
+                        console.log('objective cards', objective.cards);
                         objective.cards.splice(i, 1);
                     }
                 }
-                console.log('objective!!', objective);
+            }
+            return objective;
+        });
+        // console.log('categories!!', categories);
 
-                return objective;
+        state = Object.assign({}, state, {
+            objectives: new1Objectives
+        });
 
-                state = Object.assign({}, state, {
-                    objectives: new1Objectives
-                });
-            } 
+        return state;
+        //-----------------
+
+        // var new1Objectives = state.objectives.map(function(objective, index) {
+        //     console.log('action data update', action.data);
+        //     // console.log('status', action.data.status);
+        //     // console.log('action.data._id', action.data._id);
+
+        //     if ('deleted' == action.data.status) {
+        //         for (var i = 0; i < objective.cards.length; i++) {
+        //             // console.log('looking for objective id', objective.cards[i]._id);
+        //             if (objective.cards[i]._id == action.data._id) {
+        //                 // console.log('objective cards', objective.cards);
+        //                 // console.log('updated objective', objective.cards[i]);
+        //                 // console.log('i index', i);
+        //                 objective.cards.splice(i, 1);
+        //             }
+        //         }
+        //         console.log('objective!!', objective);
+
+        //         return objective;
+
+        //         state = Object.assign({}, state, {
+        //             objectives: new1Objectives
+        //         });
+        //     } 
             // else {
         //         console.log('updating the card title hit');
         // var updatedTitleCard;
@@ -87,8 +106,8 @@ var overviewReducer = function(state, action) {
         //         }
         //     }
 
-        });
-        return state;
+        // });
+        // return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
         return action.error;
@@ -116,30 +135,7 @@ var overviewReducer = function(state, action) {
             isOpen: false
         });
         return state;
-    } else if (action.type === actions.OPEN_OBJECTIVE_MODAL) {
-        console.log("users arrived to REDUCER", action.data);
-        state = Object.assign({}, state, {
-            isObjectiveOpen: true,
-        });
-
-        return state;
-
-    } else if (action.type === actions.CLOSE_OBJECTIVE_MODAL) {
-        state = Object.assign({}, state, {
-            isObjectiveOpen: false
-        });
-        return state;
-    } else if (action.type === actions.POST_OBJECTIVE_SUCCESS) {
-        console.log("POST OBJECTIVE IN REDUCER Success: ", action.data);
-
-        return state;
-
-    } else if (action.type === actions.POST_OBJECTIVE_ERROR) {
-        console.log("POST OBJECTIVE IN REDUCER Error: ", action.data);
-        
-        return state;
     }
-
     return state;
 };
 

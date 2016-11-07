@@ -3,9 +3,7 @@ var update = require('react-addons-update');
 
 var initialState = {
     categories: [],
-    userId: "",
-    updateCardId: '',
-    objectives: []
+    userId: ""
 };
 
 var CardCategoriesReducer = function(state, action) {
@@ -115,9 +113,7 @@ var CardCategoriesReducer = function(state, action) {
         // console.log('categories!!', categories);
 
         state = Object.assign({}, state, {
-            categories: categories,
-
-            updateCardId: action.data._id
+            categories: categories
         });        
 
         return state;
