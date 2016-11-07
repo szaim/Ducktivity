@@ -67,7 +67,7 @@ var OverviewObjectivePanel = React.createClass({
         console.log("CardActions", CardActions, "actions:", actions);
 
         this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
-        this.props.dispatch(CardActions.updateCard(TaskConstruct));
+        // this.props.dispatch(CardActions.updateCards(TaskConstruct));
         // alert("clicked on closeModal")
         // this.setState({
         //     modalIsOpen: false
