@@ -67,7 +67,7 @@ var overviewReducer = function(state, action) {
                 state = Object.assign({}, state, {
                     objectives: new1Objectives
                 });
-            } 
+            }
             // else {
         //         console.log('updating the card title hit');
         // var updatedTitleCard;
@@ -129,14 +129,15 @@ var overviewReducer = function(state, action) {
             isObjectiveOpen: false
         });
         return state;
-    } else if (action.type === actions.POST_OBJECTIVE_SUCCESS) {
-        console.log("POST OBJECTIVE IN REDUCER Success: ", action.data);
-
+    } else if (action.type === Constants.POST_OBJECTIVE_SUCCESS) {
+        state = Object.assign({}, state, {
+            objectives: state.objectives.concat(action.data)
+        });
         return state;
 
-    } else if (action.type === actions.POST_OBJECTIVE_ERROR) {
+    } else if (action.type === Constants.POST_OBJECTIVE_ERROR) {
         console.log("POST OBJECTIVE IN REDUCER Error: ", action.data);
-        
+
         return state;
     }
 

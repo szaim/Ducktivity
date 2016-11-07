@@ -31,7 +31,8 @@ var OverviewObjectivePanel = React.createClass({
     openObjectiveModal: function() {
         this.props.dispatch(actions.openObjectiveModal());
     },
-    closeAndAddObjective: function() {
+    closeAndAddObjective: function(event) {
+        event.preventDefault();
         var newObjectiveTitle = this.refs["objectiveTitle" + this.props.projectTitle].value;
         if (!newObjectiveTitle) {
             this.props.dispatch(actions.closeObjectiveModal());
@@ -49,6 +50,7 @@ var OverviewObjectivePanel = React.createClass({
         this.refs.subtitle.style.color = '#f00';
     },
     closeModal: function(objective, event) {
+        event.preventDefault();
         console.log(this.props.objectiveId, "this.props.objectiveId")
         console.log('close modal obj', objective)
         console.log('close modal event', event)
@@ -176,7 +178,7 @@ var OverviewObjectivePanel = React.createClass({
                     ? <div>
                         <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeModal} style={customStyles}>
                             <h2 ref="subtitle">Add a new Card</h2>
-                            <form>
+                            <form onSubmit={closeAndAddCard.bind(this.props.objectiveId)} >
                                 <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
                                 <label htmlFor="assign-to">Assign to:</label>
                                 <select ref={"assignTo" + this.props.objectiveId}>
@@ -191,7 +193,7 @@ var OverviewObjectivePanel = React.createClass({
                     ? <div>
                         <Modal isOpen={that.props.isObjectiveOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeAndAddObjective} style={customStyles}>
                             <h2 ref="subtitle">Add a New Objective</h2>
-                            <form>
+                            <form onSubmit={this.closeAndAddObjective}>
                                 <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectTitle}/>
                             </form>
                             <button onClick={this.closeAndAddObjective}>add new Objective</button>

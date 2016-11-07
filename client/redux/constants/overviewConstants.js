@@ -30,6 +30,7 @@ var fetchUsersError = function(error) {
 
 var POST_OBJECTIVE_SUCCESS = 'POST_OBJECTIVE_SUCCESS';
 var postObjectiveSuccess = function(data) {
+    console.log(data, "post objective in sync action ")
     return {
         type: POST_OBJECTIVE_SUCCESS,
         data: data
@@ -58,5 +59,3 @@ exports.POST_OBJECTIVE_SUCCESS = POST_OBJECTIVE_SUCCESS;
 exports.postObjectiveSuccess = postObjectiveSuccess;
 exports.POST_OBJECTIVE_ERROR = POST_OBJECTIVE_ERROR;
 exports.postObjectiveError = postObjectiveError;
-
-

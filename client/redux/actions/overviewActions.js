@@ -88,7 +88,7 @@ var postObjective = function(objectiveTitle, projectTitle) {
            return response.json(); 
        })
        .then(function(data) {
-               // console.log("POST DATA", data);
+               console.log("POST OBJECTIVE", data);
            return dispatch(
                Constants.postObjectiveSuccess(data)
            );
@@ -146,4 +146,3 @@ exports.OPEN_OBJECTIVE_MODAL = OPEN_OBJECTIVE_MODAL;
 exports.openObjectiveModal = openObjectiveModal;
 exports.CLOSE_OBJECTIVE_MODAL = CLOSE_OBJECTIVE_MODAL;
 exports.closeObjectiveModal = closeObjectiveModal;
-
