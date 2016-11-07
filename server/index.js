@@ -380,7 +380,8 @@ app.put('/api/category/:categoryId', passport.authenticate('bearer', {
 
 
 // get Project List
-app.get('/api/project', passport.authenticate('bearer', {
+// may need to adjust to get specific user projects only***
+app.get('/api/user/project', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -394,3 +395,26 @@ app.get('/api/project', passport.authenticate('bearer', {
             });
 });
 
+
+// POST FOR THE CARDS
+app.post('/api/create/project', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        // console.log('categoryId', req.body.categoryId);
+        Category.find({
+                owner: req.body.owner
+            })
+            .exec(function(err, project) {
+
+                var newProject = new Card({
+                    owner: req.body.owner,
+                    title: req.body.title,
+                    objective: []
+                });
+                newProject.save();
+                res.json(newProject);
+
+
+            });
+    });

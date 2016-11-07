@@ -14,7 +14,7 @@ var fetchProject = function() {
     var headers = new Headers({
         Authorization: 'bearer ' + token
       });
-       var url = '/api/project';
+       var url = '/api/user/project';
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
@@ -41,7 +41,7 @@ var fetchProject = function() {
 var createProject = function(projectTitle, owner) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
-       var url = '/api/card';
+       var url = '/api/create/project';
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
