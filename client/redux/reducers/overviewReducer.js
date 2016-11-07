@@ -42,27 +42,7 @@ var overviewReducer = function(state, action) {
         return action.error;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
-        //  var new1Objectives = state.objectives.map(function(objective, index) {
-        //     console.log("action data in UPDATE CARD overviewReducer", action.data);
-        //     if ('deleted' == action.data.status) {
-        //         for (var i = 0; i < objective.cards.length; i++) {
-        //             if (objective.cards[i]._id == action.data._id) {
-        //                 console.log('objective', objective);
-        //                 console.log('objective cards', objective.cards);
-        //                 objective.cards.splice(i, 1);
-        //             }
-        //         }
-        //     }
-        //     return objective;
-        // });
-        // // console.log('categories!!', categories);
 
-        // state = Object.assign({}, state, {
-        //     objectives: new1Objectives
-        // });
-
-        // return state;
-        //-----------------
 
         var new1Objectives = state.objectives.map(function(objective, index) {
             console.log('action data update', action.data);
@@ -86,24 +66,25 @@ var overviewReducer = function(state, action) {
                 state = Object.assign({}, state, {
                     objectives: new1Objectives
                 });
-            } else {
-                console.log('updating the card title hit');
-        var updatedTitleCard;
-                for (var i = 0; i < objective.cards.length; i++) {
-                    if (objective.cards[i]._id == action.data._id) {
-                        updatedTitleCard = objective.cards[i].title = action.data.title;
-                        return update(state, {
-                            objectives: {
-                                cards: {
-                                    [action.data._id]: {
-                                        $set: action.data
-                                    }
-                                }
-                            }
-                        })
-                    }
-                }
-            }
+            } 
+            // else {
+        //         console.log('updating the card title hit');
+        // var updatedTitleCard;
+        //         for (var i = 0; i < objective.cards.length; i++) {
+        //             if (objective.cards[i]._id == action.data._id) {
+        //                 updatedTitleCard = objective.cards[i].title = action.data.title;
+        //                 return update(state, {
+        //                     objectives: {
+        //                         cards: {
+        //                             [action.data._id]: {
+        //                                 $set: action.data
+        //                             }
+        //                         }
+        //                     }
+        //                 })
+        //             }
+        //         }
+        //     }
 
         });
         return state;
