@@ -50,6 +50,9 @@ var OverviewObjectivePanel = React.createClass({
     },
     closeModal: function(objective, event) {
         console.log(this.props.objectiveId, "this.props.objectiveId")
+        console.log('close modal obj', objective)
+        console.log('close modal event', event)
+        console.log('close modal refs', this.refs)
         if (this.refs["cardTitle" + this.props.objectiveId] && this.refs["assignTo" + this.props.objectiveId].value) {
             var newCardTitle = this.refs["cardTitle" + this.props.objectiveId].value;
             var cardAssignedTo = this.refs["assignTo" + this.props.objectiveId].value;
@@ -68,6 +71,7 @@ var OverviewObjectivePanel = React.createClass({
         if (!newCardTitle) {
             this.props.dispatch(actions.closeModal());
         } else {
+            console.log('data to reducer', TaskConstruct, this.props.categoryId[1]._id)
             this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
             this.props.dispatch(actions.closeModal());
         }
@@ -173,7 +177,7 @@ var OverviewObjectivePanel = React.createClass({
                         <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeModal} style={customStyles}>
                             <h2 ref="subtitle">Add a new Card</h2>
                             <form>
-                                <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"objectiveTitle" + this.props.projectTitle}/>
+                                <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
                                 <label htmlFor="assign-to">Assign to:</label>
                                 <select ref={"assignTo" + this.props.objectiveId}>
                                     {usersOptions}
