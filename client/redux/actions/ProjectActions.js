@@ -41,7 +41,7 @@ var fetchProject = function() {
 var createProject = function(projectTitle, owner) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
-       var url = '/api/create/project';
+       var url = '/api/project/create';
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},

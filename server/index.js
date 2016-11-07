@@ -397,23 +397,24 @@ app.get('/api/user/project', passport.authenticate('bearer', {
 
 
 // POST FOR THE CARDS
-app.post('/api/create/project', passport.authenticate('bearer', {
+app.post('/api/project/create', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         // console.log('categoryId', req.body.categoryId);
-        Category.find({
-                owner: req.body.owner
+        User.find({
+                owner: req.user.fullName
             })
             .exec(function(err, project) {
-
+                console.log('project', project);
                 var newProject = new Card({
-                    owner: req.body.owner,
+                    owner: req.user.fullName,
                     title: req.body.title,
-                    objective: []
+                    objectives: []
                 });
                 newProject.save();
-                res.json(newProject);
+                console.log('newProject', newProject);
+                res.json(req.user);
 
 
             });
