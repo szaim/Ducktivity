@@ -52,8 +52,6 @@ var overviewReducer = function(state, action) {
         return action.error;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
-
-
         var new1Objectives = state.objectives.map(function(objective, index) {
             console.log('action data update', action.data);
             // console.log('status', action.data.status);
@@ -77,27 +75,42 @@ var overviewReducer = function(state, action) {
                     objectives: new1Objectives
                 });
             }
-            // else {
-        //         console.log('updating the card title hit');
-        // var updatedTitleCard;
-        //         for (var i = 0; i < objective.cards.length; i++) {
-        //             if (objective.cards[i]._id == action.data._id) {
-        //                 updatedTitleCard = objective.cards[i].title = action.data.title;
-        //                 return update(state, {
-        //                     objectives: {
-        //                         cards: {
-        //                             [action.data._id]: {
-        //                                 $set: action.data
-        //                             }
-        //                         }
-        //                     }
-        //                 })
-        //             }
-        //         }
-        //     }
+            else {
+              console.log("state.objectives", state.objectives);
+                // var objectives = state.objectives.map(function(objective){
+                            if (objective._id !== action.data.objective) {
+                                return objective;
+                            }
+                        console.log("objective", objective);
+                        console.log("objective.cards", objective.cards);
+                            var updatedCards = objective.cards.map(function(card){
+                                    if (card._id !== action.data._id) {
+                                        return card;
+                                    } 
+                                    console.log("Matching Card card ", card);
+                                      card = action.data;
+                                    return card;
+                                    //  return Object.assign({}, objective, {
+                                    // cards: card
+                                    // });
+                                    
+                                // }
+                            });
+                               var newObjective =  Object.assign({}, objective, {
+                                    cards: updatedCards
+                               });
+                               console.log("Updated CARDS!!", updatedCards);
+                              console.log("objectiveS UPDATED?!!!!!", state.objectives);
+                              console.log("objective UPDATED!!!!!", newObjective);
+                        var newState = Object.assign({}, state, {
+                            objectives: newObjective
+                        }); 
+            }
+
+                        console.log('Complete UPDATE OF EDIT TITLE', newState);
 
         });
-        return state;
+        return newState;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
         return action.error;
