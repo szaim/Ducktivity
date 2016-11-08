@@ -9,6 +9,7 @@ var TaskBoard = React.createClass({
  render: function(){
    return (
      <div className='task-board'>
+     <a href="/logout"><button className="logout-button">Logout</button></a>
      <CategoryDisplay />
      </div>
    )

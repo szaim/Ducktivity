@@ -3,13 +3,13 @@
   width: 65%;
   float: right;
 }
-
+.logout-button {
+  float: right;
+}
 .overview-wrapper {
   border: 2px solid blue;
   width: 35%;
   float: left;
-
-
 }
 
 .projectList-wrapper{
