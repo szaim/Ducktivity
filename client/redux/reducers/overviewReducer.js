@@ -30,7 +30,7 @@ var overviewReducer = function(state, action) {
         console.log("assignedTo", action.data.assignedTo);
         console.log("userId", action.data.owner);
         var newObjectives = state.objectives.map(function(objective, index) {
-            console.log('post card overview reducer', objective._id)
+            console.log('post card overview reducer', objective._id);
             if (objective._id != action.data.objective) {
                 return objective;
             } else {
@@ -51,67 +51,39 @@ var overviewReducer = function(state, action) {
     } else if (action.type === cardConstants.POST_CARD_ERROR) {
         return action.error;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
-        console.log('overview update hit');
-        // var new1Objectives = state.objectives.map(function(objective, index) {
-        console.log('action data update', action.data);
-        // console.log('status', action.data.status);
-        // console.log('action.data._id', action.data._id);
 
         if ('deleted' == action.data.status) {
             var new1Objectives = state.objectives.map(function(objective, index) {
                 for (var i = 0; i < objective.cards.length; i++) {
-                    // console.log('looking for objective id', objective.cards[i]._id);
                     if (objective.cards[i]._id == action.data._id) {
-                        // console.log('objective cards', objective.cards);
-                        // console.log('updated objective', objective.cards[i]);
-                        // console.log('i index', i);
                         objective.cards.splice(i, 1);
                     }
                 }
-                console.log('objective!!', objective);
-
                 return objective;
-
                 state = Object.assign({}, state, {
                     objectives: new1Objectives
                 });
             });
 
         } else {
-            //   console.log("state.objectives", state.objectives);
-            //     // var objectives = state.objectives.map(function(objective){
-            //                 if (objective._id !== action.data.objective) {
-            //                     return objective;
-            //                 }
-            //             console.log("objective", objective);
-            //             console.log("objective.cards", objective.cards);
-            //                 var updatedCards = objective.cards.map(function(card){
-            //                         if (card._id !== action.data._id) {
-            //                             return card;
-            //                         } 
-            //                         console.log("Matching Card card ", card);
-            //                           card = action.data;
-            //                         return card;
-            //                         //  return Object.assign({}, objective, {
-            //                         // cards: card
-            //                         // });
-
-            //                     // }
-            //                 });
-            //                    var newObjective =  Object.assign({}, objective, {
-            //                         cards: updatedCards
-            //                    });
-            //                    console.log("Updated CARDS!!", updatedCards);
-            //                   console.log("objectiveS UPDATED?!!!!!", state.objectives);
-            //                   console.log("objective UPDATED!!!!!", newObjective);
-            //             var newState = Object.assign({}, state, {
-            //                 objectives: newObjective
-            //             }); 
+            var new2Objectives = state.objectives.map(function(objective) {
+                if (objective._id !== action.data.objective) {
+                    return objective;
+                }
+                var updatedCards = objective.cards.map(function(card) {
+                    if (card._id !== action.data._id) {
+                        return card;
+                    }
+                    return action.data;
+                });
+                 return Object.assign({}, objective, {
+                      cards: updatedCards
+                  });
+            });
+            state = Object.assign({}, state, {
+                objectives: new2Objectives
+            });
         }
-
-        //             console.log('Complete UPDATE OF EDIT TITLE', newState);
-
-        // });
         return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
