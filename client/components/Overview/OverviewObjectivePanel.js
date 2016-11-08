@@ -63,7 +63,6 @@ var OverviewObjectivePanel = React.createClass({
             var TaskConstruct = {
                 owner: this.props.userId,
                 title: newCardTitle,
-                category: this.props.categoryId[1]._id,
                 assignedTo: cardAssignedTo,
                 status: 'active',
                 objective: this.props.objectiveId
@@ -72,7 +71,6 @@ var OverviewObjectivePanel = React.createClass({
         if (!newCardTitle) {
             this.props.dispatch(actions.closeModal());
         } else {
-            console.log('data to reducer', TaskConstruct, this.props.categoryId[1]._id)
             this.props.dispatch(CardActions.postCard(TaskConstruct));
             // this.props.dispatch(CardActions.moveCard(TaskConstruct, TaskConstruct.category));
             this.props.dispatch(actions.closeModal());

@@ -197,10 +197,19 @@ app.post('/api/card', passport.authenticate('bearer', {
     var objective;
     var card;
     var category;
-    Category.findOne({
-        owner: req.body.TaskConstruct.assignedTo,
-        title: "TO DO" 
-    }).exec().then(function(_category) {
+    var categoryQuery;
+    if(req.body.TaskConstruct.category){
+        categoryQuery = Category.findOne({
+            _id: req.body.TaskConstruct.category,
+            owner: req.body.TaskConstruct.assignedTo
+        });
+    }else {
+        categoryQuery = Category.findOne({
+            owner: req.body.TaskConstruct.assignedTo,
+            title: "TO DO" 
+        });
+    }
+    categoryQuery.exec().then(function(_category) {
         if(!_category) {
             throw new Error('Could not find category');
         }
@@ -218,7 +227,7 @@ app.post('/api/card', passport.authenticate('bearer', {
         var newCard = new Card({
             owner: req.body.TaskConstruct.owner,
             title: req.body.TaskConstruct.title,
-            category: req.body.TaskConstruct.category,
+            category: category._id,
             status: req.body.TaskConstruct.status,
             assignedTo: req.body.TaskConstruct.assignedTo,
             objective: req.body.TaskConstruct.objective
