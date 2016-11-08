@@ -63,8 +63,7 @@ var OverviewObjectivePanel = React.createClass({
             var TaskConstruct = {
                 owner: this.props.userId,
                 title: newCardTitle,
-                _id: this.props.updateCardId,
-                category: "TO DO",
+                category: "581a61888a1d7406d96a815b",
                 assignedTo: cardAssignedTo,
                 status: 'active',
                 objective: this.props.objectiveId
@@ -74,7 +73,8 @@ var OverviewObjectivePanel = React.createClass({
             this.props.dispatch(actions.closeModal());
         } else {
             console.log('data to reducer', TaskConstruct, this.props.categoryId[1]._id)
-            this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.categoryId[1]._id));
+            this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.objectiveId));
+            // this.props.dispatch(CardActions.moveCard(TaskConstruct, TaskConstruct.category));
             this.props.dispatch(actions.closeModal());
         }
     },
@@ -86,25 +86,7 @@ var OverviewObjectivePanel = React.createClass({
             accordion: !this.state.accordion
         });
     },
-    handleAddCard: function(objective, event) {
-        event.stopPropagation();
-        event.preventDefault();
-        console.log(objective);
-        var val = this.refs['overviewCardAdd' + objective._id].value
-        console.log(val);
-        var TaskConstruct = {
-            owner: objective.owner,
-            title: val,
-            category: 'TO DO',
-            subtask: objective.subtask,
-            status: 'active',
-            AssignTo: '#USER ID',
-            objective: '581b99035626253e933a2f85'
-        }
-        this.setState({
-            taskInputActive: !this.state.taskInputActive
-        })
-    },
+
     activateTaskInput: function(objective, event) {
         console.log('TASK INPUT ACTIVATE!');
         event.stopPropagation();
@@ -114,9 +96,6 @@ var OverviewObjectivePanel = React.createClass({
     },
     render: function() {
         var that = this;
-        var handleAddCard = function(event) {
-            that.handleAddCard(this, event)
-        };
         var activateTaskInput = function(event) {
             that.activateTaskInput(this, event)
         };
@@ -129,7 +108,7 @@ var OverviewObjectivePanel = React.createClass({
         if (this.props.users) {
             var usersOptions = this.props.users.map(function(user, index) {
                 return (
-                    <option key={index} value={user.fullName}>{user.fullName}</option>
+                    <option key={index} value={user._id}>{user.fullName}</option>
                 )
             });
         }
@@ -152,6 +131,7 @@ var OverviewObjectivePanel = React.createClass({
         }
         if (this.props.objectives) {
             var objectivePanel = this.props.objectives.map(function(objective, index) {
+                console.log('objective cards', objective.cards);
                 return (
                     <Panel header={<span> {objective.title}
                         <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button></span>} key={index}>

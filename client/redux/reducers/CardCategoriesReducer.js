@@ -15,14 +15,15 @@ var CardCategoriesReducer = function(state, action) {
         // console.log("add USER success in reducer", action.data.categories)
         state = Object.assign({}, state, {
             categories: action.data.categories,
-            userId: action.data.googleID
+            userId: action.data._id
         });
 
         // console.log('fetch user success', state);
         return state;
     } else if (action.type === Constants.FETCH_USER_ERROR) {
         return action.error
-    } else if (action.type === Constants.POST_CARD_SUCCESS) {
+    } 
+    else if (action.type === Constants.POST_CARD_SUCCESS) {
         var categories = state.categories.map(function(category) {
             if (category._id !== action.data.category) {
                 return category;
@@ -37,10 +38,12 @@ var CardCategoriesReducer = function(state, action) {
         });
 
         return state;
+    }
 
-    } else if (action.type === Constants.POST_CARD_ERROR) {
-        return action.error;
-    } else if (action.type === Constants.DELETE_CARD_SUCCESS) {
+    // } else if (action.type === Constants.POST_CARD_ERROR) {
+    //     return action.error;
+    // } 
+    else if (action.type === Constants.DELETE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
             // console.log('action data update', action.data);
             // console.log('status', action.data.status);
@@ -92,7 +95,7 @@ var CardCategoriesReducer = function(state, action) {
          var categories = state.categories.map(function(category, index) {
             console.log('action data update', action.data);
             console.log('status', action.data.status);
-            // console.log('action.data._id', action.data._id);
+           
             
             if ('deleted' == action.data.status) {
                 for (var i = 0; i < category.cards.length; i++) {

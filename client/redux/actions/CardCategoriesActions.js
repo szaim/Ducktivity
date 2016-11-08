@@ -35,7 +35,7 @@ var fetchUser = function() {
    }
 };
 
-var postCard = function(TaskConstruct, categoryId) {
+var postCard = function(TaskConstruct, objectiveId) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
        var url = '/api/card';
@@ -44,7 +44,7 @@ var postCard = function(TaskConstruct, categoryId) {
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
           TaskConstruct: TaskConstruct,
-          categoryId: categoryId
+          objectiveId: objectiveId
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
@@ -55,7 +55,7 @@ var postCard = function(TaskConstruct, categoryId) {
            return response.json(); 
        })
        .then(function(data) {
-               // console.log("POST DATA", data);
+               console.log("POST Objective DATA", data);
            return dispatch(
                Constants.postCardSuccess(data)
            );

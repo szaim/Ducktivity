@@ -2,10 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CardSchema = new mongoose.Schema({
-	owner: {type: String, require: true},//{type: Schema.Types.ObjectId, ref: 'User'},
+	owner: {type: Schema.Types.ObjectId, ref: 'User'},//{type: Schema.Types.ObjectId, ref: 'User'},
 	title: {type: String, require: true},
-	category: {type: String, require: true}, //ObjectId --> Category/Stage
-	subtask: [{type: Schema.Types.ObjectId, ref: 'SubTask'}],
+	category: {type: Schema.Types.ObjectId, ref: 'Category'}, //ObjectId --> Category/Stage
 	status: {type: String},
 	assignedTo: {type: Schema.Types.ObjectId, ref: 'User'},
 	objective: {type: Schema.Types.ObjectId, ref: 'Objective'}

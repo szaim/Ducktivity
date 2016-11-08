@@ -3,7 +3,6 @@ var update = require('react-addons-update');
 
 var initialState = {
     categories: [],
-    userId: "",
     projects: []
 };
 

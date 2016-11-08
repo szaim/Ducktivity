@@ -68,7 +68,7 @@ passport.use(new GoogleStrategy({
                     var newCategory = '';
                     for (var i = 0; i < categoryTitles.length; i++) {
                         newCategory = new Category({
-                            owner: user.googleID,
+                            owner: user._id,
                             title: categoryTitles[i],
                             cards: []
                         });
@@ -158,12 +158,12 @@ app.get('/api/user/me', passport.authenticate('bearer', {
                 if (err) {
                     res.send("Error has occured");
                 } else {
-                    console.log("user.cards", req.user.categories);
+                    // console.log("user.cards", req.user.categories);
                     for (var i = req.user.categories.length; i--;) {
                         for (var j = req.user.categories[i].cards.length; j--;) {
                             if (req.user.categories[i].cards[j].status == "deleted") {
                                 req.user.categories[i].cards.splice(j, 1);
-                                console.log("usercards", req.user.categories);
+                                // console.log("usercards", req.user.categories);
                                 // return user.cards
                             }
                         }
@@ -182,7 +182,7 @@ app.get('/api/users', passport.authenticate('bearer', {
             if (err) {
                 res.send("Error has occured");
             } else {
-                console.log("users found", users);
+                // console.log("users found", users);
                 res.json(users);
             }
         });
@@ -192,11 +192,71 @@ app.get('/api/users', passport.authenticate('bearer', {
 
 // POST FOR THE CARDS
 app.post('/api/card', passport.authenticate('bearer', {
+    session: false
+}), function(req, res) {
+    var objective;
+    var card;
+    var category;
+    Category.findOne({
+        owner: req.body.TaskConstruct.assignedTo,
+        title: "TO DO" 
+    }).exec().then(function(_category) {
+        if(!_category) {
+            throw new Error('Could not find category');
+        }
+
+        category = _category;
+        return Objective.findOne({
+             _id: req.body.objectiveId
+        }).exec()
+    }).then(function(_objective) {
+        if (!_objective) {
+            throw new Error('Could not find objective');
+        }
+
+        objective = _objective;
+        var newCard = new Card({
+            owner: req.body.TaskConstruct.owner,
+            title: req.body.TaskConstruct.title,
+            category: req.body.TaskConstruct.category,
+            status: req.body.TaskConstruct.status,
+            assignedTo: req.body.TaskConstruct.assignedTo,
+            objective: req.body.objectiveId
+        });
+        return newCard.save();
+    }).then(function(_card) {
+        if (!_card) {
+            throw new Error('Could not save card');
+        }
+
+        card = _card;
+        objective.cards.push(card._id);
+        return objective.save();
+    }).then(function(_objective) {
+        if (!_objective) {
+            throw new Error('Could not save objective');
+        }
+
+       category.cards.push(card._id);
+       return category.save();
+    }).then(function(_category) {
+        if (!_category) {
+            throw new Error('Could not save category');
+        }
+         res.json(card);
+    }).catch(function(err) {
+        console.error(err);
+        return res.status(500).send(err.message);
+    });
+});
+
+// POST FOR THE  MOVE CARDS
+app.post('/api/movecard', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         // console.log('categoryId', req.body.categoryId);
-        Category.findOne({
+        Category.find({
                 _id: req.body.categoryId
             })
             .exec(function(err, category) {
@@ -209,55 +269,15 @@ app.post('/api/card', passport.authenticate('bearer', {
                     objective: req.body.TaskConstruct.objective
                 });
                 newCard.save();
-                console.log("after user found", category);
-                console.log("task created", newCard);
-                category.cards.push(newCard);
-                category.save();
-                console.log("User cards", category.cards);
-
-                Objective.findOne({
-                    _id: req.body.TaskConstruct.objective
-                }).exec(function(err, objective) {
-                    objective.cards.push(newCard);
-                    objective.save();
-                });
-                // res.json(user[0].cards);
-                console.log("newCARD CREATED ", newCard);
-
-                res.json(newCard);
-            });
-    });
-
-// POST FOR THE  MOVE CARDS
-app.post('/api/movecard', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        // console.log('categoryId', req.body.categoryId);
-        Category.find({
-                _id: req.body.categoryId
-            })
-            .exec(function(err, category) {
-
-                var newCard = new Card({
-                    _id: req.body.TaskConstruct._id,
-                    owner: req.body.TaskConstruct.owner,
-                    title: req.body.TaskConstruct.title,
-                    category: req.body.categoryId,
-                    status: req.body.TaskConstruct.status
-                });
-                newCard.save();
                 // console.log("after user found", category);
                 // console.log("task created", newCard);
                 category[0].cards.push(newCard);
                 category[0].save();
-                // console.log("User cards", category[0].cards);
-                // // res.json(user[0].cards);
-                // console.log("request Params for Category:", req.params.categoryId);
-
+                // console.log("User cards move", category[0].cards);
+               
+                // res.json(user[0].cards);
+                // console.log("newCARD CREATED ", newCard);
                 res.json(newCard);
-
-
             });
     });
 
@@ -280,12 +300,12 @@ app.put('/api/card/:cardId', passport.authenticate('bearer', {
             new: true
         }, function(err, card) {
             if (err) {
-                console.log('cards not found: ', err);
+                // console.log('cards not found: ', err);
                 return res.status(500).json({
                     message: err
                 });
             }
-            console.log('updated card', card);
+            // console.log('updated card', card);
             res.json(card);
         });
     });
@@ -302,12 +322,11 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
         console.log('category delete', req.body.originalCategory);
         console.log('_id delete', req.params.cardId);
         Card.findOneAndRemove({
-                category: req.body.originalCategory,
                 _id: req.params.cardId
             })
             .exec(function(err, card) {
                 if (err) {
-                    console.log('cards not found: ', err);
+                    // console.log('cards not found: ', err);
                     return res.status(500).json({
                         message: err
                     });
@@ -319,7 +338,7 @@ app.delete('/api/card/:cardId', passport.authenticate('bearer', {
 
 
 
-app.post('/api/objective/', passport.authenticate('bearer', {
+app.post('/api/objective', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -331,14 +350,14 @@ app.post('/api/objective/', passport.authenticate('bearer', {
                     res.send("Error has occured");
                 } else {
                     var newObjective = new Objective({
-                        owner: req.user,
+                        owner: req.user._id,
                         title: req.body.title,
                         cards: [],
                         status: 'active'
                     });
                     newObjective.save();
-                    console.log("after project found", project);
-                    console.log("objective created", newObjective);
+                    // console.log("after project found", project);
+                    // console.log("objective created", newObjective);
                     project.objectives.push(newObjective);
                     project.save();
                     // console.log("User cards", project.objectives);
@@ -380,7 +399,7 @@ app.put('/api/objective/:objectiveId', passport.authenticate('bearer', {
             new: true
         }, function(err, objective) {
             if (err) {
-                console.log('objective not found: ', err);
+                // console.log('objective not found: ', err);
                 return res.status(500).json({
                     message: err
                 });
@@ -430,7 +449,7 @@ app.get('/api/user/project', passport.authenticate('bearer', {
             if (err) {
                 res.send("Error has occured");
             } else {
-                console.log("projects found", projects);
+                // console.log("projects found", projects);
                 res.json(projects);
             }
         });
@@ -447,14 +466,14 @@ app.post('/api/project/create', passport.authenticate('bearer', {
                 owner: req.user.fullName
             })
             .exec(function(err, project) {
-                console.log('project', project);
+                // console.log('project', project);
                 var newProject = new Card({
                     owner: req.user.fullName,
                     title: req.body.title,
                     objectives: []
                 });
                 newProject.save();
-                console.log('newProject', newProject);
+                // console.log('newProject', newProject);
                 res.json(req.user);
             });
     });
@@ -497,7 +516,7 @@ app.put('/api/project/:projectId', passport.authenticate('bearer', {
             new: true
         }, function(err, project) {
             if (err) {
-                console.log('project not found: ', err);
+                // console.log('project not found: ', err);
                 return res.status(500).json({
                     message: err
                 });

@@ -3,6 +3,7 @@ var actions = require('../actions/overviewActions');
 var cardActions = require('../actions/CardCategoriesActions');
 var cardConstants = require('../constants/CardCategoriesConstants');
 var update = require('react-addons-update');
+var cardList = require('./CardCategoriesReducer');
 
 var initialState = {
     projectTitle: "",
@@ -11,11 +12,12 @@ var initialState = {
     isOpen: false,
     objectiveId: '',
     isObjectiveOpen: false
+
 };
 
 var overviewReducer = function(state, action) {
     state = state || initialState;
-
+    
     if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
         var newState = Object.assign({}, state, {
             projectTitle: action.data.title,
@@ -25,17 +27,24 @@ var overviewReducer = function(state, action) {
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
         return action.error;
     } else if (action.type === cardConstants.POST_CARD_SUCCESS) {
+        console.log("assignedTo", action.data.assignedTo);
+        console.log("userId", action.data.owner);
         var newObjectives = state.objectives.map(function(objective, index) {
+            console.log('post card overview reducer', objective._id)
             if (objective._id != action.data.objective) {
                 return objective;
             } else {
+                console.log('concat post card to objective worked');
                 return Object.assign({}, objective, {
                     cards: objective.cards.concat(action.data)
                 });
             }
         });
+
+
         state = Object.assign({}, state, {
-            objectives: newObjectives
+            objectives: newObjectives,
+          
         });
         return state;
 

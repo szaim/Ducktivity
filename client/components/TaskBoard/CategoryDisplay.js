@@ -96,8 +96,8 @@ var CategoryDisplay = React.createClass({
 
 var mapStateToProps = function(state, props) {
 	return {
-    categories: state.cardList.categories || [],
-    userId: state.cardList.userId
+    categories: state.cardList.categories || []
+
 	}
 };
 
