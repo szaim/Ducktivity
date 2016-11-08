@@ -45,7 +45,8 @@ var CategoryDisplay = React.createClass({
         title: card.title,
         category: category._id,
         subtask: card.subtask,
-        status: 'active'
+        status: 'active',
+        assignedTo: card.assignedTo
       };
 
       console.log('delete cardId', TaskConstruct._id);
