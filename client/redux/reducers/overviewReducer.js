@@ -19,9 +19,23 @@ var overviewReducer = function(state, action) {
     state = state || initialState;
 
     if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
+        console.log("FETCH_PROJECT_SUCCESS")
+        var activeObjectives = action.data.objectives.map(function(objective, index) {
+            var cards = [];
+            for (var i = 0; i < objective.cards.length; i++) {
+                if (objective.cards[i].status != 'deleted') {
+                    console.log('objective cards',objective.cards[i]);
+                    cards.push(objective.cards[i]);
+                }
+            }
+            return Object.assign({}, objective, {
+                cards: cards
+            });
+             });
+             console.log(activeObjectives);
         var newState = Object.assign({}, state, {
             projectTitle: action.data.title,
-            objectives: action.data.objectives
+            objectives: activeObjectives
         });
         return newState;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
