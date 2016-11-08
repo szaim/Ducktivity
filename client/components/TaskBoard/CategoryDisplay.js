@@ -38,20 +38,14 @@ var CategoryDisplay = React.createClass({
   if(category._id == card.category) {
   return;
   }
-  
-      var TaskConstruct = {
-        _id: card._id,
-        owner: card.owner,
-        title: card.title,
-        category: category._id,
-        subtask: card.subtask,
-        status: 'active',
-        assignedTo: card.assignedTo
-      };
+      
+    var TaskConstruct = Object.assign({}, card, 
+      {status: 'active', category: category._id}
+    );
 
       console.log('delete cardId', TaskConstruct._id);
        console.log('delete original categoryId', card.category);
-      this.props.dispatch(actions.moveCard(TaskConstruct, category._id));
+      this.props.dispatch(actions.postCard(TaskConstruct));
       this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
     },
 

@@ -73,7 +73,7 @@ var OverviewObjectivePanel = React.createClass({
             this.props.dispatch(actions.closeModal());
         } else {
             console.log('data to reducer', TaskConstruct, this.props.categoryId[1]._id)
-            this.props.dispatch(CardActions.postCard(TaskConstruct, this.props.objectiveId));
+            this.props.dispatch(CardActions.postCard(TaskConstruct));
             // this.props.dispatch(CardActions.moveCard(TaskConstruct, TaskConstruct.category));
             this.props.dispatch(actions.closeModal());
         }

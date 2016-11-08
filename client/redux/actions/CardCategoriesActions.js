@@ -35,7 +35,7 @@ var fetchUser = function() {
    }
 };
 
-var postCard = function(TaskConstruct, objectiveId) {
+var postCard = function(TaskConstruct) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
        var url = '/api/card';
@@ -43,8 +43,7 @@ var postCard = function(TaskConstruct, objectiveId) {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          TaskConstruct: TaskConstruct,
-          objectiveId: objectiveId
+          TaskConstruct: TaskConstruct
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
@@ -67,40 +66,6 @@ var postCard = function(TaskConstruct, objectiveId) {
        });
    }
 };
-
-var moveCard = function(TaskConstruct, categoryId) {
-   return function(dispatch) {
-    var token = Cookies.get('accessToken');
-       var url = '/api/movecard';
-       return fetch(url, {
-        method: 'post',
-        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
-        body: JSON.stringify({
-          TaskConstruct: TaskConstruct,
-          categoryId: categoryId
-        })
-      }).then(function(response) {
-           if (response.status < 200 || response.status >= 300) {
-               var error = new Error(response.statusText);
-               error.response = response;
-               throw error;
-           }
-           return response.json(); 
-       })
-       .then(function(data) {
-               console.log("MOVE DATA", data);
-           return dispatch(
-               Constants.moveCardSuccess(data)
-           );
-       })
-       .catch(function(error) {
-           return dispatch(
-               Constants.moveCardError(error)
-           );
-       });
-   }
-};
-
 
 //UPDATE + DELETE TASK DATA ACTION
 var updateCards = function(CardConstruct) {
@@ -181,4 +146,4 @@ exports.fetchUser = fetchUser;
 exports.postCard = postCard;
 exports.updateCards = updateCards;
 exports.deleteCard = deleteCard;
-exports.moveCard = moveCard;
+

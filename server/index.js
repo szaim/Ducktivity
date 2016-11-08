@@ -207,7 +207,7 @@ app.post('/api/card', passport.authenticate('bearer', {
 
         category = _category;
         return Objective.findOne({
-             _id: req.body.objectiveId
+             _id: req.body.TaskConstruct.objective
         }).exec()
     }).then(function(_objective) {
         if (!_objective) {
@@ -221,7 +221,7 @@ app.post('/api/card', passport.authenticate('bearer', {
             category: req.body.TaskConstruct.category,
             status: req.body.TaskConstruct.status,
             assignedTo: req.body.TaskConstruct.assignedTo,
-            objective: req.body.objectiveId
+            objective: req.body.TaskConstruct.objective
         });
         return newCard.save();
     }).then(function(_card) {
@@ -249,38 +249,6 @@ app.post('/api/card', passport.authenticate('bearer', {
         return res.status(500).send(err.message);
     });
 });
-
-// POST FOR THE  MOVE CARDS
-app.post('/api/movecard', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        // console.log('categoryId', req.body.categoryId);
-        Category.find({
-                _id: req.body.categoryId
-            })
-            .exec(function(err, category) {
-                var newCard = new Card({
-                    owner: req.body.TaskConstruct.owner,
-                    title: req.body.TaskConstruct.title,
-                    category: req.body.categoryId,
-                    status: req.body.TaskConstruct.status,
-                    assignedTo: req.body.TaskConstruct.assignedTo,
-                    objective: req.body.TaskConstruct.objective
-                });
-                newCard.save();
-                // console.log("after user found", category);
-                // console.log("task created", newCard);
-                category[0].cards.push(newCard);
-                category[0].save();
-                // console.log("User cards move", category[0].cards);
-               
-                // res.json(user[0].cards);
-                // console.log("newCARD CREATED ", newCard);
-                res.json(newCard);
-            });
-    });
-
 
 /*Update Card Delete STATUS */
 //TODO: Refactor using User instead Directly the Card --> Quicker
