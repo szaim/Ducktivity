@@ -24,19 +24,21 @@ var CardCategoriesReducer = function(state, action) {
         return action.error
     } 
     else if (action.type === Constants.POST_CARD_SUCCESS) {
-        var categories = state.categories.map(function(category) {
-            if (category._id !== action.data.category) {
-                return category;
-            } else {
-                return Object.assign({}, category, {
-                    cards: category.cards.concat(action.data)
-                })
-            }
-        })
-        state = Object.assign({}, state, {
-            categories: categories
-        });
+        if(action.data.assignedTo == state.userId) {
+            var categories = state.categories.map(function(category) {
+                if (category._id !== action.data.category) {
+                    return category;
+                } else {
+                    return Object.assign({}, category, {
+                        cards: category.cards.concat(action.data)
+                    })
+                }
+            })
+            state = Object.assign({}, state, {
+                categories: categories
+            });
 
+        }
         return state;
     }
 

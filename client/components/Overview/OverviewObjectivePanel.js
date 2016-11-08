@@ -63,7 +63,7 @@ var OverviewObjectivePanel = React.createClass({
             var TaskConstruct = {
                 owner: this.props.userId,
                 title: newCardTitle,
-                category: "581a61888a1d7406d96a815b",
+                category: this.props.categoryId[1]._id,
                 assignedTo: cardAssignedTo,
                 status: 'active',
                 objective: this.props.objectiveId
