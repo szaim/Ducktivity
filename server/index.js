@@ -319,7 +319,7 @@ app.post('/api/objective', passport.authenticate('bearer', {
     }),
     function(req, res) {
         Project.findOne({
-                title: req.body.projectTitle
+                _id: req.body.projectId
             })
             .exec(function(err, project) {
                 if (err) {
@@ -417,7 +417,7 @@ app.delete('/api/objective/:objectiveId', passport.authenticate('bearer', {
 
 // get Project List
 // may need to adjust to get specific user projects only***
-app.get('/api/user/project', passport.authenticate('bearer', {
+app.get('/api/user/projects', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -455,120 +455,49 @@ app.post('/api/project', passport.authenticate('bearer', {
     });
 
 
-app.get('/api/project/objectives/:projectId', passport.authenticate('bearer', {
+app.get('/api/project/:projectId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         Project.findOne({
                 _id: req.params.projectId
-            }).populate({
-                path: 'objectives',
-                populate: {
-                    path: 'cards',
-                    model: 'Card'
-                }
-            })
+            }).populate('objectives')
             .exec(function(err, project) {
                 if (err) {
                     res.send("Error has occured");
                 } else {
-                    res.json(project);
-                }
-            });
-    });
-
-app.get('/api/project/categories/:projectId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Project.findOne({
-                _id: req.params.projectId
-            }).populate({
-                path: 'categories',
-                populate: {
-                    path: 'cards',
-                    model: 'Card'
-                }
-            })
-            .exec(function(err, user) {
-                if (err) {
-                    res.send("Error has occured");
-                } else{
-                    // console.log("user.cards", req.user.categories);
-
-                    for (var i = req.user.categories.length; i--;) {
-                        for (var j = req.user.categories[i].cards.length; j--;) {
-                            if (req.user.categories[i].cards[j].status == "deleted") {
-                                req.user.categories[i].cards.splice(j, 1);
-                                // console.log("usercards", req.user.categories);
-                                // return user.cards
-                            }
+                    for (var i = project.objectives.length; i--;) {
+                        if (project.objectives[i].status == "deleted") {
+                          project.objectives.splice(i, 1);
+                            // console.log("usercards", req.user.categories);
+                            // return user.cards
                         }
+                      
                     }
-                    res.json(req.user);
+                    res.json(project)
                 }
             });
     });
 
-app.put('/api/project/:projectId', passport.authenticate('bearer', {
-        session: false
-    }),
-    function(req, res) {
-        Project.update({
-            _id: req.params.projectId
-        }, {
-            $set: {
-                owner: req.body.owner,
-                title: req.body.title
-            }
-        }, {
-            new: true
-        }, function(err, project) {
-            if (err) {
-                // console.log('project not found: ', err);
-                return res.status(500).json({
-                    message: err
-                });
-            }
-            res.json({
-                project
-            });
-        });
-    });
 
-app.delete('/api/project/:projectId', passport.authenticate('bearer', {
+app.delete('/api/project/:project', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
-        Project.findOne({
-            _id: req.params.projectId
-        }).populate({
-            path: 'objectives',
-            populate: {
-                path: 'cards',
-                model: 'Card'
-            }
-        }).exec(function(err, project) {
-            if (project) {
-                for (var i = 0; i < project.objectives.length; i++) {
-                    project.objectives[i].status = "deleted";
-                    project.objectives[i].save();
-                    for (var j = 0; j < project.objectives.cards.length; j++) {
-                        project.objectives.cards[j].status = "deleted";
-                        project.objectives.cards[j].save();
-                    }
+        console.log('_id delete', req.params.project);
+        Project.findOneAndRemove({
+                _id: req.params.project
+            })
+            .exec(function(err, project) {
+                if (err) {
+                    // console.log('cards not found: ', err);
+                    return res.status(500).json({
+                        message: err
+                    });
                 }
-                project.save();
-            }
-        }).then(
-            Project.findOneAndRemove({
-                _id: req.params.projectId
-            })
-            .exec(function(err, category) {
+                res.json(project);
+            });
 
-                res.json({
-                    message: 'Project removed!'
-                });
-            })
-        );
     });
+
+

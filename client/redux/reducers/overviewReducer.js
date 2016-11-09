@@ -2,11 +2,13 @@ var Constants = require('../constants/overviewConstants');
 var actions = require('../actions/overviewActions');
 var cardActions = require('../actions/CardCategoriesActions');
 var cardConstants = require('../constants/CardCategoriesConstants');
+var projectConstants = require('../constants/projectConstants');
 var update = require('react-addons-update');
 var cardList = require('./CardCategoriesReducer');
 
 var initialState = {
     projectTitle: "",
+    projectId: '',
     objectives: [],
     users: [],
     isOpen: false,
@@ -18,8 +20,15 @@ var initialState = {
 var overviewReducer = function(state, action) {
     state = state || initialState;
 
-    if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
-
+    if (action.type === projectConstants.FETCH_PROJECT_SUCCESS) {
+        if(action.data == null) {
+            var newState = Object.assign({}, state, {
+                projectId: null,
+                projectTitle: "",
+                objectives: []
+            });
+        return newState;
+        };
         console.log("FETCH_PROJECT_SUCCESS")
         var activeObjectives = action.data.objectives.map(function(objective, index) {
             var cards = [];
@@ -35,11 +44,12 @@ var overviewReducer = function(state, action) {
              });
              console.log(activeObjectives);
         var newState = Object.assign({}, state, {
+            projectId: action.data._id,
             projectTitle: action.data.title,
             objectives: activeObjectives
         });
         return newState;
-    } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
+    } else if (action.type === projectConstants.FETCH_PROJECT_ERROR) {
         return action.error;
     } 
     else if (action.type === cardConstants.POST_CARD_SUCCESS) {
@@ -69,22 +79,15 @@ var overviewReducer = function(state, action) {
     } 
     else if (action.type === cardConstants.DELETE_CARD_SUCCESS) {
          var objectives = state.objectives.map(function(objective, index) {
-            // console.log('action data update', action.data);
-            // console.log('status', action.data.status);
-            // console.log('action.data._id', action.data._id);
             if (action.data.objective == objective._id) {
                 for (var i = 0; i < objective.cards.length; i++) {
                     if (objective.cards[i]._id == action.data._id) {
-                        // console.log('category cards', category.cards);
-                        // console.log('updated category', category.cards[i]);
-                        // console.log('i index', i);
                         objective.cards.splice(i, 1);
                     }
                 }
             }
             return objective;
         });
-        // console.log('categories!!', categories);
 
         state = Object.assign({}, state, {
             objectives: objectives
@@ -176,9 +179,9 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.POST_OBJECTIVE_ERROR) {
-        console.log("POST OBJECTIVE IN REDUCER Error: ", action.data);
+        console.log("POST OBJECTIVE IN REDUCER Error: ", action.error);
 
-        return state;
+        return action.error;
     } else if (action.type === Constants.DELETE_OBJECTIVE_SUCCESS) {
       console.log(action.data, "Object Id when deleted!! REDUCER");
 

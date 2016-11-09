@@ -7,7 +7,7 @@ var connect = require('react-redux').connect;
 var NewProject = React.createClass({
 
 componentDidMount: function() {
-  this.props.dispatch(actions.getProject());
+  this.props.dispatch(actions.getProjects());
 },
 
 submitProject: function(event) {
@@ -28,10 +28,22 @@ onSelect: function() {
    //run action to fetch selected dropdown project
   console.log('this was selected', this.refs.selectedProject.value);
   
-  this.props.dispatch(actions.fetchProjectCategories(this.refs.selectedProject.value));
-  this.props.dispatch(overviewActions.fetchProject(this.refs.selectedProject.value));
-},
+  // this.props.dispatch(actions.fetchProjectCategories(this.refs.selectedProject.value));
+  this.props.dispatch(actions.fetchProject(this.refs.selectedProject.value));
 
+},
+onDelete: function() {
+
+	if(confirm('Are you sure you want to delete?')) {
+		this.props.dispatch(actions.deleteProject(this.refs.selectedProject.value));
+		console.log('deleted projectlist', this.props.projectList);
+		var nextProject = this.props.projectList.find((project)=>{
+			return project._id !== this.refs.selectedProject.value;
+		})||{};
+		this.props.dispatch(actions.fetchProject(nextProject._id));
+	}
+
+},
  render: function(){
     if(this.props.projectList){
       var projects = this.props.projectList.map(function(project, index){
@@ -52,11 +64,11 @@ onSelect: function() {
           <button type='submit' onClick={this.submitProject}>Create Project</button>
         </span>
         <h5>Select Project:</h5>
-        <select ref="selectedProject" onSelect={this.onSelect}>
+        <select ref="selectedProject" value={this.props.activeProjectId} onChange={this.onSelect}>
           {projects}
         </select>
-        <span>
-          <button type='submit' onClick={this.onSelect}>Go</button>
+         <span>
+          <button type='submit' onClick={this.onDelete}>Delete</button>
         </span>
       
       </form>
@@ -77,7 +89,7 @@ onSelect: function() {
 var mapStateToProps = function(state, props) {
 	return {
     projectList: state.projectList.projects || [],
-    categories: state.cardList.categories || []
+    activeProjectId: state.overview.projectId
 	}
 };
 
