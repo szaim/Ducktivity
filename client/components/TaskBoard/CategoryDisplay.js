@@ -6,7 +6,8 @@ import { Draggable, Droppable } from 'react-drag-and-drop';
 var CardList = require('./CardList');
 var ProgressBar = require('./ProgressBar');
 
- var percent;
+
+var percent;
 
 var CategoryDisplay = React.createClass({
 
@@ -32,66 +33,10 @@ var CategoryDisplay = React.createClass({
      
       this.props.dispatch(actions.postCard(TaskConstruct));
       this.props.dispatch(actions.deleteCard(TaskConstruct._id, card.category));
-     
-          // this.props.categories[0].cards.filter((card)=> {
-          //   console.log("this.props.activeObjectiveIds", this.props.activeObjectiveIds)
-          //   this.props.activeObjectiveIds.indexOf(card.objective) != -1
-          //   console.log('card', card)
-          //   return (
-          //     blocked = card.length;
-          //     )
-          
-  
-          // })
-    // var newArr = [];
-    // var counter = 0;
-    // var completed = 0;
-    // for (var i = 0 ; i < this.props.categories.length; i++) {
-    //   var resultArr = this.props.categories[i].cards.filter((card)=>{
-    //       return this.props.activeObjectiveIds.indexOf(card.objective) != -1;
-        
-    //     })
-    //   console.log("resultArr.length", resultArr.length)
-    //   counter += resultArr.length
-    // }
-
-    
-    //    var completedArr = this.props.categories[3].cards.filter((card)=>{
-    //       return this.props.activeObjectiveIds.indexOf(card.objective) != -1;
-        
-    //     })
-    //   console.log("completedArr.length", completedArr.length)
-     
-    //   completed += completedArr.length
-
-    //     if ((completed + 1) == counter ) {
-    //     completed ++
-    //    }
-      
-    // console.log("counter", counter)
-    //  console.log("completed", completed)
-
-
-
-    //   percent = Math.ceil(parseInt((completed / counter) * 100));
-
-    // // if(completed === (counter - completed)) {
-    // //     percent = 50;
-    // //   }
-    // // if (counter == completed) {
-    // //   percent = 100;
-    // // }
-
-    // // if (counter === 0) {
-    // //     percent = 100;
-    // //   }
-     
-     
-     
+       
     },
 
     percent: function() {
- var newArr = [];
     var counter = 0;
     var completed = 0;
     for (var i = 0 ; i < this.props.categories.length; i++) {
@@ -108,25 +53,23 @@ var CategoryDisplay = React.createClass({
           return this.props.activeObjectiveIds.indexOf(card.objective) != -1;
         
         })
-      console.log("completedArr.length", completedArr.length)
+      // console.log("completedArr.length", completedArr.length)
      
       completed += completedArr.length
       
-    console.log("counter", counter)
-     console.log("completed", completed)
-
-
-
+      // console.log("counter", counter)
+      // console.log("completed", completed)
       percent = Math.ceil(parseInt((completed / counter) * 100));
+
     },
 
  render: function(){
-  console.log('percent', percent);
+  // console.log('percent', percent);
   if(this.props.categories){
     var displayCategories = this.props.categories.map((data, index)=> {
      return (
         <div className="task-list-container" key={index}>
-        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this,data)}>
+        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
         <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
             </div>
