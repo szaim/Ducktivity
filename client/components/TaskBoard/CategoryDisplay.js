@@ -35,7 +35,7 @@ var CategoryDisplay = React.createClass({
  render: function(){
   if(this.props.categories){
     var displayCategories = this.props.categories.map((data, index)=> {
-     return (
+     return (      
         <div className="task-list-container" key={index}>
         <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)}>
         <h1 className="category-option-container">{data.title}</h1>
@@ -55,6 +55,8 @@ var CategoryDisplay = React.createClass({
 
    return (
      <div className='category-container'>
+    <div className="progressBar-wrapper"> Progress Bar here</div>
+     
      <div className='task-categories'>
      {displayCategories}
      </div>

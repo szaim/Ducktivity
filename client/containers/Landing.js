@@ -12,8 +12,6 @@ var Landing = function(){
 		
 		<div className="projectList-wrapper"><NewProject/> </div>
 
-		<div className="progressBar-wrapper"> Progress Bar here</div>
-
 		<div className="taskBoard-wrapper"> <TaskBoard/> </div>
 
 			
