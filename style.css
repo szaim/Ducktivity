@@ -1,3 +1,6 @@
+body {
+  background-color: #0891E8;
+} 
 .taskBoard-wrapper {
   border: 2px solid red;
   width: 65%;
@@ -18,23 +21,47 @@
   float: right;
 }
 
-.add-card-message, .delete-objective-message, .add-objective-message {
-  display: none;
+ /* ToolTip  Icons Style*/
+ .add-objective {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px; 
+
+ }
+ .add-objective .add-objective-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.add-objective .add-objective-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
-.add-card:hover + .add-card-message {
-  // position: absolute;
-  display: block;
-  // z-index: 2000;
+.add-objective:hover .add-objective-message{
+    visibility: visible;
+    opacity: 1;
 }
 
-.delete-objective:hover + .delete-objective-message {
-  display: block; 
-}
-
-.add-objective:hover + .add-objective-message {
-  display: block;
-}
 .projectList-wrapper{
   border: 2px solid green;
   width: 35%;

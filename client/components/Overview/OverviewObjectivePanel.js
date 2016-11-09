@@ -138,10 +138,9 @@ var OverviewObjectivePanel = React.createClass({
             console.log('objective cards', objective.cards);
             return (
                 <Panel header={<span> {objective.title}
-                    <button className = 'add-card' onClick = {openTheModal.bind(objective)}><span className="ion-android-add-circle"></span></button>
-                    <div className="add-card-message">add a card</div>
-                    <button className ='delete-objective' onClick = {deleteTheObjective.bind(objective)}><span className="ion-android-cancel"></span></button>
-                    <div className="delete-objective-message">delete Objective</div>
+                   <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message">add a card</span></div>
+                   <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message">delete Objective</span></div>
+                    
                     </span>} key={index}>
                     {/*End Header Start Panel Content */}
                     <p>Description Objective here</p>
@@ -157,8 +156,7 @@ var OverviewObjectivePanel = React.createClass({
                 width: 350
             }}>
                 {this.props.projectTitle}
-                <button className ='add-objective' onClick={this.openObjectiveModal}><span className="ion-android-add-circle"></span></button>
-                <div className="add-objective-message">add Objective</div>
+                <div className="add-objective ion-android-add-circle" onClick={this.openObjectiveModal}><span className="add-objective-message">add Objective</span></div>
                 <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
                     {objectivePanel}
                 </Collapse>
