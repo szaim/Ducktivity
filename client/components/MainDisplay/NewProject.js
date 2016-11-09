@@ -27,7 +27,7 @@ if(!this.refs.projectTitle.value) {
 onSelect: function() {
    //run action to fetch selected dropdown project
   console.log('this was selected', this.refs.selectedProject.value);
-  
+
   // this.props.dispatch(actions.fetchProjectCategories(this.refs.selectedProject.value));
   this.props.dispatch(actions.fetchProject(this.refs.selectedProject.value));
 
@@ -57,24 +57,24 @@ onDelete: function() {
 
    return (
     <div className="Form wrapper">
-      <form>
-     
-        <input placeholder='Project Title...' ref="projectTitle" />
-        <span>
-          <button type='submit' onClick={this.submitProject}>Create Project</button>
-        </span>
-        <h5>Select Project:</h5>
-        <select ref="selectedProject" value={this.props.activeProjectId} onChange={this.onSelect}>
-          {projects}
-        </select>
-         <span>
-          <button type='submit' onClick={this.onDelete}>Delete</button>
-        </span>
-      
-      </form>
-      
+        <form>
+            
+            <input placeholder='Project Title...' ref="projectTitle" />
+            <span>
+                <div className="add-project ion-compose" onClick={this.submitProject}><span className="add-project-message">Add a Project</span></div>
+            </span>
+            <h5>Select Project:</h5>
+            <select ref="selectedProject" value={this.props.activeProjectId} onChange={this.onSelect}>
+                {projects}
+            </select>
+            <span>
+                <button type='submit' onClick={this.onDelete}>Delete</button>
+            </span>
+
+        </form>
+
     </div>
- 
+
    )
  }
 
@@ -96,7 +96,3 @@ var mapStateToProps = function(state, props) {
 var Container = connect(mapStateToProps)(NewProject);
 
 module.exports = Container;
-
-
-
-
