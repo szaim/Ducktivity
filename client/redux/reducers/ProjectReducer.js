@@ -18,6 +18,8 @@ var ProjectReducer = function(state, action) {
         console.log('GET PROJECT success', state);
         return state;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
+      console.error(action.type, action.error);
+
         return state;
     } 
     else if (action.type === Constants.CREATE_PROJECT_SUCCESS) {
@@ -27,6 +29,8 @@ var ProjectReducer = function(state, action) {
         });
         return state;
     } else if (action.type === Constants.CREATE_PROJECT_ERROR) {
+      console.error(action.type, action.error);
+
         return state;
     } 
     else if (action.type === Constants.DELETE_PROJECT_SUCCESS) {
@@ -43,6 +47,8 @@ var ProjectReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.DELETE_CARD_ERROR) {
+      console.error(action.type, action.error);
+        
         return state
     } 
     // console.log('state', state);

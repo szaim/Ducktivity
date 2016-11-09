@@ -461,8 +461,13 @@ app.get('/api/project/:projectId', passport.authenticate('bearer', {
     function(req, res) {
         Project.findOne({
                 _id: req.params.projectId
-            }).populate('objectives')
-            .exec(function(err, project) {
+            }).populate({
+                path: 'objectives',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            }).exec(function(err, project) {
                 if (err) {
                     res.send("Error has occured");
                 } else {

@@ -119,52 +119,34 @@ var OverviewObjectivePanel = React.createClass({
             });
         }
         // console.log(this.props.objectives.length);
-        if (this.props.objectives || this.props.objectives.length == 0) {
-            var ModalContent = this.props.objectives.map(function(objective, index) {
-                return (
-                    <div key={index} className="model-content">
-                        <h2 ref="subtitle">Add a new Card</h2>
-                        <form>
-                            <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + objective._id}/>
-                            <label htmlFor="assign-to">Assign to:</label>
-                            <select ref={"assignTo" + objective._id}>
-                                {usersOptions}
-                            </select>
-                        </form>
-                        <button onClick={closeAndAddCard.bind(objective)}>add new Card</button>
-                    </div>
-                )
-            })
-        }
-        if (this.props.objectives) {
-            var objectivePanel = this.props.objectives.map(function(objective, index) {
-                console.log('objective cards', objective.cards);
-                return (
-                    <Panel header={<span> {objective.title}
-                        <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
-                        <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
-                        </span>} key={index}>
-                        {/*End Header Start Panel Content */}
-                        <p>Description Objective here</p>
-                        <OverviewCardPanel cards={objective.cards}/>
-                    </Panel>
-                )
-            });
-        } else if (this.props.objectives.length == 0) {
-            var objectivePanel = this.props.objectives.map(function(objective, index) {
-                console.log('objective cards', objective.cards);
-                return (
-                    <Panel header={<span> {objective.title}
-                        <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
-                        <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
-                        </span>} key={index}>
-                        {/*End Header Start Panel Content */}
-                        <p>Description Objective here</p>
-                        <OverviewCardPanel cards={objective.cards}/>
-                    </Panel>
-                )
-            });
-        }
+        var ModalContent = this.props.objectives.map(function(objective, index) {
+            return (
+                <div key={index} className="model-content">
+                    <h2 ref="subtitle">Add a new Card</h2>
+                    <form>
+                        <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + objective._id}/>
+                        <label htmlFor="assign-to">Assign to:</label>
+                        <select ref={"assignTo" + objective._id}>
+                            {usersOptions}
+                        </select>
+                    </form>
+                    <button onClick={closeAndAddCard.bind(objective)}>add new Card</button>
+                </div>
+            )
+        })
+        var objectivePanel = this.props.objectives.map(function(objective, index) {
+            console.log('objective cards', objective.cards);
+            return (
+                <Panel header={<span> {objective.title}
+                    <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
+                    <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
+                    </span>} key={index}>
+                    {/*End Header Start Panel Content */}
+                    <p>Description Objective here</p>
+                    <OverviewCardPanel cards={objective.cards}/>
+                </Panel>
+            )
+        });
         var accordion = this.state.accordion;
         var activeKey = this.state.activeKey;
         return (

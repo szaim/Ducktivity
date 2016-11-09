@@ -20,6 +20,8 @@ var CardCategoriesReducer = function(state, action) {
         });
         return state;
     } else if (action.type === ProjectConstants.FETCH_PROJECT_CATEGORIES_ERROR) {
+      console.error(action.type, action.error);
+
         return action.error;
     } 
 
@@ -32,6 +34,8 @@ var CardCategoriesReducer = function(state, action) {
         // console.log('fetch user success', state);
         return state;
     } else if (action.type === Constants.FETCH_USER_ERROR) {
+      console.error(action.type, action.error);
+
         return state
     } 
     else if (action.type === Constants.POST_CARD_SUCCESS) {
@@ -70,6 +74,8 @@ var CardCategoriesReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.DELETE_CARD_ERROR) {
+      console.error(action.type, action.error);
+
         return state
     
     } 
@@ -102,6 +108,8 @@ var CardCategoriesReducer = function(state, action) {
 
     } 
     else if (action.type === Constants.UPDATE_CARD_ERROR) {
+      console.error(action.type, action.error);
+        
         return state;
     } 
     return state;

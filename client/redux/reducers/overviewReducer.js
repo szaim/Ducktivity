@@ -50,6 +50,7 @@ var overviewReducer = function(state, action) {
         });
         return newState;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
+      console.error(action.type, action.error);
         return state;
     } else if (action.type === cardConstants.POST_CARD_SUCCESS) {
         console.log("assignedTo", action.data.assignedTo);
@@ -74,6 +75,8 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === cardConstants.POST_CARD_ERROR) {
+      console.error(action.type, action.error);
+
         return state;
     } 
     else if (action.type === cardConstants.DELETE_CARD_SUCCESS) {
@@ -94,6 +97,8 @@ var overviewReducer = function(state, action) {
 
         return state;
     } else if (action.type === cardConstants.DELETE_CARD_ERROR) {
+      console.error(action.type, action.error);
+
         return state;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
@@ -133,6 +138,10 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
+      console.error(action.type, action.error);
+
+        console.log(action.error);
+
         return state;
     } else if (action.type === Constants.FETCH_USERS_SUCCESS) {
         console.log("users arrived to REDUCER", action.data);
@@ -143,6 +152,9 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.FETCH_USERS_ERROR) {
+      console.error(action.type, action.error);
+
+
         return state;
     } else if (action.type === actions.OPEN_MODAL) {
         console.log("users arrived to REDUCER", action.data);
@@ -178,13 +190,14 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.POST_OBJECTIVE_ERROR) {
-        console.log("POST OBJECTIVE IN REDUCER Error: ", action.error);
+      console.error(action.type, action.error);
 
-        return action.error;
+
+        return state;
     } else if (action.type === Constants.DELETE_OBJECTIVE_SUCCESS) {
       console.log(action.data, "Object Id when deleted!! REDUCER");
 
-          var new3Objectives = state.objectives;
+          var new3Objectives = state.objectives.concat();
                 for (var i = 0; i < new3Objectives.length; i++) {
                     if ( new3Objectives[i]._id == action.data) {
                         new3Objectives.splice(i, 1);
@@ -200,7 +213,8 @@ var overviewReducer = function(state, action) {
             
 
     } else if (action.type === Constants.DELETE_OBJECTIVE_ERROR) {
-        console.log("DELETE OBJECTIVE IN REDUCER Error: ", action.data);
+      console.error(action.type, action.error);
+
 
         return state;
     }
