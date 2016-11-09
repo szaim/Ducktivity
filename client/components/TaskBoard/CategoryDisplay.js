@@ -39,6 +39,7 @@ var CategoryDisplay = React.createClass({
     percent: function() {
     var counter = 0;
     var completed = 0;
+    
     for (var i = 0 ; i < this.props.categories.length; i++) {
       var resultArr = this.props.categories[i].cards.filter((card)=>{
           return this.props.activeObjectiveIds.indexOf(card.objective) != -1;

@@ -4,7 +4,7 @@ var Line = require("rc-progress").Line;
 var ProgressBar = React.createClass({
 	render: function() {
 		var containerStyle = {
-			width: '250px',
+			width: '300px',
 		};
 		return (
 	        <div style={containerStyle}>
