@@ -433,24 +433,24 @@ app.get('/api/user/project', passport.authenticate('bearer', {
 
 
 // POST FOR THE CARDS
-app.post('/api/project/create', passport.authenticate('bearer', {
+app.post('/api/project', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
         // console.log('categoryId', req.body.categoryId);
-        User.find({
-                owner: req.user.fullName
-            })
+        Project.find()
             .exec(function(err, project) {
                 // console.log('project', project);
-                var newProject = new Card({
-                    owner: req.user.fullName,
+                var newProject = new Project({
+                    owner: req.user._id,
                     title: req.body.title,
                     objectives: []
                 });
                 newProject.save();
+                project.push(newProject);
+
                 // console.log('newProject', newProject);
-                res.json(req.user);
+                res.json(newProject);
             });
     });
 

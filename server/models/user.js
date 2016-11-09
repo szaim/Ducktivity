@@ -11,7 +11,6 @@ var UserBoard = new mongoose.Schema({
     type: String
   },
   categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
-  Project: {type: Schema.Types.ObjectId, ref: 'Project'},
   userType: {
   	type: String,
   	Default: "Project Manager"
