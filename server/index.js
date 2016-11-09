@@ -456,7 +456,7 @@ app.post('/api/project/create', passport.authenticate('bearer', {
     });
 
 
-app.get('/api/project/:projectId', passport.authenticate('bearer', {
+app.get('/api/project/objectives/:projectId', passport.authenticate('bearer', {
         session: false
     }),
     function(req, res) {
@@ -474,6 +474,39 @@ app.get('/api/project/:projectId', passport.authenticate('bearer', {
                     res.send("Error has occured");
                 } else {
                     res.json(project);
+                }
+            });
+    });
+
+app.get('/api/project/categories/:projectId', passport.authenticate('bearer', {
+        session: false
+    }),
+    function(req, res) {
+        Project.findOne({
+                _id: req.params.projectId
+            }).populate({
+                path: 'categories',
+                populate: {
+                    path: 'cards',
+                    model: 'Card'
+                }
+            })
+            .exec(function(err, user) {
+                if (err) {
+                    res.send("Error has occured");
+                } else{
+                    // console.log("user.cards", req.user.categories);
+
+                    for (var i = req.user.categories.length; i--;) {
+                        for (var j = req.user.categories[i].cards.length; j--;) {
+                            if (req.user.categories[i].cards[j].status == "deleted") {
+                                req.user.categories[i].cards.splice(j, 1);
+                                // console.log("usercards", req.user.categories);
+                                // return user.cards
+                            }
+                        }
+                    }
+                    res.json(req.user);
                 }
             });
     });

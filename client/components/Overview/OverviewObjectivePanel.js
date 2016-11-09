@@ -22,7 +22,7 @@ var customStyles = {
 
 var OverviewObjectivePanel = React.createClass({
     componentDidMount: function() {
-        this.props.dispatch(actions.fetchProject('581b92369273743a75b84f90'))
+        // this.props.dispatch(actions.fetchProject('581b92369273743a75b84f90'))
         this.props.dispatch(actions.fetchUsers())
     },
     getInitialState: function() {

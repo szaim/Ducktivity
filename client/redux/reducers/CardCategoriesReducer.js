@@ -1,17 +1,29 @@
 var Constants = require('../constants/CardCategoriesConstants');
+var OverviewConstants = require('../constants/overviewConstants');
+var ProjectConstants = require('../constants/projectConstants');
 var update = require('react-addons-update');
 
 var initialState = {
     categories: [],
     userId: "",
-    updateCardId: '',
-    objectives: []
+    updateCardId: ''
+
 };
 
 var CardCategoriesReducer = function(state, action) {
     state = state || initialState;
 
-    if (action.type === Constants.FETCH_USER_SUCCESS) {
+    if (action.type === ProjectConstants.FETCH_PROJECT_CATEGORIES_SUCCESS) {
+        console.log('Card Categories fetch project action data', action.data);
+        var state = Object.assign({}, state, {
+           categories: action.data.categories
+        });
+        return state;
+    } else if (action.type === ProjectConstants.FETCH_PROJECT_CATEGORIES_ERROR) {
+        return action.error;
+    } 
+
+    else if (action.type === Constants.FETCH_USER_SUCCESS) {
         // console.log("add USER success in reducer", action.data.categories)
         state = Object.assign({}, state, {
             categories: action.data.categories,

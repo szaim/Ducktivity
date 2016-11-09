@@ -13,7 +13,7 @@ var fetchProject = function(projectId) {
     var headers = new Headers({
         Authorization: 'bearer ' + token
       });
-       var url = '/api/project/'+projectId;
+       var url = '/api/project/objectives/'+projectId;
        return fetch(url, {headers: headers}).then(function(response) {
            if (response.status < 200 || response.status >= 300) {
                var error = new Error(response.statusText);
@@ -35,6 +35,8 @@ var fetchProject = function(projectId) {
        });
    }
 };
+
+
 
 var fetchUsers = function() {
    return function(dispatch) {

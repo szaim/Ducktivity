@@ -19,14 +19,15 @@ var overviewReducer = function(state, action) {
     state = state || initialState;
     
     if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
-        var newState = Object.assign({}, state, {
+        state = Object.assign({}, state, {
             projectTitle: action.data.title,
             objectives: action.data.objectives
         });
-        return newState;
+        return state;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
         return action.error;
-    } else if (action.type === cardConstants.POST_CARD_SUCCESS) {
+    } 
+    else if (action.type === cardConstants.POST_CARD_SUCCESS) {
         console.log("assignedTo", action.data.assignedTo);
         console.log("userId", action.data.owner);
         var newObjectives = state.objectives.map(function(objective, index) {
