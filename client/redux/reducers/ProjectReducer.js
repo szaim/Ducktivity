@@ -23,6 +23,10 @@ var ProjectReducer = function(state, action) {
     } 
     else if (action.type === Constants.CREATE_PROJECT_SUCCESS) {
         console.log("post PROJECT success in reducer", action.data);
+        state = Object.assign({}, state, {
+            projects: state.projects.concat(action.data)
+        })
+
         return state;
     } else if (action.type === Constants.CREATE_PROJECT_ERROR) {
         return action.error;

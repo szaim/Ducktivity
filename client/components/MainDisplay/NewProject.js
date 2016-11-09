@@ -18,6 +18,7 @@ if(!this.refs.projectTitle.value) {
 } else {
   //create new project action
     console.log('project title ref', this.refs.projectTitle.value);
+    this.props.dispatch(actions.createProject(this.refs.projectTitle.value));
     this.refs.projectTitle.value = '';
 }
 

@@ -72,16 +72,16 @@ var fetchProjectCategories = function(projectId) {
        });
    }
 };
-var createProject = function(projectTitle, owner) {
+var createProject = function(projectTitle) {
    return function(dispatch) {
     var token = Cookies.get('accessToken');
-       var url = '/api/project/create';
+       var url = '/api/project';
        return fetch(url, {
         method: 'post',
         headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
         body: JSON.stringify({
-          projectTitle: projectTitle,
-          owner: owner
+          projectTitle: projectTitle
+          
         })
       }).then(function(response) {
            if (response.status < 200 || response.status >= 300) {

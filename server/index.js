@@ -443,7 +443,7 @@ app.post('/api/project', passport.authenticate('bearer', {
                 // console.log('project', project);
                 var newProject = new Project({
                     owner: req.user._id,
-                    title: req.body.title,
+                    title: req.body.projectTitle,
                     objectives: []
                 });
                 newProject.save();
