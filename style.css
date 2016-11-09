@@ -21,7 +21,7 @@ body {
   float: right;
 }
 
- /* ToolTip  Icons Style*/
+ /* ToolTip Icons Style*/
 
  /* Objective Tooltip */
  .add-objective {
@@ -148,7 +148,91 @@ body {
     opacity: 1;
 }
 
- /*  */
+ /* delete Card Tooltip */
+
+  .edit-card {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px; 
+
+ }
+ .edit-card .edit-card-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.edit-card .edit-card-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    // border-color: #555 transparent transparent transparent;
+}
+
+.edit-card:hover .edit-card-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+ /* delete Card Tooltip */
+
+  .delete-card {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px; 
+
+ }
+ .delete-card .delete-card-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.delete-card .delete-card-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    // border-color: #555 transparent transparent transparent;
+}
+
+.delete-card:hover .delete-card-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+/* */
 .projectList-wrapper{
   border: 2px solid green;
   width: 35%;

@@ -45,8 +45,8 @@ var CardDetail = React.createClass({
 	  return (
 	
 	    <li className="task-item" >
-	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3><div type='submit' onClick={this.editable}>{this.state.buttonAction}</div>
-	      <button className='delete-task-button' type='submit' onClick={this.props.handleCardDelete}>Delete</button>
+	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3><div className='edit-card ion-android-create' type='submit' onClick={this.editable}><span className="edit-card-message">Edit Card</span></div>
+	      <div className='delete-card ion-android-delete' type='submit' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>
 	    </li>
 	   
 
