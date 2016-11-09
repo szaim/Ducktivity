@@ -119,7 +119,7 @@ var OverviewObjectivePanel = React.createClass({
                 )
             });
         }
-        console.log(this.props.objectives.length);
+        // console.log(this.props.objectives.length);
         if (this.props.objectives || this.props.objectives.length == 0) {
             var ModalContent = this.props.objectives.map(function(objective, index) {
                 return (

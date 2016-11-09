@@ -39,7 +39,7 @@ var overviewReducer = function(state, action) {
         });
         return newState;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
-        return action.error;
+        return state;
     } else if (action.type === cardConstants.POST_CARD_SUCCESS) {
         console.log("assignedTo", action.data.assignedTo);
         console.log("userId", action.data.owner);
@@ -63,7 +63,7 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === cardConstants.POST_CARD_ERROR) {
-        return action.error;
+        return state;
     } 
     else if (action.type === cardConstants.DELETE_CARD_SUCCESS) {
          var objectives = state.objectives.map(function(objective, index) {
@@ -90,7 +90,7 @@ var overviewReducer = function(state, action) {
 
         return state;
     } else if (action.type === cardConstants.DELETE_CARD_ERROR) {
-        return action.error;
+        return state;
     } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
 
@@ -129,7 +129,7 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
-        return action.error;
+        return state;
     } else if (action.type === Constants.FETCH_USERS_SUCCESS) {
         console.log("users arrived to REDUCER", action.data);
         state = Object.assign({}, state, {
@@ -139,7 +139,7 @@ var overviewReducer = function(state, action) {
         return state;
 
     } else if (action.type === Constants.FETCH_USERS_ERROR) {
-        return action.error;
+        return state;
     } else if (action.type === actions.OPEN_MODAL) {
         console.log("users arrived to REDUCER", action.data);
         state = Object.assign({}, state, {
