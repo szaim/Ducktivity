@@ -17,7 +17,6 @@ var CardCategoriesReducer = function(state, action) {
             categories: action.data.categories,
             userId: action.data._id
         });
-
         // console.log('fetch user success', state);
         return state;
     } else if (action.type === Constants.FETCH_USER_ERROR) {
@@ -74,25 +73,6 @@ var CardCategoriesReducer = function(state, action) {
         return action.error
     
     } 
-    else if (action.type === Constants.MOVE_CARD_SUCCESS) {
-        var categories = state.categories.map(function(category) {
-            if (category._id !== action.data.category) {
-                return category;
-            } else {
-                return Object.assign({}, category, {
-                    cards: category.cards.concat(action.data)
-                })
-            }
-        })
-        state = Object.assign({}, state, {
-            categories: categories
-        });
-
-        return state;
-
-    } else if (action.type === Constants.MOVE_CARD_ERROR) {
-        return action.error;
-    }
     else if (action.type === Constants.UPDATE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
             console.log('action data update', action.data);

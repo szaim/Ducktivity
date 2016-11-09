@@ -101,6 +101,35 @@ var postObjective = function(objectiveTitle, projectTitle) {
    }
 };
 
+var deleteObjective = function(objectiveId) {
+   return function(dispatch) {
+    var token = Cookies.get('accessToken');
+       var url = '/api/objective/' + objectiveId;
+       return fetch(url, {
+        method: 'delete',
+        headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+      }).then(function(response) {
+           if (response.status < 200 || response.status >= 300) {
+               var error = new Error(response.statusText);
+               error.response = response;
+               throw error;
+           }
+           return response.json(); 
+       })
+       .then(function(data) {
+               console.log("Delete OBJECTIVE", data);
+           return dispatch(
+               Constants.deleteObjectiveSuccess(objectiveId)
+           );
+       })
+       .catch(function(error) {
+           return dispatch(
+               Constants.deleteObjectiveError(error)
+           );
+       });
+   }
+};
+
 
 var OPEN_MODAL = 'OPEN_MODAL';
 var openModal = function(data) {
@@ -136,6 +165,8 @@ exports.fetchProject = fetchProject;
 exports.fetchUsers = fetchUsers;
 
 exports.postObjective = postObjective;
+exports.deleteObjective = deleteObjective;
+
 
 exports.OPEN_MODAL = OPEN_MODAL;
 exports.openModal = openModal;

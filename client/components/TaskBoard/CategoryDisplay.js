@@ -12,23 +12,6 @@ var CategoryDisplay = React.createClass({
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
   },
-  handleAddCard: function(data, event) {
-    event.preventDefault();
-    var cardId = data._id;
-    var val = this.refs['card-add-' +cardId].value
-    var TaskConstruct = {
-      owner: data.owner,
-      title: val,
-      category: data.title,
-      subtask: data.subtask,
-      status: 'active' ,
-      objective: '581b99035626253e933a2f85'
-    }
-    this.props.dispatch(actions.postCard(TaskConstruct, cardId));
-    this.refs['card-add-' + cardId].value = "";
-  },
-
-
 
   onDrop: function(category, card) {
 
@@ -57,8 +40,6 @@ var CategoryDisplay = React.createClass({
         <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)}>
         <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
-            <input  key={index} ref={'card-add-'+ data._id}  type='text' />
-            <button type='submit' onClick={this.handleAddCard.bind(this, data)}>Add Task</button>
             </div>
             <CardList 
             cardsData={data.cards} 
