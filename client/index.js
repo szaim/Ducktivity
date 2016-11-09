@@ -5,6 +5,8 @@ var Provider = require("react-redux").Provider;
 var store = require("./redux/store");
 var routes = require("./Routes");
 require("../style.css");
+require("../css/ionicons.css");
+
 // var App = require("./containers/App");
 // var TaskBoard = require('./containers/TaskBoard');
 

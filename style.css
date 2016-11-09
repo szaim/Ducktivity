@@ -12,8 +12,33 @@
   float: left;
 }
 
-.projectList-wrapper{
+.progressBar-wrapper{
+  border: 2px solid purple;
+  width: 65%;
+  float: right;
+}
 
+.add-card-message, .delete-objective-message, .add-objective-message {
+  display: none;
+}
+
+.add-card:hover + .add-card-message {
+  // position: absolute;
+  display: block;
+  // z-index: 2000;
+}
+
+.delete-objective:hover + .delete-objective-message {
+  display: block; 
+}
+
+.add-objective:hover + .add-objective-message {
+  display: block;
+}
+.projectList-wrapper{
+  border: 2px solid green;
+  width: 35%;
+  float: left;
 }
 .task-list-container {
 

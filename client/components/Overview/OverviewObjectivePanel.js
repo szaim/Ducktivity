@@ -138,8 +138,10 @@ var OverviewObjectivePanel = React.createClass({
             console.log('objective cards', objective.cards);
             return (
                 <Panel header={<span> {objective.title}
-                    <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
-                    <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
+                    <button className = 'add-card' onClick = {openTheModal.bind(objective)}><span className="ion-android-add-circle"></span></button>
+                    <div className="add-card-message">add a card</div>
+                    <button className ='delete-objective' onClick = {deleteTheObjective.bind(objective)}><span className="ion-android-cancel"></span></button>
+                    <div className="delete-objective-message">delete Objective</div>
                     </span>} key={index}>
                     {/*End Header Start Panel Content */}
                     <p>Description Objective here</p>
@@ -155,13 +157,14 @@ var OverviewObjectivePanel = React.createClass({
                 width: 350
             }}>
                 {this.props.projectTitle}
-                <button onClick={this.openObjectiveModal}>Add Objective</button>
+                <button className ='add-objective' onClick={this.openObjectiveModal}><span className="ion-android-add-circle"></span></button>
+                <div className="add-objective-message">add Objective</div>
                 <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
                     {objectivePanel}
                 </Collapse>
                 {this.props.isOpen
                     ? <div>
-                        <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeModal} style={customStyles}>
+                        <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={closeAndAddCard} style={customStyles}>
                             <h2 ref="subtitle">Add a new Card</h2>
                             <form onSubmit={closeAndAddCard.bind(this.props.objectiveId)} >
                                 <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
