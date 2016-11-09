@@ -92,6 +92,12 @@ var OverviewObjectivePanel = React.createClass({
             taskInputActive: !this.state.taskInputActive
         })
     },
+    deleteObjective: function(objective, event){
+        event.preventDefault();
+        event.stopPropagation();
+        console.log("delete Method!", objective._id);
+        this.props.dispatch(actions.deleteObjective(objective._id));
+    },
     render: function() {
         var that = this;
         var activateTaskInput = function(event) {
@@ -103,6 +109,9 @@ var OverviewObjectivePanel = React.createClass({
         var openTheModal = function(event) {
             that.openModal(this, event);
         }
+        var deleteTheObjective = function(event) {
+            that.deleteObjective(this, event);
+        }
         if (this.props.users) {
             var usersOptions = this.props.users.map(function(user, index) {
                 return (
@@ -110,7 +119,8 @@ var OverviewObjectivePanel = React.createClass({
                 )
             });
         }
-        if (this.props.objectives) {
+        console.log(this.props.objectives.length);
+        if (this.props.objectives || this.props.objectives.length == 0) {
             var ModalContent = this.props.objectives.map(function(objective, index) {
                 return (
                     <div key={index} className="model-content">
@@ -132,7 +142,23 @@ var OverviewObjectivePanel = React.createClass({
                 console.log('objective cards', objective.cards);
                 return (
                     <Panel header={<span> {objective.title}
-                        <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button></span>} key={index}>
+                        <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
+                        <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
+                        </span>} key={index}>
+                        {/*End Header Start Panel Content */}
+                        <p>Description Objective here</p>
+                        <OverviewCardPanel cards={objective.cards}/>
+                    </Panel>
+                )
+            });
+        } else if (this.props.objectives.length == 0) {
+            var objectivePanel = this.props.objectives.map(function(objective, index) {
+                console.log('objective cards', objective.cards);
+                return (
+                    <Panel header={<span> {objective.title}
+                        <button className = 'add-card' onClick = {openTheModal.bind(objective)}>Add Card</button>
+                        <button className = 'delete-objective' onClick = {deleteTheObjective.bind(objective)}>delete Objective</button>
+                        </span>} key={index}>
                         {/*End Header Start Panel Content */}
                         <p>Description Objective here</p>
                         <OverviewCardPanel cards={objective.cards}/>

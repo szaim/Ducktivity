@@ -44,6 +44,21 @@ var postObjectiveError = function(error) {
     };
 };
 
+var DELETE_OBJECTIVE_SUCCESS = 'DELETE_OBJECTIVE_SUCCESS';
+var deleteObjectiveSuccess = function(data) {
+    console.log(data, "delete objective in sync action ");
+    return {
+        type: DELETE_OBJECTIVE_SUCCESS,
+        data: data
+    };
+};
+var DELETE_OBJECTIVE_ERROR= 'DELETE_OBJECTIVE_ERROR';
+var deleteObjectiveError = function(error) {
+    return {
+        type: DELETE_OBJECTIVE_ERROR,
+        error: error
+    };
+};
 
 exports.FETCH_PROJECT_SUCCESS = FETCH_PROJECT_SUCCESS;
 exports.fetchProjectSuccess = fetchProjectSuccess;
@@ -59,3 +74,8 @@ exports.POST_OBJECTIVE_SUCCESS = POST_OBJECTIVE_SUCCESS;
 exports.postObjectiveSuccess = postObjectiveSuccess;
 exports.POST_OBJECTIVE_ERROR = POST_OBJECTIVE_ERROR;
 exports.postObjectiveError = postObjectiveError;
+
+exports.DELETE_OBJECTIVE_SUCCESS = DELETE_OBJECTIVE_SUCCESS;
+exports.deleteObjectiveSuccess = deleteObjectiveSuccess;
+exports.DELETE_OBJECTIVE_ERROR = DELETE_OBJECTIVE_ERROR;
+exports.deleteObjectiveError = deleteObjectiveError;

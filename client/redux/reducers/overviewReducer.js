@@ -17,13 +17,28 @@ var initialState = {
 
 var overviewReducer = function(state, action) {
     state = state || initialState;
-    
+
     if (action.type === Constants.FETCH_PROJECT_SUCCESS) {
-        state = Object.assign({}, state, {
+
+        console.log("FETCH_PROJECT_SUCCESS")
+        var activeObjectives = action.data.objectives.map(function(objective, index) {
+            var cards = [];
+            for (var i = 0; i < objective.cards.length; i++) {
+                if (objective.cards[i].status != 'deleted') {
+                    console.log('objective cards',objective.cards[i]);
+                    cards.push(objective.cards[i]);
+                }
+            }
+            return Object.assign({}, objective, {
+                cards: cards
+            });
+             });
+             console.log(activeObjectives);
+        var newState = Object.assign({}, state, {
             projectTitle: action.data.title,
-            objectives: action.data.objectives
+            objectives: activeObjectives
         });
-        return state;
+        return newState;
     } else if (action.type === Constants.FETCH_PROJECT_ERROR) {
         return action.error;
     } 
@@ -31,7 +46,7 @@ var overviewReducer = function(state, action) {
         console.log("assignedTo", action.data.assignedTo);
         console.log("userId", action.data.owner);
         var newObjectives = state.objectives.map(function(objective, index) {
-            console.log('post card overview reducer', objective._id)
+            console.log('post card overview reducer', objective._id);
             if (objective._id != action.data.objective) {
                 return objective;
             } else {
@@ -45,7 +60,7 @@ var overviewReducer = function(state, action) {
 
         state = Object.assign({}, state, {
             objectives: newObjectives,
-          
+
         });
         return state;
 
@@ -76,55 +91,43 @@ var overviewReducer = function(state, action) {
         });
 
         return state;
-    }
-
-    else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
+    } else if (action.type === cardConstants.DELETE_CARD_ERROR) {
+        return action.error;
+    } else if (action.type === cardConstants.UPDATE_CARD_SUCCESS) {
         console.log('overview update hit');
 
-
-        var new1Objectives = state.objectives.map(function(objective, index) {
-            console.log('action data update', action.data);
-            // console.log('status', action.data.status);
-            // console.log('action.data._id', action.data._id);
-
-            if ('deleted' == action.data.status) {
+        if ('deleted' == action.data.status) {
+            var new1Objectives = state.objectives.map(function(objective, index) {
                 for (var i = 0; i < objective.cards.length; i++) {
-                    // console.log('looking for objective id', objective.cards[i]._id);
                     if (objective.cards[i]._id == action.data._id) {
-                        // console.log('objective cards', objective.cards);
-                        // console.log('updated objective', objective.cards[i]);
-                        // console.log('i index', i);
                         objective.cards.splice(i, 1);
                     }
                 }
-                console.log('objective!!', objective);
-
                 return objective;
-
                 state = Object.assign({}, state, {
                     objectives: new1Objectives
                 });
-            }
-            // else {
-        //         console.log('updating the card title hit');
-        // var updatedTitleCard;
-        //         for (var i = 0; i < objective.cards.length; i++) {
-        //             if (objective.cards[i]._id == action.data._id) {
-        //                 updatedTitleCard = objective.cards[i].title = action.data.title;
-        //                 return update(state, {
-        //                     objectives: {
-        //                         cards: {
-        //                             [action.data._id]: {
-        //                                 $set: action.data
-        //                             }
-        //                         }
-        //                     }
-        //                 })
-        //             }
-        //         }
-        //     }
+            });
 
-        });
+        } else {
+            var new2Objectives = state.objectives.map(function(objective) {
+                if (objective._id !== action.data.objective) {
+                    return objective;
+                }
+                var updatedCards = objective.cards.map(function(card) {
+                    if (card._id !== action.data._id) {
+                        return card;
+                    }
+                    return action.data;
+                });
+                 return Object.assign({}, objective, {
+                      cards: updatedCards
+                  });
+            });
+            state = Object.assign({}, state, {
+                objectives: new2Objectives
+            });
+        }
         return state;
 
     } else if (action.type === cardConstants.UPDATE_CARD_ERROR) {
@@ -174,6 +177,28 @@ var overviewReducer = function(state, action) {
 
     } else if (action.type === Constants.POST_OBJECTIVE_ERROR) {
         console.log("POST OBJECTIVE IN REDUCER Error: ", action.data);
+
+        return state;
+    } else if (action.type === Constants.DELETE_OBJECTIVE_SUCCESS) {
+      console.log(action.data, "Object Id when deleted!! REDUCER");
+
+          var new3Objectives = state.objectives;
+                for (var i = 0; i < new3Objectives.length; i++) {
+                    if ( new3Objectives[i]._id == action.data) {
+                        new3Objectives.splice(i, 1);
+                    }
+                }
+                console.log(new3Objectives, "new3Objectives");
+            var newState = Object.assign({}, state, {
+                    objectives: new3Objectives
+                });
+                console.log(state, "state");
+
+        return newState;
+            
+
+    } else if (action.type === Constants.DELETE_OBJECTIVE_ERROR) {
+        console.log("DELETE OBJECTIVE IN REDUCER Error: ", action.data);
 
         return state;
     }

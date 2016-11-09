@@ -29,7 +29,6 @@ var CardCategoriesReducer = function(state, action) {
             categories: action.data.categories,
             userId: action.data._id
         });
-
         // console.log('fetch user success', state);
         return state;
     } else if (action.type === Constants.FETCH_USER_ERROR) {
