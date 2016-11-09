@@ -22,7 +22,6 @@ var customStyles = {
 
 var OverviewObjectivePanel = React.createClass({
     componentDidMount: function() {
-        this.props.dispatch(actions.fetchProject('581b92369273743a75b84f90'))
         this.props.dispatch(actions.fetchUsers())
     },
     getInitialState: function() {
@@ -33,11 +32,11 @@ var OverviewObjectivePanel = React.createClass({
     },
     closeAndAddObjective: function(event) {
         event.preventDefault();
-        var newObjectiveTitle = this.refs["objectiveTitle" + this.props.projectTitle].value;
+        var newObjectiveTitle = this.refs["objectiveTitle" + this.props.projectId].value;
         if (!newObjectiveTitle) {
             this.props.dispatch(actions.closeObjectiveModal());
         } else {
-            this.props.dispatch(actions.postObjective(newObjectiveTitle, this.props.projectTitle));
+            this.props.dispatch(actions.postObjective(newObjectiveTitle, this.props.projectId));
             this.props.dispatch(actions.closeObjectiveModal());
         }
     },
@@ -198,7 +197,7 @@ var OverviewObjectivePanel = React.createClass({
                         <Modal isOpen={that.props.isObjectiveOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeAndAddObjective} style={customStyles}>
                             <h2 ref="subtitle">Add a New Objective</h2>
                             <form onSubmit={this.closeAndAddObjective}>
-                                <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectTitle}/>
+                                <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectId}/>
                             </form>
                             <button onClick={this.closeAndAddObjective}>add new Objective</button>
                         </Modal>
@@ -212,6 +211,7 @@ var OverviewObjectivePanel = React.createClass({
 var mapStateToProps = function(state, props) {
     console.log("state in overview", state);
     return {
+        projectId: state.overview.projectId,
         projectTitle: state.overview.projectTitle,
         objectives: state.overview.objectives,
         userId: state.cardList.userId,

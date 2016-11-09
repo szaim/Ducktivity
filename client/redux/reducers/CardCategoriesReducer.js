@@ -1,17 +1,29 @@
 var Constants = require('../constants/CardCategoriesConstants');
+var OverviewConstants = require('../constants/overviewConstants');
+var ProjectConstants = require('../constants/projectConstants');
 var update = require('react-addons-update');
 
 var initialState = {
     categories: [],
     userId: "",
-    updateCardId: '',
-    objectives: []
+    updateCardId: ''
+
 };
 
 var CardCategoriesReducer = function(state, action) {
     state = state || initialState;
 
-    if (action.type === Constants.FETCH_USER_SUCCESS) {
+    if (action.type === ProjectConstants.FETCH_PROJECT_CATEGORIES_SUCCESS) {
+        console.log('Card Categories fetch project action data', action.data);
+        var state = Object.assign({}, state, {
+           categories: action.data.categories
+        });
+        return state;
+    } else if (action.type === ProjectConstants.FETCH_PROJECT_CATEGORIES_ERROR) {
+        return action.error;
+    } 
+
+    else if (action.type === Constants.FETCH_USER_SUCCESS) {
         // console.log("add USER success in reducer", action.data.categories)
         state = Object.assign({}, state, {
             categories: action.data.categories,
@@ -40,29 +52,17 @@ var CardCategoriesReducer = function(state, action) {
         }
         return state;
     }
-
-    // } else if (action.type === Constants.POST_CARD_ERROR) {
-    //     return state;
-    // } 
     else if (action.type === Constants.DELETE_CARD_SUCCESS) {
          var categories = state.categories.map(function(category, index) {
-            // console.log('action data update', action.data);
-            // console.log('status', action.data.status);
-            // console.log('action.data._id', action.data._id);
             if (action.data.category == category._id) {
                 for (var i = 0; i < category.cards.length; i++) {
                     if (category.cards[i]._id == action.data._id) {
-                        // console.log('category cards', category.cards);
-                        // console.log('updated category', category.cards[i]);
-                        // console.log('i index', i);
                         category.cards.splice(i, 1);
                     }
                 }
             }
             return category;
         });
-        // console.log('categories!!', categories);
-
         state = Object.assign({}, state, {
             categories: categories
         });
@@ -81,11 +81,7 @@ var CardCategoriesReducer = function(state, action) {
             
             if ('deleted' == action.data.status) {
                 for (var i = 0; i < category.cards.length; i++) {
-                    // console.log('looking for category id', category.cards[i]._id);
                     if (category.cards[i]._id == action.data._id) {
-                        
-                        // console.log('updated category', category.cards[i]);
-                        // console.log('i index', i);
                         category.cards.splice(i, 1);
 
 
@@ -97,11 +93,8 @@ var CardCategoriesReducer = function(state, action) {
             return category;
 
         });
-        // console.log('categories!!', categories);
-
         state = Object.assign({}, state, {
             categories: categories,
-
             updateCardId: action.data._id
         });        
 
@@ -111,7 +104,6 @@ var CardCategoriesReducer = function(state, action) {
     else if (action.type === Constants.UPDATE_CARD_ERROR) {
         return state;
     } 
-    // console.log('state', state);
     return state;
 
 };

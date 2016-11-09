@@ -41,7 +41,10 @@ var CardList = React.createClass({
  render: function(){
 
 
-  var displayCard = this.props.cardsData.map((data, index)=>{
+  var displayCard = this.props.cardsData.filter((card)=>
+      this.props.activeObjectiveIds.indexOf(card.objective) != -1
+
+    ).map((data, index)=>{
      return (
 
       <div key={index}>
@@ -67,8 +70,10 @@ var CardList = React.createClass({
 
 var mapStateToProps = function(state, props) {
 	return {  
-    categories: state.cardList.categories
-
+    categories: state.cardList.categories,
+    activeObjectiveIds: state.overview.objectives.map(function(objective) {
+      return objective._id;
+    })
 	}
 };
 

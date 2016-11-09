@@ -9,7 +9,7 @@ var TaskBoard = React.createClass({
  render: function(){
    return (
      <div className='task-board'>
-     <a href="/logout"><button className="logout-button">Logout</button></a>
+     <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8080/"><button className="logout-button">Logout</button></a>
      <CategoryDisplay />
      </div>
    )
