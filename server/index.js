@@ -63,7 +63,7 @@ passport.use(new GoogleStrategy({
 
                 }, function(err, user) {
 
-                    var categoryTitles = ['BLOCKED', 'TO DO', 'IN PROGRESS', 'COMPLETED'];
+                    var categoryTitles = ['TO DO', 'IN PROGRESS', 'BLOCKED', 'COMPLETED'];
                     var newCategory = '';
                     for (var i = 0; i < categoryTitles.length; i++) {
                         newCategory = new Category({

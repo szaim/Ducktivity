@@ -8,7 +8,7 @@ var NewProject = React.createClass({
 
 componentDidMount: function() {
   this.props.dispatch(actions.getProjects());
-  this.props.dispatch(actions.fetchProject("582347f05fb0b32276555648"));
+  this.props.dispatch(actions.fetchProject("5824a8e11f9a9e04c7c6fa4e"));
 
 },
 
