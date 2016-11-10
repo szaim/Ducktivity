@@ -11,13 +11,13 @@ var CardDetail = React.createClass({
 	  		contentEditable: false,
 	  		drag: true,
 	  		buttonAction: 'Edit',
-	  		editableIcon: 'ion-ios-compose'
+	  		editableIcon: 'ion-ios-compose',
 	  	};
 	  },
 	  editable: function(props) {
 	  	var updateCardTitle = {
 	  			  _id: this.props.cardData._id,
-			      title: $("#"+this.props.cardData._id).html(),
+			      title: $("#"+this.props.cardData._id).html().replace(/&nbsp;/gi, ''),
 			      category: this.props.cardData.category,
 			      status: 'active'
 			    }
@@ -33,7 +33,7 @@ var CardDetail = React.createClass({
 	  		this.setState({
 	  			contentEditable: false,
 	  			buttonAction: 'Edit',
-	  			editableIcon: 'ion-ios-compose'
+	  			editableIcon: 'ion-ios-compose',
 	  		});
 
 	  	this.props.dispatch(actions.updateCards(updateCardTitle));
@@ -49,9 +49,9 @@ var CardDetail = React.createClass({
 
 	  return (
 
-	    <li className="task-item" >
-			<h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3>
-			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable}>
+	    <li className="task-item" style={{display: "inlineBlock"}, {padding: 0}}>
+			<p id={this.props.cardData._id}  contentEditable={this.state.contentEditable} style={{display: "inlineBlock"}, {padding: 0}}>{this.props.title}</p>
+			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable} style={{display: "inlineBlock"}, {padding: 0}}>
 				<span className="edit-card-message">Edit Card</span>
 			</div>
 			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>

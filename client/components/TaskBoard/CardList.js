@@ -47,7 +47,7 @@ var CardList = React.createClass({
     ).map((data, index)=>{
      return (
 
-      <div key={index}>
+      <div key={index} style={{display: "inlineBlock"}, {padding: 0}}>
           <Draggable type='cards' data={JSON.stringify(data)}>
          <ul className="card-box" key={index}>
              <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
@@ -59,7 +59,7 @@ var CardList = React.createClass({
 
 
    return (
-     <div className='task-categories'>
+     <div className='task-categories' style={{display: "inlineBlock"}, {padding: 0}}>
      {displayCard}
      </div>
    )

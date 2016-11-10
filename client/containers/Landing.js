@@ -10,7 +10,7 @@ var Header = require('../components/MainDisplay/Header');
 var Landing = function(){
 	return (
 		<div>
-		<div className="container-header"><Header/> </div>
+		<div><Header/> </div>
 		<div id="landing" className="container">
 		<div className="container-left">
 		

@@ -31,9 +31,8 @@ body {
   width: 65%;
   float: right;
 }
-.logout-button {
-  float: right;
-}
+
+
 .overview-wrapper {
   border: 2px solid blue;
   width: 35%;
@@ -491,9 +490,6 @@ li {
 
 }
 
-
-   
-
 .img-logo-login {
   height: 300px;
   width: 300px;
@@ -504,4 +500,64 @@ li {
   align-self: center;
 }
 
+//HEADER----------------------------
+.container-header {
+  border: 2px solid @light-blue;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+  height: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+.img-logo-header {
+  height: 6em;
+  width: 8em;
+}
+
+.userName {
+  margin-top: 1.3em;
+  margin-left: 1.3em;
+}
+
+// avatar for the user 
+.avatar{
+  float: right;
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 30px; /* Saf3+, Chrome */
+  border-radius: 30px; /* Opera 10.5, IE 9 */
+  border: 2px solid @light-blue;
+  margin-top: 0.6em;
+  margin-right: 1.3em;
+
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-top: 4em;
+
+}
+
+.dropdown-content .logout {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin-right: 5em;
+}
+
+.dropdown-content .logout:hover {
+  background-color: #f1f1f1;
+   margin-right: 5em;
+
+}
+
+.avatarLogout:hover .dropdown-content {
+    display: block;
+}
