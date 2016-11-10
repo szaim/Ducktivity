@@ -8,22 +8,13 @@ var ProgressBar = require('./ProgressBar');
 
 
 
-
+var percent;
+var strokeColor;
 var CategoryDisplay = React.createClass({
   
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
   },
-
-   getInitialState: function() {
-      return {
-        percent: 0,
-        value: false
-      };
-    },
-
-  
-
   onDrop: function(category, card) {
 
     console.log("drop", card);
@@ -48,7 +39,7 @@ var CategoryDisplay = React.createClass({
     percent: function() {
     var counter = 0;
     var completed = 0;
-    
+
     for (var i = 0 ; i < this.props.categories.length; i++) {
       var resultArr = this.props.categories[i].cards.filter((card)=>{
           return this.props.activeObjectiveIds.indexOf(card.objective) != -1;
@@ -69,11 +60,19 @@ var CategoryDisplay = React.createClass({
       
       // console.log("counter", counter)
       // console.log("completed", completed)
-      this.setState({
-        percent: Math.ceil(parseInt((completed / counter) * 100)),
-        value: true
-      })
-     
+
+        percent = Math.ceil(parseInt((completed / counter) * 100));
+        if(counter == 0) {
+          percent = 0;
+        }
+        if(percent <= 100 && percent >= 70) {
+            strokeColor = '#85D262';
+        } else if(percent < 70 && percent >= 50) {
+            strokeColor = '#85D262';
+        } else if(percent < 50) {
+            strokeColor = '#ff0000';
+        }
+      
 
     },
 
@@ -83,7 +82,7 @@ var CategoryDisplay = React.createClass({
     var displayCategories = this.props.categories.map((data, index)=> {
      return (
         <div className="task-list-container" key={index}>
-        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)} value={this.state.value}>
+        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
         <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
             </div>
@@ -102,7 +101,7 @@ var CategoryDisplay = React.createClass({
    return (
      <div className='category-container'>
       <div> 
-        <ProgressBar percent={this.state.percent} strokeColor='#FE8C6A'/>
+        <ProgressBar percent={percent} strokeColor={strokeColor}/>
       </div>     
      <div className='task-categories'>
      {displayCategories}
