@@ -307,7 +307,7 @@ body {
 }
 .add-project .add-project-message {
    visibility: hidden;
-   width: 120px;
+   width: 100px;
    background-color: @brand-peach;
    color: @brand-black;
    text-align: center;
@@ -315,8 +315,8 @@ body {
    padding: 5px 0;
    position: absolute;
    z-index: 1;
-   bottom: -125%;
-   left: 100%;
+   bottom: -145%;
+   left: 45%;
    margin-left: 15px;
    opacity: 0;
    transition: opacity 1s;
@@ -337,10 +337,60 @@ body {
    opacity: 0.75;
 }
 
+.add-project .add-project-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
+
+/* Delete Project Tooltip */
+
+ .delete-project {
+   position: relative;
+   display: inline-block;
+   font-size: 25px;
+   padding-left: 10px;
+
+}
+.delete-project .delete-project-message {
+   visibility: hidden;
+   width: 60px;
+   background-color: @brand-peach;
+   color: @brand-black;
+   text-align: center;
+   border-radius: 6px;
+   padding: 5px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: -145%;
+   left: 45%;
+   margin-left: 15px;
+   opacity: 0;
+   transition: opacity 1s;
+}
+
+.delete-project .delete-project-message:after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+
+}
+
+.delete-project:hover .delete-project-message{
+   visibility: visible;
+   opacity: 0.80;
+}
+
+.delete-project .delete-project-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
 /* */
 .projectList-wrapper{
   border: 2px solid green;
-  width: 35%;
+  width: 100%;
   float: left;
 }
 .task-list-container {

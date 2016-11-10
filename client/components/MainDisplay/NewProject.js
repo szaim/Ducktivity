@@ -65,14 +65,14 @@ onDelete: function() {
      
         <input placeholder='Project Title...' ref="projectTitle" />
         <span>
-          <button type='submit' onClick={this.submitProject}>Create Project</button>
+        <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add a Project</p></span></div>
         </span>
         <h5>Select Project:</h5>
         <select ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
           {projects}
         </select>
          <span>
-          <button type='submit' onClick={this.onDelete}>Delete</button>
+         <div className="delete-project ion-android-cancel" onClick={this.onDelete}><span className="delete-project-message"><p>Delete</p></span></div>
         </span>
       
       </form>
