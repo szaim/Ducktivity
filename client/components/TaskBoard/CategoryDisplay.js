@@ -7,13 +7,22 @@ var CardList = require('./CardList');
 var ProgressBar = require('./ProgressBar');
 
 
-var percent;
+
 
 var CategoryDisplay = React.createClass({
-
+  
   componentDidMount: function() {
     this.props.dispatch(actions.fetchUser());
   },
+
+   getInitialState: function() {
+      return {
+        percent: 0,
+        value: false
+      };
+    },
+
+  
 
   onDrop: function(category, card) {
 
@@ -60,7 +69,11 @@ var CategoryDisplay = React.createClass({
       
       // console.log("counter", counter)
       // console.log("completed", completed)
-      percent = Math.ceil(parseInt((completed / counter) * 100));
+      this.setState({
+        percent: Math.ceil(parseInt((completed / counter) * 100)),
+        value: true
+      })
+     
 
     },
 
@@ -70,7 +83,7 @@ var CategoryDisplay = React.createClass({
     var displayCategories = this.props.categories.map((data, index)=> {
      return (
         <div className="task-list-container" key={index}>
-        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
+        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)} value={this.state.value}>
         <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
             </div>
@@ -89,7 +102,7 @@ var CategoryDisplay = React.createClass({
    return (
      <div className='category-container'>
       <div> 
-        <ProgressBar percent={percent} strokeColor='#FE8C6A'/>
+        <ProgressBar percent={this.state.percent} strokeColor='#FE8C6A'/>
       </div>     
      <div className='task-categories'>
      {displayCategories}
