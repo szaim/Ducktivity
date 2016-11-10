@@ -42,7 +42,7 @@ var overviewReducer = function(state, action) {
                 cards: cards
             });
              });
-             console.log(activeObjectives);
+             console.log("first one");
         var newState = Object.assign({}, state, {
             projectId: action.data._id,
             projectTitle: action.data.title,

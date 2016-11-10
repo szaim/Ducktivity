@@ -8,27 +8,10 @@ var NewProject = React.createClass({
 
 componentDidMount: function() {
   this.props.dispatch(actions.getProjects());
+  this.props.dispatch(actions.fetchProject("582347f05fb0b32276555648"));
+
 },
 
-    getDefaultProps: function(){
-      return {
-        multiple: false
-        /*
-        name: 'mySelect'
-        options: [
-          {
-            value: optionOne
-            label: "Option One"
-          },
-          {
-            value: optionsTwo
-            label: "Option Two",
-            selected: true,
-          }
-        ]
-         */
-      }
-    },
 
 submitProject: function(event) {
   event.preventDefault();
@@ -52,13 +35,6 @@ onSelect: function() {
   this.props.dispatch(actions.fetchProject(this.refs.selectedProject.value));
 
 },
-setDefault: function() {
-
-  
-  // this.props.dispatch(actions.fetchProjectCategories(this.refs.selectedProject.value));
-  this.props.dispatch(actions.fetchProject("582347f05fb0b32276555648"));
-
-},
 onDelete: function() {
 
 	if(confirm('Are you sure you want to delete?')) {
@@ -72,6 +48,7 @@ onDelete: function() {
 
 },
  render: function(){
+  console.log("projectId", this.props.projectId);
     if(this.props.projectList){
       var projects = this.props.projectList.map(function(project, index){
       return (
@@ -91,7 +68,7 @@ onDelete: function() {
           <button type='submit' onClick={this.submitProject}>Create Project</button>
         </span>
         <h5>Select Project:</h5>
-        <select ref="selectedProject"  value={this.props.activeProjectId} multiple={this.props.multiple} onChange={this.onSelect} >
+        <select ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
           {projects}
         </select>
          <span>
@@ -100,6 +77,7 @@ onDelete: function() {
       
       </form>
       
+
 
     </div>
 
