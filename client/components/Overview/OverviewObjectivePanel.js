@@ -137,11 +137,11 @@ var OverviewObjectivePanel = React.createClass({
         var objectivePanel = this.props.objectives.map(function(objective, index) {
             console.log('objective cards', objective.cards);
             return (
-                <Panel header={<span> {objective.title}
-                   <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message">add a card</span></div>
-                   <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message">delete Objective</span></div>
+                <Panel header={<span className='objective-header'> {objective.title}
+                    <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message">add a card</span></div>
+                    <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message">delete Objective</span></div>
 
-                    </span>} key={index}>
+                </span>} key={index}>
                     {/*End Header Start Panel Content */}
                     <OverviewCardPanel cards={objective.cards}/>
                 </Panel>
@@ -150,41 +150,43 @@ var OverviewObjectivePanel = React.createClass({
         var accordion = this.state.accordion;
         var activeKey = this.state.activeKey;
         return (
-            <div style={{
-                margin: 10,
-                width: 350
-            }}>
+            <div>
                 <div className='overview-project-title'>{this.props.projectTitle}</div>
                 <div className="add-objective ion-android-add-circle" onClick={this.openObjectiveModal}><span className="add-objective-message">add Objective</span></div>
-                <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
-                    {objectivePanel}
-                </Collapse>
-                {this.props.isOpen
-                    ? <div>
-                        <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={closeAndAddCard} style={customStyles}>
-                            <h2 ref="subtitle">Add a new Card</h2>
-                            <form onSubmit={closeAndAddCard.bind(this.props.objectiveId)} >
-                                <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
-                                <label htmlFor="assign-to">Assign to:</label>
-                                <select ref={"assignTo" + this.props.objectiveId}>
-                                    {usersOptions}
-                                </select>
-                            </form>
-                            <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>add new Card</button>
-                        </Modal>
-                    </div>
-                : null}
-                {this.props.isObjectiveOpen
-                    ? <div>
-                        <Modal isOpen={that.props.isObjectiveOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeAndAddObjective} style={customStyles}>
-                            <h2 ref="subtitle">Add a New Objective</h2>
-                            <form onSubmit={this.closeAndAddObjective}>
-                                <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectId}/>
-                            </form>
-                            <button onClick={this.closeAndAddObjective}>add new Objective</button>
-                        </Modal>
-                    </div>
-                : null}
+                <div className='objective-wrapper' style={{
+                    margin: 10,
+                    width: 350
+                }}>
+                    <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
+                        {objectivePanel}
+                    </Collapse>
+                    {this.props.isOpen
+                        ? <div>
+                            <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={closeAndAddCard} style={customStyles}>
+                                <h2 ref="subtitle">Add a new Card</h2>
+                                <form onSubmit={closeAndAddCard.bind(this.props.objectiveId)} >
+                                    <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
+                                    <label htmlFor="assign-to">Assign to:</label>
+                                    <select ref={"assignTo" + this.props.objectiveId}>
+                                        {usersOptions}
+                                    </select>
+                                </form>
+                                <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>add new Card</button>
+                            </Modal>
+                        </div>
+                    : null}
+                    {this.props.isObjectiveOpen
+                        ? <div>
+                            <Modal isOpen={that.props.isObjectiveOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeAndAddObjective} style={customStyles}>
+                                <h2 ref="subtitle">Add a New Objective</h2>
+                                <form onSubmit={this.closeAndAddObjective}>
+                                    <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectId}/>
+                                </form>
+                                <button onClick={this.closeAndAddObjective}>add new Objective</button>
+                            </Modal>
+                        </div>
+                    : null}
+                </div>
             </div>
         );
     }

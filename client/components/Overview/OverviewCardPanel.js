@@ -5,9 +5,11 @@ var OverviewCardPanel = React.createClass({
 render: function() {
   var cardPanels = this.props.cards.map(function(card, index) {
      return (
-         <div key={index} >
-             {card.title}
-             <hr/>
+         <div className='card-box' key={index} >
+
+                 {card.title}
+
+
              </div>
 
        )

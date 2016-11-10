@@ -20,7 +20,21 @@
 
 @brand-gray: #636363;
 
+.objective-header {
+    font-size: 1.3em;
+    font-weight: 500;
+}
 
+.card-box {
+    font-size: 1.05em;
+    background-color: @dark-yellow;
+    border: 3px solid @dark-yellow;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 7px 4px -4px #777;
+}
 
 body {
   background-color: @brand-blue;
@@ -36,8 +50,12 @@ body {
 }
 .overview-wrapper {
   border: 2px solid blue;
-  width: 35%;
+  width: 100%;
   float: left;
+}
+.objective-wrapper {
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 .progressBar-wrapper{
@@ -78,6 +96,7 @@ body {
     position: absolute;
     top: 100%;
     left: 50%;
+    font-size: 1em;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
@@ -99,25 +118,27 @@ body {
 
  }
  .add-card .add-card-message {
-    visibility: hidden;
-    width: 120px;
-    background-color: @brand-peach;
-    color: @brand-black;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
+     visibility: hidden;
+     font-size: 1em!important;
+     width: 120px;
+     background-color: @brand-peach;
+     color: @brand-black;
+     text-align: center;
+     border-radius: 6px;
+     padding: 5px 0;
+     position: absolute;
+     z-index: 1;
+     bottom: -125%;
+     left: 100%;
+     margin-left: 15px;
+     opacity: 0;
+     transition: opacity 1s;
  }
 
 .add-card .add-card-message:after {
     content: "";
     position: absolute;
+    font-size: 1em!important;
     top: 100%;
     left: 50%;
     margin-left: -5px;
@@ -141,20 +162,20 @@ body {
 
  }
  .delete-objective .delete-objective-message {
-    visibility: hidden;
-    width: 120px;
-    background-color: @brand-peach;
-    color: @brand-black;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
+     visibility: hidden;
+     width: 120px;
+     background-color: @brand-peach;
+     color: @brand-black;
+     text-align: center;
+     border-radius: 6px;
+     padding: 5px 0;
+     position: absolute;
+     z-index: 1;
+     bottom: -125%;
+     left: 100%;
+     margin-left: 15px;
+     opacity: 0;
+     transition: opacity 1s;
  }
 
 .delete-objective .delete-objective-message:after {
@@ -225,20 +246,20 @@ body {
 
  }
  .delete-card .delete-card-message {
-    visibility: hidden;
-    width: 120px;
-    background-color: @brand-peach;
-    color: @brand-black;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
+     visibility: hidden;
+     width: 120px;
+     background-color: @brand-peach;
+     color: @brand-black;
+     text-align: center;
+     border-radius: 6px;
+     padding: 5px 0;
+     position: absolute;
+     z-index: 1;
+     bottom: -125%;
+     left: 100%;
+     margin-left: 15px;
+     opacity: 0;
+     transition: opacity 1s;
  }
 
 .delete-card .delete-card-message:after {
@@ -386,13 +407,16 @@ body {
   // height: 38px;
   line-height: 38px;
   // text-indent: 16px;
-  color: #666;
+  color: darken(@brand-gray, 10%);
   background-color: @brand-yellow;
   cursor: pointer;
   // overflow: auto;
   border-bottom: 2px @brand-peach solid!important;
   word-wrap: break-word;
   border-radius: 7px 7px 0px 0px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 .rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
   display: inline-block;
@@ -403,15 +427,16 @@ body {
   line-height: 0;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
-  border-left: 4px solid #666;
+  border-left: 4px solid @brand-gray;
   vertical-align: middle;
   margin-right: 8px;
 }
 .rc-collapse-content {
   overflow: hidden;
-  color: #666;
+  color: darken(@brand-gray, 10%);
   padding: 0 16px;
-  background-color: lighten(@brand-yellow, 10%)
+  background-color: lighten(@brand-yellow, 10%);
+  width: 293px;
 }
 .rc-collapse-content > .rc-collapse-content-box {
   margin-top: 16px;
@@ -426,7 +451,7 @@ body {
 .rc-collapse > .rc-collapse-item-active > .rc-collapse-header .arrow {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
-  border-top: 4px solid #666;
+  border-top: 4px solid @brand-gray;
   margin-right: 6px;
 }
 
