@@ -52,9 +52,9 @@ var CardDetail = React.createClass({
 	    <li className="task-item" >
 			<h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3>
 			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable}>
-				<span className="edit-card-message">Edit Card</span>
+				<span className="edit-card-message"><p>Edit Card</p></span>
 			</div>
-			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>
+			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}><span className='delete-card-message'><p>Delete</p></span></div>
 	    </li>
 
 

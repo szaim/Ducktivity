@@ -17,6 +17,8 @@
 
 
 @brand-peach: #EE5652;
+@light-peach: #EE5652 + #111;
+
 
 @brand-gray: #636363;
 
@@ -76,12 +78,11 @@ body {
  }
  .add-objective .add-objective-message {
     visibility: hidden;
-    width: 120px;
-    background-color: @brand-peach;
+    width: 100px;
+    background-color: @light-peach;
     color: @brand-black;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
     position: absolute;
     z-index: 1;
     bottom: 125%;
@@ -90,6 +91,10 @@ body {
     opacity: 0;
     transition: opacity 1s;
  }
+.add-objective .add-objective-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
 
 .add-objective .add-objective-message:after {
     content: "";
@@ -119,13 +124,12 @@ body {
  }
  .add-card .add-card-message {
      visibility: hidden;
-     font-size: 1em!important;
-     width: 120px;
-     background-color: @brand-peach;
+     width: 80px;
+     height: 40px;
+     background-color: @light-peach;
      color: @brand-black;
      text-align: center;
      border-radius: 6px;
-     padding: 5px 0;
      position: absolute;
      z-index: 1;
      bottom: -125%;
@@ -135,6 +139,10 @@ body {
      transition: opacity 1s;
  }
 
+ .add-card .add-card-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
 .add-card .add-card-message:after {
     content: "";
     position: absolute;
@@ -164,11 +172,11 @@ body {
  .delete-objective .delete-objective-message {
      visibility: hidden;
      width: 120px;
-     background-color: @brand-peach;
+     height: 40px;
+     background-color: @light-peach;
      color: @brand-black;
      text-align: center;
      border-radius: 6px;
-     padding: 5px 0;
      position: absolute;
      z-index: 1;
      bottom: -125%;
@@ -194,6 +202,11 @@ body {
     opacity: 1;
 }
 
+.delete-objective:hover .delete-objective-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
+
  /* delete Card Tooltip */
 
   .edit-card {
@@ -205,7 +218,8 @@ body {
  }
  .edit-card .edit-card-message {
     visibility: hidden;
-    width: 120px;
+    width: 70px;
+    height: 35px;
     background-color: @brand-peach;
     color: @brand-black;
     text-align: center;
@@ -227,10 +241,12 @@ body {
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
-    border-style: solid;
-    // border-color: transparent transparent transparent transparent;
 }
 
+.edit-card .edit-card-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
 .edit-card:hover .edit-card-message{
     visibility: visible;
     opacity: 1;
@@ -247,7 +263,8 @@ body {
  }
  .delete-card .delete-card-message {
      visibility: hidden;
-     width: 120px;
+     width: 70px;
+     height: 35px;
      background-color: @brand-peach;
      color: @brand-black;
      text-align: center;
@@ -269,14 +286,16 @@ body {
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
-    border-style: solid;
-    // border-color: transparent transparent transparent transparent;
 }
 
 .delete-card:hover .delete-card-message{
     visibility: visible;
     opacity: 1;
 }
+.delete-card:hover .delete-card-message > p {
+  font-size: 0.5em;
+  font-weight: 700;
+} 
 
 /* Add Project Tooltip */
 
@@ -311,8 +330,7 @@ body {
    left: 50%;
    margin-left: -5px;
    border-width: 5px;
-   border-style: solid;
-   border-color: transparent transparent transparent transparent;
+
 }
 
 .add-project:hover .add-project-message{
@@ -404,13 +422,10 @@ body {
   border-top: none;
 }
 .rc-collapse > .rc-collapse-item > .rc-collapse-header {
-  // height: 38px;
-  line-height: 38px;
-  // text-indent: 16px;
+  // line-height: 38px;
   color: darken(@brand-gray, 10%);
   background-color: @brand-yellow;
   cursor: pointer;
-  // overflow: auto;
   border-bottom: 2px @brand-peach solid!important;
   word-wrap: break-word;
   border-radius: 7px 7px 0px 0px;
