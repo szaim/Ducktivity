@@ -10,7 +10,8 @@ var CardDetail = React.createClass({
 	  	return {
 	  		contentEditable: false,
 	  		drag: true,
-	  		buttonAction: 'Edit'
+	  		buttonAction: 'Edit',
+	  		editableIcon: 'ion-ios-compose'
 	  	};
 	  },
 	  editable: function(props) {
@@ -22,13 +23,18 @@ var CardDetail = React.createClass({
 			    }
 			    console.log('updateCardTitle', updateCardTitle);
 			    console.log('jquery', $("#"+this.props.cardData._id).html())
+		if(this.state.buttonAction == 'Edit'){
+	  		this.setState({
+	  			editableIcon: 'ion-ios-locked'
+	  		});
+
+		}
 	  	if(this.state.buttonAction == 'Save') {
 	  		this.setState({
 	  			contentEditable: false,
-	  			buttonAction: 'Edit'
+	  			buttonAction: 'Edit',
+	  			editableIcon: 'ion-ios-compose'
 	  		});
-	  		
-			    
 
 	  	this.props.dispatch(actions.updateCards(updateCardTitle));
 
@@ -39,13 +45,15 @@ var CardDetail = React.createClass({
 	  	});
 	  }
 	},
-	
 	  render: function() {
 
 	  return (
 	
 	    <li className="task-item" >
-	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3><div className='edit-card ion-android-create' type='submit' onClick={this.editable}><span className="edit-card-message">Edit Card</span></div>
+	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3>
+	     <div className={'edit-card '+ this.state.editableIcon} type='submit' onClick={this.editable}>
+	     <span className="edit-card-message">Edit Card</span>
+	     </div>
 	      <div className='delete-card ion-android-delete' type='submit' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>
 	    </li>
 	   
