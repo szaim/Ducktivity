@@ -47,7 +47,7 @@ if(!this.refs.projectTitle.value) {
 onSelect: function() {
    //run action to fetch selected dropdown project
   console.log('this was selected', this.refs.selectedProject.value);
-  
+
   // this.props.dispatch(actions.fetchProjectCategories(this.refs.selectedProject.value));
   this.props.dispatch(actions.fetchProject(this.refs.selectedProject.value));
 
@@ -91,7 +91,7 @@ onDelete: function() {
           <button type='submit' onClick={this.submitProject}>Create Project</button>
         </span>
         <h5>Select Project:</h5>
-        <select ref="selectedProject" options={this.setDefault()} value={this.props.activeProjectId} multiple={this.props.multiple} onChange={this.onSelect} >
+        <select ref="selectedProject"  value={this.props.activeProjectId} multiple={this.props.multiple} onChange={this.onSelect} >
           {projects}
         </select>
          <span>
@@ -100,8 +100,9 @@ onDelete: function() {
       
       </form>
       
+
     </div>
- 
+
    )
  }
 
@@ -123,7 +124,3 @@ var mapStateToProps = function(state, props) {
 var Container = connect(mapStateToProps)(NewProject);
 
 module.exports = Container;
-
-
-
-

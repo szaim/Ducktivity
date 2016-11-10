@@ -80,7 +80,7 @@ var CategoryDisplay = React.createClass({
   // console.log('percent', percent);
   if(this.props.categories){
     var displayCategories = this.props.categories.map((data, index)=> {
-     return (
+     return (      
         <div className="task-list-container" key={index}>
         <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
         <h1 className="category-option-container">{data.title}</h1>
@@ -103,6 +103,8 @@ var CategoryDisplay = React.createClass({
       <div> 
         <ProgressBar percent={percent} strokeColor={strokeColor}/>
       </div>     
+    <div className="progressBar-wrapper"> Progress Bar here</div>
+     
      <div className='task-categories'>
      {displayCategories}
      </div>
