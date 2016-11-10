@@ -140,7 +140,7 @@ var OverviewObjectivePanel = React.createClass({
                 <Panel header={<span> {objective.title}
                    <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message">add a card</span></div>
                    <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message">delete Objective</span></div>
-                    
+
                     </span>} key={index}>
                     {/*End Header Start Panel Content */}
                     <OverviewCardPanel cards={objective.cards}/>
@@ -154,7 +154,7 @@ var OverviewObjectivePanel = React.createClass({
                 margin: 10,
                 width: 350
             }}>
-                {this.props.projectTitle}
+                <div className='overview-project-title'>{this.props.projectTitle}</div>
                 <div className="add-objective ion-android-add-circle" onClick={this.openObjectiveModal}><span className="add-objective-message">add Objective</span></div>
                 <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
                     {objectivePanel}
