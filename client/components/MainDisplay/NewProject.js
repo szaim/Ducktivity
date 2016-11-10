@@ -61,7 +61,7 @@ onDelete: function() {
             
             <input placeholder='Project Title...' ref="projectTitle" />
             <span>
-                <div className="add-project ion-compose" onClick={this.submitProject}><span className="add-project-message">Add a Project</span></div>
+                <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message">Add a Project</span></div>
             </span>
             <h5>Select Project:</h5>
             <select ref="selectedProject" value={this.props.activeProjectId} onChange={this.onSelect}>

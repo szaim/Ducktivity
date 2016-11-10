@@ -143,7 +143,6 @@ var OverviewObjectivePanel = React.createClass({
                     
                     </span>} key={index}>
                     {/*End Header Start Panel Content */}
-                    <p>Description Objective here</p>
                     <OverviewCardPanel cards={objective.cards}/>
                 </Panel>
             )
