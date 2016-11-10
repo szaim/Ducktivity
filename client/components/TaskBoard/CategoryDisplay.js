@@ -82,8 +82,8 @@ var CategoryDisplay = React.createClass({
     var displayCategories = this.props.categories.map((data, index)=> {
      return (      
         <div className="task-list-container" key={index}>
-        <Droppable types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
-        <h1 className="category-option-container">{data.title}</h1>
+        <Droppable className="Droppable" types={['cards']} onDrop={this.onDrop.bind(this, data)} onClick={this.percent(this)}>
+            <h1 className="category-option-container">{data.title}</h1>
             <div className="input-task">
             </div>
             <CardList 

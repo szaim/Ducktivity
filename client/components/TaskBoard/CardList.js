@@ -46,12 +46,11 @@ var CardList = React.createClass({
 
     ).map((data, index)=>{
      return (
-
-      <div key={index}>
+      <div className="draggable-item" key={index}>
           <Draggable type='cards' data={JSON.stringify(data)}>
-         <ul className="card-box" key={index}>
+         <div className="card-container" key={index}>
              <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
-         </ul>
+         </div>
          </Draggable>
       </div>
        );

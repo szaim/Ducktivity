@@ -394,18 +394,17 @@ body {
   float: left;
 }
 .task-list-container {
-
 	display: -webkit-flex;
-   display: flex;
-   -webkit-align-items: center;
-   align-items: center;
-   -webkit-justify-content: center;
-   justify-content: center;
-   -webkit-flex-flow: column wrap;
-   flex-flow: column wrap;
-   -webkit-align-content: center;
-   align-content: center;
-	width: 20%;
+ display: flex;
+ -webkit-align-items: center;
+ align-items: center;
+ -webkit-justify-content: center;
+ justify-content: center;
+ -webkit-flex-flow: column wrap;
+ flex-flow: column wrap;
+ -webkit-align-content: center;
+ align-content: center;
+	width: 23%;
 	margin-right: 0;
 	margin-left: 0;
 	// padding:  0.5em 1em 0.5em 1em;
@@ -429,9 +428,9 @@ body {
    -webkit-align-content: flex-start;
    align-content: flex-start;
 	padding: 0.5em 1em 0.5em 1em;
-	// border: solid green 2px;
-	margin: 11px;
+	margin: 0 auto;
 	width: 70%;
+  // height: 2em;
 }
 
 .task-item h3 {
@@ -448,7 +447,7 @@ body {
    flex-flow: row wrap;
    -webkit-align-content: flex-start;
    align-content: flex-start;
-	// border: solid blue 2px;
+	// border: solid pink 2px;
 	flex-direction: row;
 	width: 100%;
 	order: 2;
@@ -535,16 +534,43 @@ li {
 
 .task-list-container h1 {
     font-family: @title-font;
-    font-size: 1.5em;
+    text-align: center;
+    font-size: 1.3em;
+    border-bottom: solid 1px @brand-yellow;
+    border-radius: 7px 7px 0 0;
+    background-color: @brand-yellow;
+    margin-top: 0;
 }
 
+.task-list-container {
+  background-color: darken(@brand-blue, 10%);
+  border-radius: 7px 7px 7px 7px;
+  width: 15em;
+}
 .overview-project-title {
     display: inline-block;
     font-family: @title-font;
     font-size: 1.5em;
 }
 
-//App
+.Droppable {
+    margin: 0;
+    width: 100%;
+}
+
+.draggable-item {
+  border: 5px solid blue;
+  width: 90%;
+
+}
+
+.card-container {
+  border: 1px solid red;
+  width: 100%;
+  padding: 0;
+}
+ //App
+
 #App {
   justify-content: center;
   display: flex;
@@ -554,6 +580,7 @@ li {
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 // container left
