@@ -1,0 +1,420 @@
+@import './node_modules/lesshat/lesshat.less';
+
+
+body {
+  background-color: #0891E8;
+}
+.taskBoard-wrapper {
+  border: 2px solid red;
+  width: 65%;
+  float: right;
+}
+.logout-button {
+  float: right;
+}
+.overview-wrapper {
+  border: 2px solid blue;
+  width: 35%;
+  float: left;
+}
+
+.progressBar-wrapper{
+  border: 2px solid purple;
+  width: 65%;
+  float: right;
+}
+
+ /* ToolTip Icons Style*/
+
+ /* Objective Tooltip */
+ .add-objective {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px;
+
+ }
+ .add-objective .add-objective-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.add-objective .add-objective-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent transparent;
+}
+
+.add-objective:hover .add-objective-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+ /* add Card Tooltip */
+
+ .add-card {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px;
+
+ }
+ .add-card .add-card-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.add-card .add-card-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent transparent;
+}
+
+.add-card:hover .add-card-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+ /* delete Card Tooltip */
+
+  .delete-objective {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px;
+
+ }
+ .delete-objective .delete-objective-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.delete-objective .delete-objective-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent transparent;
+}
+
+.delete-objective:hover .delete-objective-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+ /* delete Card Tooltip */
+
+  .edit-card {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px;
+
+ }
+ .edit-card .edit-card-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.edit-card .edit-card-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    // border-color: transparent transparent transparent transparent;
+}
+
+.edit-card:hover .edit-card-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+ /* delete Card Tooltip */
+
+  .delete-card {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    padding-left: 10px;
+
+ }
+ .delete-card .delete-card-message {
+    visibility: hidden;
+    width: 120px;
+    background-color: #EE5652;
+    color: #3D3D3D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+ }
+
+.delete-card .delete-card-message:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    // border-color: transparent transparent transparent transparent;
+}
+
+.delete-card:hover .delete-card-message{
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Add Project Tooltip */
+
+ .add-project {
+   position: relative;
+   display: inline-block;
+   font-size: 25px;
+   padding-left: 10px;
+
+}
+.add-project .add-project-message {
+   visibility: hidden;
+   width: 120px;
+   background-color: #EE5652;
+   color: #3D3D3D;
+   text-align: center;
+   border-radius: 6px;
+   padding: 5px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: -125%;
+   left: 100%;
+   margin-left: 15px;
+   opacity: 0;
+   transition: opacity 1s;
+}
+
+.add-project .add-project-message:after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: transparent transparent transparent transparent;
+}
+
+.add-project:hover .add-project-message{
+   visibility: visible;
+   opacity: 1;
+}
+
+/* */
+.projectList-wrapper{
+  border: 2px solid green;
+  width: 35%;
+  float: left;
+}
+.task-list-container {
+
+	display: -webkit-flex;
+   display: flex;
+   -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+   -webkit-flex-flow: column wrap;
+   flex-flow: column wrap;
+   -webkit-align-content: center;
+   align-content: center;
+	width: 20%;
+	margin-right: 0;
+	margin-left: 0;
+	// padding:  0.5em 1em 0.5em 1em;
+
+}
+.task-list-container h1 {
+	width: 100%;
+}
+.input-task {
+	order: 1;
+}
+.task-item {
+	display: -webkit-flex;
+   display: flex;
+   -webkit-align-items: flex-start;
+   align-items: flex-start;
+   -webkit-justify-content: flex-start;
+   justify-content: flex-start;
+   -webkit-flex-flow: column wrap;
+   flex-flow: column wrap;
+   -webkit-align-content: flex-start;
+   align-content: flex-start;
+	padding: 0.5em 1em 0.5em 1em;
+	// border: solid green 2px;
+	margin: 11px;
+	width: 70%;
+}
+
+.task-item h3 {
+	// display: inline-block;
+}
+.task-categories {
+	display: -webkit-flex;
+   display: flex;
+   -webkit-align-items: baseline;
+   align-items: baseline;
+   -webkit-justify-content: space-around;
+   justify-content: space-around;
+   -webkit-flex-flow: row wrap;
+   flex-flow: row wrap;
+   -webkit-align-content: flex-start;
+   align-content: flex-start;
+	// border: solid blue 2px;
+	flex-direction: row;
+	width: 100%;
+	order: 2;
+	margin: 0;
+}
+
+.rc-collapse {
+  background-color: #f4f4f4;
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+}
+.rc-collapse-anim-active {
+  -webkit-transition: height 0.2s ease-out;
+  transition: height 0.2s ease-out;
+}
+.rc-collapse > .rc-collapse-item {
+  border-top: 1px solid #d9d9d9;
+}
+.rc-collapse > .rc-collapse-item:first-child {
+  border-top: none;
+}
+.rc-collapse > .rc-collapse-item > .rc-collapse-header {
+  // height: 38px;
+  line-height: 38px;
+  // text-indent: 16px;
+  color: #666;
+  cursor: pointer;
+  // overflow: auto;
+  word-wrap: break-word
+}
+.rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
+  display: inline-block;
+  content: '\20';
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 4px solid #666;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.rc-collapse-content {
+  overflow: hidden;
+  color: #666;
+  padding: 0 16px;
+  background-color: #fff;
+}
+.rc-collapse-content > .rc-collapse-content-box {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.rc-collapse-content-inactive {
+  display: none;
+}
+.rc-collapse-item:last-child > .rc-collapse-content {
+  border-radius: 0 0 3px 3px;
+}
+.rc-collapse > .rc-collapse-item-active > .rc-collapse-header .arrow {
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 4px solid #666;
+  margin-right: 6px;
+}
+
+li.placeholder { background: rgb(255,240,120);}
+li.placeholder:before {
+  content: "Drop here"; color: rgb(225,210,90);
+}
+ul {
+  list-style: none;
+  margin:0;
+  padding:0
+}
+li {
+  padding: 5px;
+  background:#eee
+}
