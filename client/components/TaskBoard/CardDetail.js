@@ -16,7 +16,7 @@ var CardDetail = React.createClass({
 	  },
 	  editable: function(props) {
 	  	var updateCardTitle = {
-	  			  _id: this.props.cardData._id,	
+	  			  _id: this.props.cardData._id,
 			      title: $("#"+this.props.cardData._id).html(),
 			      category: this.props.cardData.category,
 			      status: 'active'
@@ -48,15 +48,15 @@ var CardDetail = React.createClass({
 	  render: function() {
 
 	  return (
-	
+
 	    <li className="task-item" >
-	     <h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3>
-	     <div className={'edit-card '+ this.state.editableIcon} type='submit' onClick={this.editable}>
-	     <span className="edit-card-message">Edit Card</span>
-	     </div>
-	      <div className='delete-card ion-android-delete' type='submit' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>
+			<h3 id={this.props.cardData._id}  contentEditable={this.state.contentEditable}>{this.props.title}</h3>
+			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable}>
+				<span className="edit-card-message">Edit Card</span>
+			</div>
+			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}><span className='delete-card-message'>Delete</span></div>
 	    </li>
-	   
+
 
 	  );
 	}

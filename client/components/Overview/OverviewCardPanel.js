@@ -6,8 +6,10 @@ render: function() {
   var cardPanels = this.props.cards.map(function(card, index) {
      return (
          <div key={index} >
-        {card.title}
-         </div>
+             {card.title}
+             <hr/>
+             </div>
+
        )
    });
   return (
