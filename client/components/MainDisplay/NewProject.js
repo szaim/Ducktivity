@@ -75,7 +75,7 @@ onDelete: function() {
           <hr/>
           <span className="project-action-title">Select Project: </span>
           <div className="container-select-project">
-            <select className="selectProject" ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
+            <select className="selectProject" ref="selectedProject" value={this.props.activeProjectId}  onChange={this.onSelect} >
               {projects}
             </select>
             <span>
