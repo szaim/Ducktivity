@@ -96,8 +96,12 @@ var CategoryDisplay = React.createClass({
   }
    return (
       <div className='category-container'>
-        <div className="progressBar-wrapper">          
+        <div className="progressBar-wrapper">
+          <h3 className="progress-title">Check Your Progress:</h3> 
+          <div className="progress">
           <ProgressBar percent={percent} strokeColor={strokeColor}/>
+          <span className="percent">{percent}%</span>
+          </div>
         </div>
         <div className='task-categories'>
           {displayCategories}

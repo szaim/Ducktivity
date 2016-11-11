@@ -17,9 +17,8 @@ var Header = React.createClass({
 	  		     <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://young-lake-21041.herokuapp.com"
 	  		     		className="avatarLogout">
 	  		     	<img src={this.props.avatar} className="avatar" />
-	  		     	<div className="dropdown-content">
-	  		     		<span className="logout"><p>Logout</p></span>
-	  		     	</div>
+	  		     		<span className="logout">Logout</span>
+
 	  		     </a>
 	  		</div>
 

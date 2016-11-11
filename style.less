@@ -64,6 +64,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  float-direction: column;
 }
 
  /* ToolTip Icons Style*/
@@ -394,51 +395,10 @@ body {
   font-weight: 700;
 }
 
-/* logout Tooltip */
 
-// .dropdown-content {
-//    position: relative;
-//    display: inline-block;
-//    font-size: 25px;
-//    padding-left: 10px;
 
-// }
-// .dropdown-content .logout {
-//    visibility: hidden;
-//    width: 60px;
-//    background-color: @brand-peach;
-//    color: @brand-black;
-//    text-align: center;
-//    border-radius: 6px;
-//    padding: 5px 0;
-//    position: absolute;
-//    z-index: 1;
-//    bottom: -145%;
-//    left: 45%;
-//    margin-left: 15px;
-//    opacity: 0;
-//    transition: opacity 1s;
-// }
 
-// .dropdown-content .logout:after {
-//    content: "";
-//    position: absolute;
-//    top: 100%;
-//    left: 50%;
-//    margin-left: -5px;
-//    border-width: 5px;
 
-// }
-
-// .dropdown-content:hover .logout{
-//    visibility: visible;
-//    opacity: 0.80;
-// }
-
-.dropdown-content .logout > p {
-  font-size: 0.5em;
-  font-weight: 700;
-}
 /* */
 .projectList-wrapper{
   width: 100%;
@@ -666,15 +626,14 @@ li {
 
 //login----------------------------
 .container-login {
-  justify-content: center;
   display: flex;
-  align-self: center;
   flex-direction: column;
-  margin: 0 auto;
-  margin-top: 10em;
+  align-items: center;
+  justify-content: center;
   border-radius: 1em;
   padding: 3rem 5rem;
   box-shadow: 0 9px 28px #064373;
+  margin-top: 8%;
 }
 
 .container-login h1 {
@@ -740,49 +699,29 @@ li {
   margin-right: 1.3em;
 }
 
-.dropdown-content {
-   position: relative;
-   display: inline-block;
-   font-size: 25px;
-   padding-left: 10px;
+.avatarLogout .logout {
+    visibility: hidden;
+    width: 120px;
+    background-color: #064373;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 9%;
+    left: 79%;
+    position: absolute;
 }
 
-.dropdown-content .logout {
-  visibility: hidden;
-   width: 60px;
-   background-color: @brand-peach;
-   color: @brand-black;
-   text-align: center;
-   border-radius: 6px;
-   padding: 5px 0;
-   position: absolute;
-   z-index: 1;
-   bottom: -145%;
-   left: 45%;
-   margin-left: 15px;
-   opacity: 0;
-   transition: opacity 1s;
+.avatarLogout:hover .logout {
+    visibility: visible;
 }
 
-.dropdown-content .logout:after {
-   content: "";
-   position: absolute;
-   top: 100%;
-   left: 50%;
-   margin-left: -5px;
-   border-width: 5px;
 
-}
 
-.avatarLogout:hover .logout{
-   visibility: visible;
-   opacity: 0.80;
-}
-
-.dropdown-content .logout > p {
-  font-size: 0.5em;
-  font-weight: 700;
-}
 
 //Project---------------------
 
@@ -859,6 +798,26 @@ li {
     margin-top: 0px;
     margin-bottom: 10px;
 }
+
+//progress-bar
+
+.progress {
+  float-direction: row;
+  display: flex;
+}
+
+.progress-title {
+    margin-bottom: 6em;
+    margin-right: -16em;
+    font-size: 1.3em;
+    font-family: 'Itim', cursive;
+}
+
+.percent {
+    padding-left: 0.4em;
+    font-weight: bold;
+}
+
 
 
 @media screen and (min-width: 1200px) and (max-width: 1600px) {

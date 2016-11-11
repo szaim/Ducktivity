@@ -5,7 +5,8 @@ var ProgressBar = React.createClass({
 	render: function() {
 		var containerStyle = {
 			width: '30em',
-			backgroundColor: "#0672b7"
+			backgroundColor: "#0672b7",
+			borderRadius: "8px"
 		};
 		return (
 	        <div style={containerStyle}>

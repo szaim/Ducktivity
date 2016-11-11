@@ -12,12 +12,13 @@ var CardDetail = React.createClass({
 	  		drag: true,
 	  		buttonAction: 'Edit',
 	  		editableIcon: 'ion-ios-compose',
+	  		message: "Edit Card"
 	  	};
 	  },
 	  editable: function(props) {
 	  	var updateCardTitle = {
 	  			  _id: this.props.cardData._id,
-			      title: $("#"+this.props.cardData._id).html().replace(/&nbsp;/gi, ''),
+			      title: $("#"+this.props.cardData._id).text().replace(/&nbsp;/gi, ''),
 			      category: this.props.cardData.category,
 			      status: 'active'
 			    }
@@ -25,7 +26,8 @@ var CardDetail = React.createClass({
 			    console.log('jquery', $("#"+this.props.cardData._id).html())
 		if(this.state.buttonAction == 'Edit'){
 	  		this.setState({
-	  			editableIcon: 'ion-ios-locked'
+	  			editableIcon: 'ion-ios-locked',
+	  			message: "Save Card"
 	  		});
 
 		}
@@ -34,6 +36,8 @@ var CardDetail = React.createClass({
 	  			contentEditable: false,
 	  			buttonAction: 'Edit',
 	  			editableIcon: 'ion-ios-compose',
+	  			message: "Edit Card"
+	  			
 	  		});
 
 	  	this.props.dispatch(actions.updateCards(updateCardTitle));
@@ -42,6 +46,7 @@ var CardDetail = React.createClass({
 	  	this.setState({
 	  		contentEditable: true,
 	  		buttonAction: 'Save'
+
 	  	});
 	  }
 	},
@@ -50,7 +55,7 @@ var CardDetail = React.createClass({
 		<div className="task-item" style={{display: "inlineBlock"}, {padding: 0}}>
 			<span id={this.props.cardData._id}  contentEditable={this.state.contentEditable} style={{display: "inlineBlock"}, {padding: 0}}>{this.props.title}</span>
 			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable} style={{display: "inlineBlock"}, {padding: 0}}>
-				<span className="edit-card-message"><p>Edit Card</p></span>
+				<span className="edit-card-message"><p>{this.state.message}</p></span>
 			</div>
 			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}>
 				<span className='delete-card-message'>

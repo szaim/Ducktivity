@@ -130,7 +130,7 @@ var OverviewObjectivePanel = React.createClass({
                             {usersOptions}
                         </select>
                     </form>
-                    <button onClick={closeAndAddCard.bind(objective)}>add new Card</button>
+                    <button onClick={closeAndAddCard.bind(objective)}>Add Card</button>
                 </div>
             )
         })
