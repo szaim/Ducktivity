@@ -60,7 +60,7 @@ body {
 .progressBar-wrapper{
   width: 100%;
   float: right;
-  height: 25vh;
+  height: 15em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -391,7 +391,7 @@ body {
 .projectList-wrapper{
   width: 100%;
   float: left;
-  height: 25vh;
+  height: 15em;
 }
 
 .task-list-container {
@@ -460,6 +460,7 @@ body {
   border-radius: 7px 7px 7px 7px;
   border-color: transparent;
   border: transparent;
+  width: 100%;
 }
 
 .rc-collapse-anim-active {
@@ -482,6 +483,7 @@ body {
   padding: 10px;
   margin-top: 10px;
   margin-right: 10px;
+  width: 103%;
 }
 
 .rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
@@ -503,7 +505,7 @@ body {
   color: darken(@brand-gray, 10%);
   padding: 0 16px;
   background-color: lighten(@brand-yellow, 10%);
-  width: 293px;
+  width: 100%;
 }
 
 .rc-collapse-content > .rc-collapse-content-box {
@@ -769,4 +771,15 @@ li {
     padding-left: 10px;
     margin-top: 0px;
     margin-bottom: 10px;
+}
+
+
+@media screen and (min-width: 1200px) and (max-width: 1600px) {
+    .task-list-container {
+      width: 12em !important;
+    }
+}
+
+@media (max-width: 760px) {
+
 }
