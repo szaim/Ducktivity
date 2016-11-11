@@ -138,8 +138,8 @@ var OverviewObjectivePanel = React.createClass({
             console.log('objective cards', objective.cards);
             return (
                 <Panel header={<span className='objective-header'> {objective.title}
-                    <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message"><p>add a card</p></span></div>
-                    <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message"><p>delete Objective</p></span></div>
+                    <div className="add-card ion-android-add-circle" onClick = {openTheModal.bind(objective)}><span className="add-card-message"><p>Add Card</p></span></div>
+                    <div className="delete-objective ion-android-cancel" onClick = {deleteTheObjective.bind(objective)}><span className="delete-objective-message"><p>Delete Objective</p></span></div>
 
                 </span>} key={index}>
                     {/*End Header Start Panel Content */}
@@ -152,7 +152,7 @@ var OverviewObjectivePanel = React.createClass({
         return (
             <div>
                 <div className='overview-project-title'>{this.props.projectTitle}</div>
-                <div className="add-objective ion-android-add-circle" onClick={this.openObjectiveModal}><span className="add-objective-message"><p>add Objective</p></span></div>
+                <div className="add-objective ion-android-add-circle" onClick={this.openObjectiveModal}><span className="add-objective-message"><p>Add Objective</p></span></div>
                 <div className='objective-wrapper' style={{
                     margin: 10,
                     width: 350
@@ -171,18 +171,18 @@ var OverviewObjectivePanel = React.createClass({
                                         {usersOptions}
                                     </select>
                                 </form>
-                                <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>add new Card</button>
+                                <button onClick={closeAndAddCard.bind(this.props.objectiveId)}>Add Card</button>
                             </Modal>
                         </div>
                     : null}
                     {this.props.isObjectiveOpen
                         ? <div>
                             <Modal isOpen={that.props.isObjectiveOpen} onAfterOpen={that.afterOpenModal} onRequestClose={that.closeAndAddObjective} style={customStyles}>
-                                <h2 ref="subtitle">Add a New Objective</h2>
+                                <h2 ref="subtitle">Add Objective</h2>
                                 <form onSubmit={this.closeAndAddObjective}>
                                     <label htmlFor="objectiveTitle">Objective title:</label><input name="objectiveTitle" ref={"objectiveTitle" + this.props.projectId}/>
                                 </form>
-                                <button onClick={this.closeAndAddObjective}>add new Objective</button>
+                                <button onClick={this.closeAndAddObjective}>Add Objective</button>
                             </Modal>
                         </div>
                     : null}

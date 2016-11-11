@@ -69,7 +69,7 @@ onDelete: function() {
           <div className="container-project-create">
             <input className="project-input" placeholder='Project Title...' ref="projectTitle" />
             <span>
-              <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add a Project</p></span></div>
+              <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add Project</p></span></div>
             </span>
           </div>
           <hr/>
