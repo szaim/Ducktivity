@@ -14,7 +14,7 @@ var Header = React.createClass({
 		  			<img src={require('../../../css/img/logo3.png')} alt='Ducktivity' className='img-logo-header'/>
 					<h3 className="app-title">Ducktivity</h3>
 		  		</div>
-	  		     <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8080/"
+	  		     <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://young-lake-21041.herokuapp.com"
 	  		     		className="avatarLogout">
 	  		     	<img src={this.props.avatar} className="avatar" />
 	  		     	<div className="dropdown-content">

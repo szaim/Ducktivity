@@ -122,7 +122,7 @@ var OverviewObjectivePanel = React.createClass({
         var ModalContent = this.props.objectives.map(function(objective, index) {
             return (
                 <div key={index} className="model-content">
-                    <h2 ref="subtitle">Add a new Card</h2>
+                    <h2 ref="subtitle">Add Card</h2>
                     <form>
                         <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + objective._id}/>
                         <label htmlFor="assign-to">Assign to:</label>
@@ -163,7 +163,7 @@ var OverviewObjectivePanel = React.createClass({
                     {this.props.isOpen
                         ? <div>
                             <Modal isOpen={that.props.isOpen} onAfterOpen={that.afterOpenModal} onRequestClose={closeAndAddCard} style={customStyles}>
-                                <h2 ref="subtitle">Add a new Card</h2>
+                                <h2 ref="subtitle">Add Card</h2>
                                 <form onSubmit={closeAndAddCard.bind(this.props.objectiveId)} >
                                     <label htmlFor="cardTitle">Card title:</label><input name="cardTitle" ref={"cardTitle" + this.props.objectiveId}/>
                                     <label htmlFor="assign-to">Assign to:</label>
