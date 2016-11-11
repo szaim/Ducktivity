@@ -94,7 +94,7 @@ body {
 .add-objective .add-objective-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 
 .add-objective .add-objective-message:after {
     content: "";
@@ -142,7 +142,7 @@ body {
  .add-card .add-card-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 .add-card .add-card-message:after {
     content: "";
     position: absolute;
@@ -204,7 +204,7 @@ body {
 .delete-objective:hover .delete-objective-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 
  /* delete Card Tooltip */
 
@@ -245,7 +245,7 @@ body {
 .edit-card .edit-card-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 .edit-card:hover .edit-card-message{
     visibility: visible;
     opacity: 0.75;
@@ -294,7 +294,7 @@ body {
 .delete-card:hover .delete-card-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 
 /* Add Project Tooltip */
 
@@ -340,7 +340,7 @@ body {
 .add-project .add-project-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 
 /* Delete Project Tooltip */
 
@@ -386,7 +386,7 @@ body {
 .delete-project .delete-project-message > p {
   font-size: 0.5em;
   font-weight: 700;
-} 
+}
 /* */
 .projectList-wrapper{
   border: 2px solid green;
@@ -407,7 +407,6 @@ body {
 	width: 23%;
 	margin-right: 0;
 	margin-left: 0;
-	// padding:  0.5em 1em 0.5em 1em;
 
 }
 .task-list-container h1 {
@@ -418,7 +417,7 @@ body {
 }
 .task-item {
 	display: -webkit-flex;
-   display: flex;
+   display: inline-block;
    -webkit-align-items: flex-start;
    align-items: flex-start;
    -webkit-justify-content: flex-start;
@@ -430,7 +429,6 @@ body {
 	padding: 0.5em 1em 0.5em 1em;
 	margin: 0 auto;
 	width: 70%;
-  // height: 2em;
 }
 
 .task-item h3 {
@@ -559,15 +557,20 @@ li {
 }
 
 .draggable-item {
-  border: 5px solid blue;
   width: 90%;
 
 }
 
 .card-container {
-  border: 1px solid red;
-  width: 100%;
-  padding: 0;
+    width: 100%;
+    font-size: 1.05em;
+    background-color: @light-blue;
+    border: 3px solid @light-blue;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 0px;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 7px 4px -4px @dark-blue;
 }
  //App
 
