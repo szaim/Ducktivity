@@ -50,7 +50,7 @@ var CardDetail = React.createClass({
 		<div className="task-item" style={{display: "inlineBlock"}, {padding: 0}}>
 			<span id={this.props.cardData._id}  contentEditable={this.state.contentEditable} style={{display: "inlineBlock"}, {padding: 0}}>{this.props.title}</span>
 			<div className={'edit-card '+ this.state.editableIcon} onClick={this.editable} style={{display: "inlineBlock"}, {padding: 0}}>
-				<span className="edit-card-message">Edit Card</span>
+				<span className="edit-card-message"><p>Edit Card</p></span>
 			</div>
 			<div className='delete-card ion-android-delete' onClick={this.props.handleCardDelete}>
 				<span className='delete-card-message'>
