@@ -7,7 +7,7 @@ var ProgressBar = React.createClass({
 			width: '250px',
 		};
 		return (
-	        <div style={containerStyle}>
+	        <div className="progress-bar-style" style={containerStyle}>
 	        	<Line 
 	        		percent={this.props.percent}  
 	        		strokeWidth="4" 
