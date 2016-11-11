@@ -60,37 +60,33 @@ onDelete: function() {
     }
 
    return (
-    <div className="Form wrapper">
-      <form>
-     
-        <input placeholder='Project Title...' ref="projectTitle" />
-        <span>
-        <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add a Project</p></span></div>
-        </span>
-        <h5>Select Project:</h5>
-        <select ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
-          {projects}
-        </select>
-         <span>
-         <div className="delete-project ion-android-cancel" onClick={this.onDelete}><span className="delete-project-message"><p>Delete</p></span></div>
-        </span>
-      
-      </form>
-      
-
-
-    </div>
-
+      <div className="container-project">
+        <div className="project-header">
+          <span className="project-title">Projects</span>
+        </div>
+        <form>
+          <span className="project-action-title">Create Project: </span>
+          <div className="container-project-create">
+            <input className="project-input" placeholder='Project Title...' ref="projectTitle" />
+            <span>
+              <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add a Project</p></span></div>
+            </span>
+          </div>
+          <hr/>
+          <span className="project-action-title">Select Project: </span>
+          <div className="container-select-project">
+            <select className="selectProject" ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
+              {projects}
+            </select>
+            <span>
+              <div className="delete-project ion-android-cancel delete-project-message" onClick={this.onDelete}><span className="delete-project-message"><p>Delete</p></span></div>
+            </span>
+          </div>
+        </form>
+      </div>
    )
  }
-
- });
-
-
-
-
-
-
+});
 
 var mapStateToProps = function(state, props) {
 	return {

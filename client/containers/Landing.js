@@ -9,12 +9,15 @@ var Header = require('../components/MainDisplay/Header');
 
 var Landing = function(){
 	return (
-		<div id="landing" className="container">
-		<div className="container-left">
-			<div className="projectList-wrapper"><NewProject/> </div>
-			<div className="overview-wrapper"> <Overview/> </div>
-		</div>
-		<div className="taskBoard-wrapper"> <TaskBoard/> </div>
+		<div>
+			<div><Header/> </div>
+			<div id="landing" className="container">
+				<div className="container-left">
+					<div className="projectList-wrapper"><NewProject/> </div>
+					<div className="overview-wrapper"> <Overview/> </div>
+				</div>
+				<div className="taskBoard-wrapper"> <TaskBoard/> </div>
+			</div>
 		</div>
 		)
 };

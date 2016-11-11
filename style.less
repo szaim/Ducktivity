@@ -22,6 +22,11 @@
 
 @brand-gray: #636363;
 
+body {
+  background-color: @brand-blue;
+  font-family: @body-font;
+}
+
 .objective-header {
     font-size: 1.3em;
     font-weight: 500;
@@ -38,37 +43,27 @@
     box-shadow: 0 7px 4px -4px #777;
 }
 
-body {
-  background-color: @brand-blue;
-  font-family: @body-font;
-}
 .taskBoard-wrapper {
   width: 65%;
   float: right;
 }
-.logout-button {
-  float: right;
-}
+
 .overview-wrapper {
   width: 100%;
   float: left;
 }
+
 .objective-wrapper {
-    overflow-y: scroll;
     height: 100vh;
 }
 
 .progressBar-wrapper{
   width: 100%;
   float: right;
-  height: 20vh;
+  height: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.progress-bar-style {
-
 }
 
  /* ToolTip Icons Style*/
@@ -127,6 +122,7 @@ body {
     padding-left: 10px;
 
  }
+
  .add-card .add-card-message {
      visibility: hidden;
      width: 80px;
@@ -148,6 +144,7 @@ body {
   font-size: 0.5em;
   font-weight: 700;
 }
+
 .add-card .add-card-message:after {
     content: "";
     position: absolute;
@@ -166,13 +163,14 @@ body {
 
  /* delete Card Tooltip */
 
-  .delete-objective {
+.delete-objective {
     position: relative;
     display: inline-block;
     font-size: 25px;
     padding-left: 10px;
 
  }
+
  .delete-objective .delete-objective-message {
      visibility: hidden;
      width: 120px;
@@ -251,6 +249,7 @@ body {
   font-size: 0.5em;
   font-weight: 700;
 }
+
 .edit-card:hover .edit-card-message{
     visibility: visible;
     opacity: 0.75;
@@ -265,6 +264,7 @@ body {
     padding-left: 10px;
 
  }
+
  .delete-card .delete-card-message {
      visibility: hidden;
      width: 70px;
@@ -296,6 +296,7 @@ body {
     visibility: visible;
     opacity: 0.75;
 }
+
 .delete-card:hover .delete-card-message > p {
   font-size: 0.5em;
   font-weight: 700;
@@ -303,13 +304,7 @@ body {
 
 /* Add Project Tooltip */
 
- .add-project {
-   position: relative;
-   display: inline-block;
-   font-size: 25px;
-   padding-left: 10px;
 
-}
 .add-project .add-project-message {
    visibility: hidden;
    width: 100px;
@@ -349,7 +344,7 @@ body {
 
 /* Delete Project Tooltip */
 
- .delete-project {
+.delete-project {
    position: relative;
    display: inline-block;
    font-size: 25px;
@@ -396,8 +391,9 @@ body {
 .projectList-wrapper{
   width: 100%;
   float: left;
-  height: 20vh;
+  height: 25vh;
 }
+
 .task-list-container {
 	display: -webkit-flex;
  display: flex;
@@ -414,12 +410,15 @@ body {
 	margin-left: 0;
 
 }
+
 .task-list-container h1 {
 	width: 100%;
 }
+
 .input-task {
 	order: 1;
 }
+
 .task-item {
 	display: -webkit-flex;
    display: inline-block;
@@ -436,9 +435,10 @@ body {
 	width: 70%;
 }
 
-.task-item h3 {
-	// display: inline-block;
+.task-item > span {
+  margin-right: 5px;
 }
+
 .task-categories {
 	display: -webkit-flex;
    display: flex;
@@ -450,7 +450,6 @@ body {
    flex-flow: row wrap;
    -webkit-align-content: flex-start;
    align-content: flex-start;
-	// border: solid pink 2px;
 	flex-direction: row;
 	width: 100%;
 	order: 2;
@@ -462,16 +461,16 @@ body {
   border-color: transparent;
   border: transparent;
 }
+
 .rc-collapse-anim-active {
   -webkit-transition: height 0.2s ease-out;
   transition: height 0.2s ease-out;
 }
-.rc-collapse > .rc-collapse-item {
-  //border-top: 10px solid @brand-blue;
-}
+
 .rc-collapse > .rc-collapse-item:first-child {
   border-top: none;
 }
+
 .rc-collapse > .rc-collapse-item > .rc-collapse-header {
   // line-height: 38px;
   color: darken(@brand-gray, 10%);
@@ -484,6 +483,7 @@ body {
   margin-top: 10px;
   margin-right: 10px;
 }
+
 .rc-collapse > .rc-collapse-item > .rc-collapse-header .arrow {
   display: inline-block;
   content: '\20';
@@ -497,6 +497,7 @@ body {
   vertical-align: middle;
   margin-right: 8px;
 }
+
 .rc-collapse-content {
   overflow: hidden;
   color: darken(@brand-gray, 10%);
@@ -504,16 +505,20 @@ body {
   background-color: lighten(@brand-yellow, 10%);
   width: 293px;
 }
+
 .rc-collapse-content > .rc-collapse-content-box {
   margin-top: 16px;
   margin-bottom: 16px;
 }
+
 .rc-collapse-content-inactive {
   display: none;
 }
+
 .rc-collapse-item:last-child > .rc-collapse-content {
   border-radius: 0 0 3px 3px;
 }
+
 .rc-collapse > .rc-collapse-item-active > .rc-collapse-header .arrow {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
@@ -521,15 +526,20 @@ body {
   margin-right: 6px;
 }
 
-li.placeholder { background: rgb(255,240,120);}
+li.placeholder { 
+  background: rgb(255,240,120);
+}
+
 li.placeholder:before {
   content: "Drop here"; color: rgb(225,210,90);
 }
+
 ul {
   list-style: none;
   margin:0;
   padding:0
 }
+
 li {
   padding: 5px;
   background:#eee
@@ -598,4 +608,165 @@ li {
   display: flex;
   flex-direction: column;
 
+}
+
+//login----------------------------
+.container-login {
+  justify-content: center;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  background-color: white;
+  margin: 0 auto;
+  margin-top: 10em;
+  border-radius: 1em;
+  border: 0.1em solid #636363;
+  padding: 3rem 5rem;
+
+}
+
+.img-logo-login {
+  height: 300px;
+  width: 300px;
+  margin: auto;
+}
+
+.title-login {
+  align-self: center;
+}
+
+//HEADER----------------------------
+.container-header {
+  border: 2px solid @light-blue;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+  height: 5em;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.img-logo-header {
+  height: 6em;
+  width: 8em;
+}
+
+.userName {
+  margin-top: 1.3em;
+  margin-left: 1.3em;
+}
+
+// avatar for the user 
+.avatar{
+  float: right;
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 30px; /* Saf3+, Chrome */
+  border-radius: 30px; /* Opera 10.5, IE 9 */
+  border: 2px solid @light-blue;
+  margin-top: 0.6em;
+  margin-right: 1.3em;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-top: 4em;
+}
+
+.dropdown-content .logout {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin-right: 5em;
+}
+
+.dropdown-content .logout:hover {
+  background-color: #f1f1f1;
+   margin-right: 5em;
+
+}
+
+.avatarLogout:hover .dropdown-content {
+    display: block;
+}
+
+//Project---------------------
+
+.container-project {
+  margin-right: 37px;  
+  border-top-left-radius: 0.8em;
+  border-top-right-radius: 0.8em;
+  background-color: #ebd21b;
+}
+
+.projectList-wrapper{
+  width: 400px;
+  float: left;
+}
+
+.container-select-project {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.container-project-create {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.selectProject {
+    width: 50%;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #c5b015;
+}
+
+
+.select-delete-button, .add-project {
+  padding-left: 10px;
+  font-size: 25px;
+}
+
+.project-header {
+  width: 100%;
+  border-bottom: 2px solid @brand-peach;
+  height: 25px;
+  padding-top:15px;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  background-color: #0672b7;
+  border-top-left-radius: 0.8em;
+  border-top-right-radius: 0.8em;
+}
+
+.project-input {
+  border:2px solid #456879;
+  background-color: #f3edc3;
+  border-radius:10px;
+  height: 22px;
+  width: 230px;
+  margin-left: 10px;
+}
+
+.project-action-title {
+  margin-left: 10px;
+}
+
+.project-title {
+    font-family: @title-font;
+    font-size: 1.5em;
+    padding-left: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }

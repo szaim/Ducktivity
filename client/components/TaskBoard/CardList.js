@@ -39,26 +39,24 @@ var CardList = React.createClass({
   },
 
  render: function(){
-
-
   var displayCard = this.props.cardsData.filter((card)=>
       this.props.activeObjectiveIds.indexOf(card.objective) != -1
 
     ).map((data, index)=>{
      return (
       <div className="draggable-item" key={index}>
+        <div key={index} style={{display: "inlineBlock"}, {padding: 0}}>
           <Draggable type='cards' data={JSON.stringify(data)}>
-         <div className="card-container" key={index}>
-             <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
-         </div>
-         </Draggable>
+          <div className="card-container" key={index}>
+            <CardDetail key={index} title={data.title} handleCardDelete={this.handleCardDelete.bind(this, data)} cardData={data} />
+          </div>
+          </Draggable>
+        </div>
       </div>
        );
    });
-
-
    return (
-     <div className='task-categories'>
+     <div className='task-categories' style={{display: "inlineBlock"}, {padding: 0}}>
      {displayCard}
      </div>
    )

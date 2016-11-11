@@ -6,7 +6,9 @@ var update = require('react-addons-update');
 var initialState = {
     categories: [],
     userId: "",
-    updateCardId: ''
+    updateCardId: '',
+    avatar: '',
+    userFullName: ''
 
 };
 
@@ -26,10 +28,12 @@ var CardCategoriesReducer = function(state, action) {
     } 
 
     else if (action.type === Constants.FETCH_USER_SUCCESS) {
-        // console.log("add USER success in reducer", action.data.categories)
+        console.log("add USER success in reducer", action.data.fullName)
         state = Object.assign({}, state, {
             categories: action.data.categories,
-            userId: action.data._id
+            userId: action.data._id,
+            avatar: action.data.avatar,
+            userFullName: action.data.fullName
         });
         // console.log('fetch user success', state);
         return state;

@@ -91,34 +91,20 @@ var CategoryDisplay = React.createClass({
             categoryId={data._id}/>
       </Droppable>   
         </div>
-
        )
    });
   }
-  
-  // }
-
    return (
-     <div className='category-container'>
-      <div className="progressBar-wrapper"> 
-        
+      <div className='category-container'>
+        <div className="progressBar-wrapper">          
           <ProgressBar percent={percent} strokeColor={strokeColor}/>
-      
-      </div>       
-     <div className='task-categories'>
-     {displayCategories}
-     </div>
-     </div>
-   )
- }
-
+        </div>
+        <div className='task-categories'>
+          {displayCategories}
+        </div>
+      </div>
+   )}
  });
-
-
-
-
-
-
 
 var mapStateToProps = function(state, props) {
 	return {
