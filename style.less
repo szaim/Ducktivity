@@ -393,6 +393,52 @@ body {
   font-size: 0.5em;
   font-weight: 700;
 }
+
+/* logout Tooltip */
+
+// .dropdown-content {
+//    position: relative;
+//    display: inline-block;
+//    font-size: 25px;
+//    padding-left: 10px;
+
+// }
+// .dropdown-content .logout {
+//    visibility: hidden;
+//    width: 60px;
+//    background-color: @brand-peach;
+//    color: @brand-black;
+//    text-align: center;
+//    border-radius: 6px;
+//    padding: 5px 0;
+//    position: absolute;
+//    z-index: 1;
+//    bottom: -145%;
+//    left: 45%;
+//    margin-left: 15px;
+//    opacity: 0;
+//    transition: opacity 1s;
+// }
+
+// .dropdown-content .logout:after {
+//    content: "";
+//    position: absolute;
+//    top: 100%;
+//    left: 50%;
+//    margin-left: -5px;
+//    border-width: 5px;
+
+// }
+
+// .dropdown-content:hover .logout{
+//    visibility: visible;
+//    opacity: 0.80;
+// }
+
+.dropdown-content .logout > p {
+  font-size: 0.5em;
+  font-weight: 700;
+}
 /* */
 .projectList-wrapper{
   width: 100%;
@@ -624,15 +670,19 @@ li {
   display: flex;
   align-self: center;
   flex-direction: column;
-  background-color: white;
   margin: 0 auto;
   margin-top: 10em;
   border-radius: 1em;
-  border: 0.1em solid #636363;
   padding: 3rem 5rem;
-
+  box-shadow: 0 9px 28px #064373;
 }
 
+.container-login h1 {
+  font-family: @title-font;
+  font-size: 4em;
+  color: @dark-yellow;
+  margin: 0.3em;
+}
 .img-logo-login {
   height: 300px;
   width: 300px;
@@ -645,24 +695,37 @@ li {
 
 //HEADER----------------------------
 .container-header {
-  border: 2px solid @light-blue;
-  margin-top: 0.5em;
+  border-bottom: 5px solid #ee5652;
   margin-bottom: 1.5em;
-  height: 5em;
+  height: 6em;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  background-color: @light-yellow; 
 }
 
+.app-title {
+  font-family: @title-font;
+  font-size: 3em; 
+  color: @brand-blue;
+}
+
+.app-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .img-logo-header {
-  height: 6em;
-  width: 8em;
+  height: 5.5em;
+  width: 4.5em;
 }
 
 .userName {
-  margin-top: 1.3em;
+  margin-top: 1.5em;
   margin-left: 1.3em;
+  color: @dark-blue;
+  font-size: 1.3em;
 }
 
 // avatar for the user 
@@ -673,35 +736,52 @@ li {
   -webkit-border-radius: 30px; /* Saf3+, Chrome */
   border-radius: 30px; /* Opera 10.5, IE 9 */
   border: 2px solid @light-blue;
-  margin-top: 0.6em;
+  margin-top: 1em;
   margin-right: 1.3em;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    margin-top: 4em;
+   position: relative;
+   display: inline-block;
+   font-size: 25px;
+   padding-left: 10px;
 }
 
 .dropdown-content .logout {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    margin-right: 5em;
+  visibility: hidden;
+   width: 60px;
+   background-color: @brand-peach;
+   color: @brand-black;
+   text-align: center;
+   border-radius: 6px;
+   padding: 5px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: -145%;
+   left: 45%;
+   margin-left: 15px;
+   opacity: 0;
+   transition: opacity 1s;
 }
 
-.dropdown-content .logout:hover {
-  background-color: #f1f1f1;
-   margin-right: 5em;
+.dropdown-content .logout:after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
 
 }
 
-.avatarLogout:hover .dropdown-content {
-    display: block;
+.avatarLogout:hover .logout{
+   visibility: visible;
+   opacity: 0.80;
+}
+
+.dropdown-content .logout > p {
+  font-size: 0.5em;
+  font-weight: 700;
 }
 
 //Project---------------------
@@ -711,6 +791,7 @@ li {
   border-top-left-radius: 0.8em;
   border-top-right-radius: 0.8em;
   background-color: #ebd21b;
+  width: 85%;
 }
 
 .projectList-wrapper{

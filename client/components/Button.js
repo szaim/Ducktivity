@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? '#91c5d4' : 'white'};
+  background: ${props => props.primary ? '#91c5d4' : '#f1e9d1'};
   color: ${props => props.primary ? 'white' : '#0891E8'};
 
   font-size: 1.5em;

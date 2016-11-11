@@ -9,7 +9,8 @@ var Button = require('./Button');
 var Login = function(){
 
 	return (
-		<div className="container-login">
+		<div className="container-login effect5
+		">
 		
 			<img src={require('../../css/img/logo3.png')} alt='Ducktivity' className='img-logo-login'/>
 			<h1 className='title-login'> Ducktivity</h1>

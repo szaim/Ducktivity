@@ -9,13 +9,16 @@ var Header = React.createClass({
 	  	console.log("fullName", this.props.fullName);
 	  return (
 	  		<div className="container-header">
-	  			<h3 className="userName"> Welcome: {this.props.fullName}</h3>
-	  			<img src={require('../../../css/img/logo3.png')} alt='Ducktivity' className='img-logo-header'/>
+	  			<h3 className="userName"> Welcome: {this.props.fullName} </h3>
+	  			<div className="app-title-wrapper">
+		  			<img src={require('../../../css/img/logo3.png')} alt='Ducktivity' className='img-logo-header'/>
+					<h3 className="app-title">Ducktivity</h3>
+		  		</div>
 	  		     <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8080/"
 	  		     		className="avatarLogout">
 	  		     	<img src={this.props.avatar} className="avatar" />
 	  		     	<div className="dropdown-content">
-	  		     		<span className="logout">Logout</span>
+	  		     		<span className="logout"><p>Logout</p></span>
 	  		     	</div>
 	  		     </a>
 	  		</div>
