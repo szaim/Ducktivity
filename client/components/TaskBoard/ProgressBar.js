@@ -4,14 +4,14 @@ var Line = require("rc-progress").Line;
 var ProgressBar = React.createClass({
 	render: function() {
 		var containerStyle = {
-			width: '20em',
+			width: '30em',
 			backgroundColor: "#0672b7"
 		};
 		return (
 	        <div style={containerStyle}>
 	        	<Line 
 	        		percent={this.props.percent}  
-	        		strokeWidth="6" 
+	        		strokeWidth="4" 
 	        		strokeColor={this.props.strokeColor} />
 	        </div>				
 
