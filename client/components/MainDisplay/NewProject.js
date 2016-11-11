@@ -60,32 +60,35 @@ onDelete: function() {
     }
 
    return (
-    <div className="Form wrapper">
-      <form>
+    <div className="container-project">
+        <div className="project-header">
+      <span className="project-title">Projects</span>
+        </div>
+     <form>
+      <span className="project-action-title">Create Project: </span> 
+      <div className="container-project-create">
+       <input className="project-input" placeholder='Project Title...' ref="projectTitle" />
+       <div className="add-project ion-android-add-circle" onClick={this.submitProject}><span className="add-project-message"><p>Add a Project</p></span></div>
+       </div>
+       <hr/>
+       <span className="project-action-title">Select Project: </span> 
+       <div className="container-select-project">
+       <select className="selectProject" ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
+         {projects}
+       </select>
+        <span className="select-delete-button">
+        <div className="delete-project ion-android-cancel delete-project-message" onClick={this.onDelete}></div>
+       </span>
+       </div>
      
-        <input placeholder='Project Title...' ref="projectTitle" />
-        <span>
-          <button type='submit' onClick={this.submitProject}>Create Project</button>
-        </span>
-        <h5>Select Project:</h5>
-        <select ref="selectedProject" defaultValue={this.props.activeProjectId}  onChange={this.onSelect} >
-          {projects}
-        </select>
-         <span>
-          <button type='submit' onClick={this.onDelete}>Delete</button>
-        </span>
-      
-      </form>
-      
+     </form>
+     
+   </div>
 
+  )
+}
 
-    </div>
-
-   )
- }
-
- });
-
+});
 
 
 
