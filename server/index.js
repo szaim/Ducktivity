@@ -470,14 +470,17 @@ app.get('/api/project/:projectId', passport.authenticate('bearer', {
             }).exec(function(err, project) {
                 if (err) {
                     res.send("Error has occured");
-                } else {
-                    for (var i = project.objectives.length; i--;) {
-                        if (project.objectives[i].status == "deleted") {
-                          project.objectives.splice(i, 1);
-                            // console.log("usercards", req.user.categories);
-                            // return user.cards
+                    // was getting error obective is null - added condition to fix
+                } else if (project) {
+                    if (project.objectives.length > 0) {
+                        for (var i = project.objectives.length; i--;) {
+                            if (project.objectives[i].status == "deleted") {
+                              project.objectives.splice(i, 1);
+                                // console.log("usercards", req.user.categories);
+                                // return user.cards
+                            }
+                          
                         }
-                      
                     }
                     res.json(project)
                 }
